@@ -1,27 +1,29 @@
 {
-  "name": "bs-bastet",
+  "name": "rescript-bastet",
   "version": "2.0.0",
   "refmt": 3,
   "namespace": true,
-  "bsc-flags": ["-bs-super-errors"],
+  "bsc-flags": [
+    "-bs-super-errors"
+  ],
   "warnings": {
-    "error" : "+101+25+8+9+27",
+    "error": "+101+25+8+9+27",
     "number": "-102-48-3"
   },
-  "sources": [{
-    "dir": "bastet/src",
-    "subdirs": true
-  }, {
-    "dir": "bastet_js/src",
-    "subdirs": true
-  }, {
-    "dir": "bastet_js/test",
-    "type": "dev",
-    "subdirs": true
-  }],
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "__tests__",
+      "type": "dev",
+      "subdirs": true
+    }
+  ],
   "package-specs": {
     "module": "commonjs",
-    "in-source": false
+    "in-source": true
   },
   "suffix": ".bs.js",
   "bs-dependencies": [
