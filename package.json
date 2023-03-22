@@ -8,7 +8,7 @@
   },
   "scripts": {
     "clean": "rescript clean",
-    "build": "rescript -with-deps",
+    "build": "rescript build -with-deps",
     "watch": "rescript build -w",
     "mocha": "mocha",
     "test": "mocha __tests__/Test_*.bs.js",
