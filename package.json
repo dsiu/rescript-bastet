@@ -1,0 +1,34 @@
+{
+  "name": "rescript-bastet",
+  "version": "2.0.0",
+  "description": "A ReasonML/OCaml library for category theory and abstract algebra",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Risto-Stevcev/bastet.git"
+  },
+  "scripts": {
+    "clean": "bsb -clean-world",
+    "build": "bsb -make-world",
+    "watch": "bsb -make-world -w",
+    "mocha": "mocha",
+    "test": "mocha lib/js/bastet_js/test/Test_*.js",
+    "watch-test": "mocha -w lib/js/bastet_js/test/Test_*.js"
+  },
+  "homepage": "https://github.com/Risto-Stevcev/bastet",
+  "bugs": "https://github.com/Risto-Stevcev/bastet/issues",
+  "keywords": [
+    "BuckleScript",
+    "reason"
+  ],
+  "author": "Risto Stevcev",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "bs-stdlib-shims": "^0.1.0"
+  },
+  "devDependencies": {
+    "bs-chai": "github:dsiu/bs-chai#rescript-v10-pipelast",
+    "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v10",
+    "bs-mocha": "^1.0.0",
+    "rescript": "^10.0.0"
+  }
+}
