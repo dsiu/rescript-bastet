@@ -1,4 +1,0 @@
-[submodule "bs-bastet"]
-	path = bs-bastet
-	url = git@github.com:dsiu/bastet.git
-	branch = rescript-v10
