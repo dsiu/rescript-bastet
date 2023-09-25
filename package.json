@@ -1,6 +1,6 @@
 {
-  "name": "bs-bastet",
-  "version": "2.0.0",
+  "name": "rescript-bastet",
+  "version": ".0.1",
   "description": "A ReScript library for category theory and abstract algebra",
   "repository": {
     "type": "git",
@@ -22,12 +22,13 @@
   "author": "Risto Stevcev",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "bs-stdlib-shims": "^0.1.0"
+    "bs-stdlib-shims": "^0.1.0",
+    "@rescript/core": "^0.5.0"
   },
   "devDependencies": {
-    "bs-chai": "github:dsiu/bs-chai#rescript-v10-pipelast",
-    "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v10",
-    "bs-mocha": "^1.0.0",
-    "rescript": "^10.0.0"
+    "bs-chai": "github:dsiu/bs-chai#rescript-v11",
+    "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v11",
+    "rescript-mocha": "github:dsiu/rescript-mocha#rescript-v11",
+    "rescript": "^11.0.0-rc.3"
   }
 }

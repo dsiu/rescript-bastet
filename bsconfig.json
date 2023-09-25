@@ -27,10 +27,11 @@
   },
   "suffix": ".bs.js",
   "bs-dependencies": [
+    "@rescript/core"
   ],
   "bs-dev-dependencies": [
     "bs-jsverify",
-    "bs-mocha",
+    "rescript-mocha",
     "bs-chai"
   ],
   "ppx-flags": [
