@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 module Quickcheck: Test.QUICKCHECK
   with type t = unit => unit
   and type arbitrary<'a> = BsJsverify.Verify.Arbitrary.arbitrary<'a> = {

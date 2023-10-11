@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 module type EQ_F = (E: EQ) => (EQ with type t = list<E.t>)
@@ -10,7 +13,7 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = list<'a> = {
   type t<'a> = list<'a>
 
-  let map = f => ListLabels.map(~f)
+  let map = (. f) => ListLabels.map(~f, ...)
 }
 
 module Alt: ALT with type t<'a> = list<'a> = {

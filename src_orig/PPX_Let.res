@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 @@ocaml.text(" This is a helper module to integrate `bs-abstract` with `ppx_let` ")
 
 open Interface

@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 module type IMPL = {
@@ -7,7 +10,7 @@ module type IMPL = {
 
   let append: (array<'a>, array<'a>) => array<'a>
 
-  let map: ('a => 'b, array<'a>) => array<'b>
+  let map: (. 'a => 'b, array<'a>) => array<'b>
 
   let mapi: (('a, int) => 'b, array<'a>) => array<'b>
 
@@ -97,7 +100,7 @@ module type ARRAY = {
 
     let map: ('a => 'b, t<'a>) => t<'b>
 
-    let apply: (t<'a => 'b>, t<'a>) => t<'b>
+    let apply: (. t<'a => 'b>, t<'a>) => t<'b>
   }
 
   module Applicative: {
@@ -239,7 +242,7 @@ module Make = (A: IMPL): ARRAY => {
   module Apply: APPLY with type t<'a> = array<'a> = {
     include Functor
 
-    let apply = (fn_array, a) => A.fold_left((acc, f) => Alt.alt(acc, map(f, a)), [], fn_array)
+    let apply = (. fn_array, a) => A.fold_left((acc, f) => Alt.alt(acc, map(f, a)), [], fn_array)
   }
 
   module Applicative: APPLICATIVE with type t<'a> = array<'a> = {
@@ -267,7 +270,9 @@ module Make = (A: IMPL): ARRAY => {
         {
           type t<'a> = array<'a>
 
-          let (fold_left, fold_right) = (fold_left, fold_right)
+          //          let (fold_left, fold_right) = (fold_left, fold_right)
+          let fold_left = fold_left
+          let fold_right = fold_right
         },
       )
 

@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 let first = ((a, _)) => a
@@ -53,13 +56,13 @@ module Monoid: MONOID_F = (First: MONOID, Second: MONOID) => {
 module Functor: FUNCTOR_F = (T: TYPE) => {
   type t<'a> = (T.t, 'a)
 
-  let map = (f, (a, b)) => (a, f(b))
+  let map = (. f, (a, b)) => (a, f(b))
 }
 
 module Apply: APPLY_F = (S: SEMIGROUP) => {
   include Functor(S)
 
-  let apply = ((a, f), (a', x)) => (S.append(a, a'), f(x))
+  let apply = (. (a, f), (a', x)) => (S.append(a, a'), f(x))
 }
 
 module Applicative: APPLICATIVE_F = (M: MONOID) => {

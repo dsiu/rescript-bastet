@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 @@ocaml.text(" This module provides default implementations for interfaces ")
 
 let \"<." = Function.Infix.\"<."
@@ -75,7 +78,7 @@ module Fold = (F: FOLD_MAP) => {
 
   let fold_left_default = (f, init, xs) => {
     let Dual.Dual(Endo.Endo(r)) = Dual_Fold_Map.fold_map(
-      \"<."(x => Dual.Dual(Endo.Endo(x)), Function.flip(f)),
+      \"<."(x => Dual.Dual(Endo.Endo(x)), y => {Function.flip(f)(_, y)}),
       xs,
     )
 

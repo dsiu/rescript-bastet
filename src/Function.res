@@ -1,8 +1,11 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
-let flip: (('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
+let flip: (('a, 'b) => 'c) => ('b, 'a) => 'c = f => {(a, b) => f(a, b)}
 
-and const: ('a, 'b) => 'a = (a, _) => a
+and const: (. 'a, 'b) => 'a = (a, _) => a
 
 module type FUNCTOR_F = (T: TYPE) => (FUNCTOR with type t<'a> = T.t => 'a)
 
@@ -17,20 +20,29 @@ module type BICONTRAVARIANT_F = (T: TYPE) => (BICONTRAVARIANT with type t<'a, 'b
 module Functor: FUNCTOR_F = (T: TYPE) => {
   type t<'b> = T.t => 'b
 
-  let map = (f, g, x) => f(g(x))
+  //  let map = (. f, g) => x => f(g(x))
+
+  let map_x = (f, g) => x => f(g(x))
+  let map = (. f, g) => map_x(f, g, ...)
 }
 
 module Apply: APPLY_F = (T: TYPE) => {
   module Functor = Functor(T)
   include Functor
 
-  let apply = (f, g, x) => f(x, g(x))
+  //  let apply = (f, g, x) => f(x, g(x))
+
+  let apply_x = (f, g) => x => f(x)(g(x))
+  let apply = (. f, g) => apply_x(f, g, ...)
 }
 
 module Semigroupoid: SEMIGROUPOID with type t<'a, 'b> = 'a => 'b = {
   type t<'a, 'b> = 'a => 'b
 
-  let compose = (f, g, x) => f(g(x))
+  //  let compose = (f, g, x) => f(g(x))
+  let compose_x = (f, g) => x => f(g(x))
+
+  let compose = (f, g) => compose_x(f, g, ...)
 }
 
 module Category: CATEGORY with type t<'a, 'b> = 'a => 'b = {
@@ -44,7 +56,9 @@ module Invariant: INVARIANT_F = (T: TYPE) => {
 
   type t<'b> = T.t => 'b
 
-  let imap = (f, _) => F.map(f)
+  let imap = (. f, _) => F.map(f)
+
+  //  let imap = (. f, _, x) => F.map(f, x)
 }
 
 module Profunctor: PROFUNCTOR with type t<'a, 'b> = 'a => 'b = {
@@ -60,13 +74,18 @@ module Profunctor: PROFUNCTOR with type t<'a, 'b> = 'a => 'b = {
 module Contravariant: CONTRAVARIANT_F = (T: TYPE) => {
   type t<'a> = 'a => T.t
 
-  let cmap = (f, g, x) => g(f(x))
+  //  let cmap = (f, g, x) => g(f(x))
+
+  let cmap_x = (f, g, x) => g(f(x))
+  let cmap = (f, g) => cmap_x(f, g, ...)
 }
 
 module Bicontravariant: BICONTRAVARIANT_F = (T: TYPE) => {
   type t<'a, 'b> = ('a, 'b) => T.t
 
-  let bicmap = (f, g, h, a, b) => h(f(a), g(b))
+  //  let bicmap = (f, g, h, a, b) => h(f(a), g(b))
+  let bicmap_x = (f, g, h, a, b) => h(f(a), g(b))
+  let bicmap = (f, g, h) => bicmap_x(f, g, h, ...)
 }
 
 module Infix = {

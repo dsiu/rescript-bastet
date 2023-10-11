@@ -1,4 +1,7 @@
-open BsMocha.Mocha
+@@uncurried
+@@uncurried.swap
+
+open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 
 module ArbitraryOption: Test.ARBITRARY_A
@@ -23,7 +26,7 @@ module ArbitraryOptionInt: Test.ARBITRARY
   let make = arb_option(arb_int(-1000, 1000))
 }
 
-module TestOption = Test.Option(
+module TestOption = Test_Option.Option(
   MochaI.Test,
   JsVerifyI.Quickcheck,
   ArbitraryOptionInt,

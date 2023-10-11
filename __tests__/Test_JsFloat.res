@@ -1,4 +1,7 @@
-open BsMocha.Mocha
+@@uncurried
+@@uncurried.swap
+
+open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 
 module ArbitraryFloat: Test.ARBITRARY with type t = float and type arbitrary<'a> = arbitrary<'a> = {

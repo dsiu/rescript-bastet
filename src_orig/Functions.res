@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 let (const, flip) = {
@@ -36,22 +39,24 @@ module Monoid = (M: MONOID) => {
 }
 
 module Functor = (F: FUNCTOR) => {
-  let void: F.t<'a> => F.t<unit> = fa => F.map(const(), fa)
+  let void: F.t<'a> => F.t<unit> = fa => F.map(((x, y)) => const(x, y), fa)
 
-  and void_right: ('a, F.t<'b>) => F.t<'a> = (a, fb) => F.map(const(a), fb)
+  and void_right: ('a, F.t<'b>) => F.t<'a> = (a, fb) => F.map(const(a, ...), fb)
 
-  and void_left: (F.t<'a>, 'b) => F.t<'b> = (fa, b) => F.map(const(b), fa)
+  and void_left: (F.t<'a>, 'b) => F.t<'b> = (fa, b) => F.map(const(b, ...), fa)
 
-  and flap: (F.t<'a => 'b>, 'a) => F.t<'b> = (fs, a) => F.map(f => f(a), fs)
+  and flap: (F.t<'a => 'b>, 'a) => F.t<'b> = (fs, a) => F.map(f => f(a, ...), fs)
 }
 
 module Apply = (A: APPLY) => {
   module I = Infix.Apply(A)
   open I
 
-  let apply_first: (A.t<'a>, A.t<'b>) => A.t<'a> = (a, b) => \"<*>"(\"<$>"(const, a), b)
+  let apply_first: (A.t<'a>, A.t<'b>) => A.t<'a> = (a, b) =>
+    \"<*>"(\"<$>"(x => const(x, ...), a), b)
 
-  and apply_second: (A.t<'a>, A.t<'b>) => A.t<'b> = (a, b) => \"<*>"(\"<$>"(const(id), a), b)
+  and apply_second: (A.t<'a>, A.t<'b>) => A.t<'b> = (a, b) =>
+    \"<*>"(\"<$>"(x => const(id, x), a), b)
 
   and apply_both: (A.t<'a>, A.t<'b>) => A.t<('a, 'b)> = (a, b) =>
     \"<*>"(\"<$>"((a', b') => (a', b'), a), b)

@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 @@ocaml.text(" Option is the equivalent of Maybe in Haskell for Ocaml ")
 
 open Interface
@@ -38,7 +41,7 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = option<'a> = {
   type t<'a> = option<'a>
 
-  let map = (f, a) =>
+  let map = (. f, a) =>
     switch a {
     | Some(a') => Some(f(a'))
     | None => None
@@ -48,7 +51,7 @@ module Functor: FUNCTOR with type t<'a> = option<'a> = {
 module Apply: APPLY with type t<'a> = option<'a> = {
   include Functor
 
-  let apply = (fn_opt, a) =>
+  let apply = (. fn_opt, a) =>
     switch fn_opt {
     | Some(f) => map(f, a)
     | None => None
@@ -127,9 +130,11 @@ module Alternative: ALTERNATIVE with type t<'a> = option<'a> = {
 module Foldable: FOLDABLE with type t<'a> = option<'a> = {
   type t<'a> = option<'a>
 
-  let fold_left = (f, init, x) => maybe(~f=f(init), ~default=init, x)
+  let fold_left: (('a, 'b) => 'a, 'a, t<'b>) => 'a = (f, init, x) =>
+    maybe(~f=f(init, ...), ~default=init, x)
 
-  and fold_right = (f, init, x) => maybe(~f=x' => f(x', init), ~default=init, x)
+  and fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a = (f, init, x) =>
+    maybe(~f=x' => f(x', init), ~default=init, x)
 
   module Fold_Map = (M: MONOID) => {
     let fold_map = (f, x) => maybe(~f, ~default=M.empty, x)
@@ -153,9 +158,15 @@ module Traversable = (A: APPLICATIVE) => {
 
   include (Foldable: FOLDABLE with type t<'a> := t<'a>)
 
-  let traverse = (f, x) => maybe(~f=\"<."(A.map(a => Some(a)), f), ~default=A.pure(None), x)
+  let traverse = (f, x) => {
+    let ma = x => A.map(a => Some(a))(x)
+    maybe(~f=\"<."(ma, f), ~default=A.pure(None), x)
+  }
 
-  and sequence = x => maybe(~f=A.map(a => Some(a)), ~default=A.pure(None), x)
+  and sequence = x => {
+    let ma = x => A.map(a => Some(a))(x)
+    maybe(~f=ma, ~default=A.pure(None), x)
+  }
 }
 
 module Eq: EQ_F = (E: EQ) => {

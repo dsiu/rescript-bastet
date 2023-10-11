@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 @ocaml.doc(" Provides functors to verify that instances are lawful. ")
@@ -140,8 +143,21 @@ module Compare = {
 
     let identity: F.t<'a> => bool = a => E.eq(F.map(Function.Category.id, a), a)
 
-    let composition: ('b => 'c, 'a => 'b, F.t<'a>) => bool = (f, g, a) =>
-      E.eq(F.map(\"<."(f, g), a), \"<."(F.map(f), F.map(g))(a))
+    let composition: ('b => 'c, 'a => 'b, F.t<'a>) => bool = (f, g, a) => {
+      // [todo] bug in compiler?
+      // complaining fm is a curried function where an uncurried function is expected
+      // meaning \"<." is expecting f to be uncurried?
+      //      let fm = F.map(f)
+      //      let gm = F.map(g)
+      //      let compose_fmgm = \"<."(fm, gm)
+
+      // workaround
+      let fm' = x => F.map(f)(x)
+      let gm' = y => F.map(g)(y)
+      let compose_fm'gm' = \"<."(fm', gm')
+
+      E.eq(F.map(\"<."(f, g), a), compose_fm'gm'(a))
+    }
   }
 
   module Apply = (A: APPLY, E: EQ1 with type t<'a> = A.t<'a>) => {
@@ -149,7 +165,12 @@ module Compare = {
 
     let associative_composition: (A.t<'b => 'c>, A.t<'a => 'b>, A.t<'a>) => bool = (f, g, h) => {
       open I
-      E.eq(\"<*>"(\"<*>"(A.map(Function.Semigroupoid.compose, f), g), h), \"<*>"(f, \"<*>"(g, h)))
+      let amc = A.map(x => Function.Semigroupoid.compose(x, ...), f)
+      let amcg = \"<*>"(amc, g)
+      let amcgh = \"<*>"(amcg, h)
+
+      let fgh' = \"<*>"(f, \"<*>"(g, h))
+      E.eq(amcgh, fgh')
     }
   }
 
@@ -161,8 +182,9 @@ module Compare = {
       E.eq(\"<*>"(A.pure(Function.Category.id), a), a)
     }
 
-    let homomorphism: ('a => 'b, 'a) => bool = (f, x) => {
+    let homomorphism: ('a => 'b, 'a) => bool = (f', x) => {
       open I
+      let f = x => f'(x)
       E.eq(\"<*>"(A.pure(f), A.pure(x)), A.pure(f(x)))
     }
 
@@ -472,7 +494,12 @@ module Compare = {
       g1,
       g2,
       a,
-    ) => E.eq(\"<."(I.imap(g1, g2), I.imap(f1, f2))(a), I.imap(\"<."(g1, f1), \"<."(f2, g2), a))
+    ) => {
+      // for \"<." to work, i need to uncurry the argument
+      let eqa = \"<."(x => {I.imap(g1, g2)(x)}, y => {I.imap(f1, f2)(y)})(a)
+      let eqb = I.imap(\"<."(g1, f1), \"<."(f2, g2), a)
+      E.eq(eqa, eqb)
+    }
   }
 
   module Contravariant = (C: CONTRAVARIANT, E: EQ1 with type t<'a> = C.t<'a>) => {
@@ -483,7 +510,7 @@ module Compare = {
     let identity: C.t<'a> => bool = a => E.eq(C.cmap(id, a), a)
 
     let composition: ('c => 'b, 'b => 'a, C.t<'a>) => bool = (f, g, a) =>
-      E.eq(\"<."(C.cmap(f), C.cmap(g))(a), C.cmap(\"<."(g, f), a))
+      E.eq(\"<."(C.cmap(f, ...), C.cmap(g, ...))(a), C.cmap(\"<."(g, f), a))
   }
 
   module Profunctor = (P: PROFUNCTOR, E: EQ2 with type t<'a, 'b> = P.t<'a, 'b>) => {
@@ -502,7 +529,11 @@ module Compare = {
       f2,
       g2,
       a,
-    ) => E.eq(\"<."(P.dimap(f2, g2), P.dimap(f1, g1))(a), P.dimap(\">."(f2, f1), \"<."(g2, g1), a))
+    ) =>
+      E.eq(
+        \"<."(P.dimap(f2, g2, ...), P.dimap(f1, g1, ...))(a),
+        P.dimap(\">."(f2, f1), \"<."(g2, g1), a),
+      )
   }
 
   module Monad_Zero = (M: MONAD_ZERO, E: EQ1 with type t<'a> = M.t<'a>) => {
@@ -518,7 +549,7 @@ module Compare = {
     let \"<." = Function.Infix.\"<."
 
     let associativity: (E.t<'b> => 'c, E.t<'a> => 'b, E.t<'a>) => bool = (f, g, a) =>
-      E.eq(\"<."(X.extend(f), X.extend(g))(a), X.extend(\"<."(f, X.extend(g)), a))
+      E.eq(\"<."(X.extend(f, ...), X.extend(g, ...))(a), X.extend(\"<."(f, X.extend(g, ...)), a))
   }
 
   module Comonad = (C: COMONAD, E: EQ1 with type t<'a> = C.t<'a>) => {
@@ -539,7 +570,11 @@ module Compare = {
       f2,
       g2,
       a,
-    ) => E.eq(\"<."(B.bimap(f1, g1), B.bimap(f2, g2))(a), B.bimap(\"<."(f1, f2), \"<."(g1, g2), a))
+    ) =>
+      E.eq(
+        \"<."(B.bimap(f1, g1, ...), B.bimap(f2, g2, ...))(a),
+        B.bimap(\"<."(f1, f2), \"<."(g1, g2), a),
+      )
   }
 
   module Bicontravariant = (B: BICONTRAVARIANT, E: EQ2 with type t<'a, 'b> = B.t<'a, 'b>) => {
@@ -556,7 +591,10 @@ module Compare = {
       g2,
       a,
     ) =>
-      E.eq(\"<."(B.bicmap(f1, g1), B.bicmap(f2, g2))(a), B.bicmap(\"<."(f2, f1), \"<."(g2, g1), a))
+      E.eq(
+        \"<."(B.bicmap(f1, g1, ...), B.bicmap(f2, g2, ...))(a),
+        B.bicmap(\"<."(f2, f1), \"<."(g2, g1), a),
+      )
   }
 }
 
