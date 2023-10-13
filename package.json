@@ -1,6 +1,6 @@
 {
   "name": "rescript-bastet",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "A ReScript library for category theory and abstract algebra",
   "repository": {
     "type": "git",
