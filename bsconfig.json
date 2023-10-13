@@ -1,6 +1,6 @@
 {
-  "name": "bs-bastet",
-  "version": "2.0.0",
+  "name": "rescript-bastet",
+  "version": "2.0.1",
   "refmt": 3,
   "namespace": true,
   "bsc-flags": [
