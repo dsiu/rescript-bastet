@@ -24,13 +24,13 @@ module Test: Test.TEST
 
   let check = (check, ~name="", expected, actual) => {
     check |> ignore
-    BsMocha.Assert.deep_equal(~message=name, expected, actual)
+    RescriptMocha.Assert.deepEqual(~message=name, expected, actual)
   }
 
-  let test = (name, fn, ()) => BsMocha.Mocha.it(name, fn)
+  let test = (name, fn, ()) => RescriptMocha.Mocha.it(name, fn)
 
   let suite = (name, tests, ()) =>
-    BsMocha.Mocha.describe(name, () => ListLabels.iter(~f=cb => cb(), tests))
+    RescriptMocha.Mocha.describe(name, () => ListLabels.iter(~f=cb => cb(), tests))
 }
 
 let run = suites => suites |> ListLabels.iter(~f=cb => cb())

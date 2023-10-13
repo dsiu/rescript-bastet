@@ -1,4 +1,4 @@
-open BsMocha.Mocha
+open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 
 module ArbitraryOption: Test.ARBITRARY_A

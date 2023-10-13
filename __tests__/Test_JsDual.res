@@ -1,4 +1,4 @@
-open BsMocha.Mocha
+open RescriptMocha.Mocha
 
 let \"<." = Function.Infix.\"<."
 

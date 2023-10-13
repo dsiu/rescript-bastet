@@ -1,4 +1,4 @@
-open BsMocha.Mocha
+open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 
 module ArbitraryInt: Test.ARBITRARY with type t = int and type arbitrary<'a> = arbitrary<'a> = {
