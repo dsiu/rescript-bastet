@@ -4,7 +4,7 @@
   "description": "A ReScript library for category theory and abstract algebra",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Risto-Stevcev/bastet.git"
+    "url": "git://github.com/dsiu/rescript-bastet.git"
   },
   "scripts": {
     "clean": "rescript clean",
