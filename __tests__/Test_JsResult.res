@@ -3,7 +3,6 @@ open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End
 open BsJsverify.Verify.Arbitrary
 open BsJsverify.Verify.Property
-open Belt.Result
 
 type arbitrary<'a> = BsJsverify.Verify.Arbitrary.arbitrary<'a>
 
@@ -531,8 +530,8 @@ describe("Result", () => {
     )
   })
   describe("Result_Utilities", () => {
-    let errResult: Belt.Result.t<int, string> = Belt.Result.Error("ERROR")
-    let okResult: Belt.Result.t<int, string> = Belt.Result.Ok(4)
+    let errResult: Belt.Result.t<int, string> = Error("ERROR")
+    let okResult: Belt.Result.t<int, string> = Ok(4)
     let someFloat = Some(5.0)
     describe(
       "Hush",
@@ -552,11 +551,11 @@ describe("Result", () => {
       () => {
         it(
           "should convert None to Error result",
-          () => expect(Result.note("ERROR", None)) |> to_be(Belt.Result.Error("ERROR")),
+          () => expect(Result.note("ERROR", None)) |> to_be(Error("ERROR")),
         )
         it(
           "should convert Some to Ok result",
-          () => expect(Result.note("ERROR", someFloat)) |> to_be(Belt.Result.Ok(5.0)),
+          () => expect(Result.note("ERROR", someFloat)) |> to_be(Ok(5.0)),
         )
       },
     )
