@@ -537,8 +537,8 @@ describe("Result", () => {
     )
   })
   describe("Result_Utilities", () => {
-    let errResult: Belt.Result.t<int, string> = Belt.Result.Error("ERROR")
-    let okResult: Belt.Result.t<int, string> = Belt.Result.Ok(4)
+    let errResult: Belt.Result.t<int, string> = Error("ERROR")
+    let okResult: Belt.Result.t<int, string> = Ok(4)
     let someFloat = Some(5.0)
     //    describe(
     //      "Hush",
