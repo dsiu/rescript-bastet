@@ -22,8 +22,7 @@
   "author": "Risto Stevcev",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "bs-stdlib-shims": "^0.1.0",
-    "@rescript/core": "^0.6.0"
+    "bs-stdlib-shims": "^0.1.0"
   },
   "devDependencies": {
     "bs-chai": "github:dsiu/bs-chai#rescript-v11",

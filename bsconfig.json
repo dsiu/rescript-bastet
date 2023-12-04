@@ -27,7 +27,6 @@
   },
   "suffix": ".bs.js",
   "bs-dependencies": [
-    "@rescript/core"
   ],
   "bs-dev-dependencies": [
     "bs-jsverify",
