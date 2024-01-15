@@ -1122,10 +1122,10 @@ require-main-filename@^2.0.0:
   dependencies:
     mocha "^9.2.2"
 
-rescript@^11.0.0-rc.7:
-  version "11.0.0-rc.7"
-  resolved "https://registry.yarnpkg.com/rescript/-/rescript-11.0.0-rc.7.tgz#f811ba7739dc0b652e13214ad1146c8fd841910d"
-  integrity sha512-N2ImQVkzF4rzV5PBcQ8htKe4NPnqsS2DhtG9A4iic4eYsNim1Ixt8qyuD40WEYl4AZOuYUaEfJlvLTOV9wHogA==
+rescript@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/rescript/-/rescript-11.0.0.tgz#9a0b6fc998c360543c459aba49b77a572a0306cd"
+  integrity sha512-uIUwDZZmDUb7ymGkBiiGioxMg8hXh1mze/2k/qhYQcZGgi7PrLHQIW9AksM7gb9WnpjCAvFsA8U2VgC0nA468w==
 
 safe-buffer@^5.1.0:
   version "5.2.1"
