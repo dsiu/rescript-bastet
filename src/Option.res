@@ -67,7 +67,7 @@ module Applicative: APPLICATIVE with type t<'a> = option<'a> = {
 module Monad: MONAD with type t<'a> = option<'a> = {
   include Applicative
 
-  let flat_map = (x, f) =>
+  let flat_map = (. x, f) =>
     switch x {
     | Some(x') => f(x')
     | None => None
