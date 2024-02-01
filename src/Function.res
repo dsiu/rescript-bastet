@@ -3,7 +3,8 @@
 
 open Interface
 
-let flip: (('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
+//let flip: (('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
+let flip: (. ('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
 
 and const: (. 'a, 'b) => 'a = (a, _) => a
 
