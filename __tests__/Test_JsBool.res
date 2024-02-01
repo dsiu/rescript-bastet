@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 

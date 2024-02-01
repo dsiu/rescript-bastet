@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 @@ocaml.text(" Result is the equivalent of Either in Haskell for Ocaml ")
 
 open Interface
@@ -7,7 +10,7 @@ let (flip, const) = {
   (flip, const)
 }
 
-let result: ('a => 'c, 'b => 'c, result<'a, 'b>) => 'c = (f, g, a) =>
+let result: (. (. 'a) => 'c, (. 'b) => 'c, result<'a, 'b>) => 'c = (f, g, a) =>
   switch (f, g, a) {
   | (f, _, Ok(a')) => f(a')
   | (_, g, Error(a')) => g(a')
@@ -71,7 +74,7 @@ module Semigroup: SEMIGROUP_F = (T: TYPE, S: SEMIGROUP) => {
 module Functor: FUNCTOR_F = (T: TYPE) => {
   type t<'a> = result<'a, T.t>
 
-  let map = (f, a) =>
+  let map = (. f, a) =>
     switch a {
     | Ok(r) => Ok(f(r))
     | Error(l) => Error(l)
@@ -91,7 +94,7 @@ module Bifunctor: BIFUNCTOR with type t<'a, 'b> = result<'a, 'b> = {
 module Apply: APPLY_F = (T: TYPE) => {
   include Functor(T)
 
-  let apply = (f, a) =>
+  let apply = (. f, a) =>
     switch (f, a) {
     | (Ok(f'), a') => map(f', a')
     | (Error(f'), _) => Error(f')
@@ -137,7 +140,7 @@ module Extend: EXTEND_F = (T: TYPE) => {
 module Show: SHOW_F = (Ok: SHOW, Error: SHOW) => {
   type t = result<Ok.t, Error.t>
 
-  let show = result(Ok.show, Error.show)
+  let show = x => result(Ok.show, Error.show)(x)
 }
 
 module Eq: EQ_F = (Ok: EQ, Error: EQ) => {
@@ -462,7 +465,9 @@ let is_ok = a => result(const(true), const(false), a)
 
 and is_error = a => result(const(false), const(true), a)
 
-and note: ('err, option<'a>) => result<'a, 'err> = default =>
-  Option.maybe(~f=x => Ok(x), ~default=Error(default))
-
+and note: ('err, option<'a>) => result<'a, 'err> = (default, o) => {
+  let okx = x => Ok(x)
+  let errd = Error(default)
+  Option.maybe(~f=okx, ~default=errd, o)
+}
 and hush: result<'a, 'err> => option<'a> = e => result(Option.Applicative.pure, const(None), e)

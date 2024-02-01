@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 @@ocaml.text(" These helpers provide generative tests for implementations. ")
 
 module type TEST = {
@@ -23,9 +26,9 @@ module type TEST = {
 
   let check: (check<'a>, ~name: string=?, 'a, 'a) => unit
 
-  let test: (string, unit => unit) => test
+  let test: (. string, unit => unit) => test
 
-  let suite: (string, list<test>) => suite<test>
+  let suite: (. string, list<test>) => suite<test>
 }
 
 module type ARBITRARY = {
@@ -373,7 +376,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
         list{
           Q.property(~name="should satisfy identity", AA.make(Q.arbitrary_int), V.identity),
           Q.property(~name="should satisfy composition", AA.make(Q.arbitrary_int), a =>
-            V.composition(\"^"("!"), string_of_int, a)
+            V.composition(\"^"("!", ...), string_of_int, a)
           ),
         },
       )
@@ -390,7 +393,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
         name ++ ".Apply",
         list{
           Q.property(~name="should satisfy associative composition", AA.make(Q.arbitrary_int), n =>
-            V.associative_composition(A.pure(\"^"("!")), A.pure(string_of_int), n)
+            V.associative_composition(A.pure(\"^"("!", ...)), A.pure(string_of_int), n)
           ),
         },
       )
@@ -410,12 +413,12 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy homomorphism",
             AA.make(Q.arbitrary_int),
-            V.homomorphism(A.map(string_of_int)),
+            V.homomorphism(x => A.map(string_of_int, x), ...),
           ),
           Q.property(
             ~name="should satisfy interchange",
             Q.arbitrary_int,
-            V.interchange(A.pure(string_of_int)),
+            V.interchange(A.pure(string_of_int), ...),
           ),
         },
       )
@@ -434,12 +437,12 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy associativity",
             AA.make_bound(Q.arbitrary_int),
-            V.associativity(\"<."(M.pure, string_of_int), \"<."(M.pure, \"^"("!"))),
+            V.associativity(\"<."(M.pure, string_of_int), \"<."(M.pure, \"^"("!", ...)), ...),
           ),
           Q.property(
             ~name="should satisfy identity",
             Q.arbitrary_int,
-            V.identity(\"<."(M.pure, string_of_int)),
+            V.identity(\"<."(M.pure, string_of_int), ...),
           ),
         },
       )
@@ -466,7 +469,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
             ~name="should satisfy distributivity",
             AA.make(Q.arbitrary_int),
             AA.make(Q.arbitrary_int),
-            V.distributivity(string_of_int),
+            V.distributivity(string_of_int, ...),
           ),
         },
       )
@@ -485,7 +488,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy distributivity",
             AA.make(Q.arbitrary_int),
-            V.distributivity(A.pure(\"*"(2)), A.pure(\"+"(3))),
+            V.distributivity(A.pure(\"*"(2, ...)), A.pure(\"+"(3, ...)), ...),
           ),
           T.test("should satisfy annihalation", () =>
             T.check(T.bool, V.annihalation(string_of_int |> A.pure), true)
@@ -914,8 +917,9 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
             V.composition(
               float_of_int,
               int_of_float,
-              \"<."(\"*"(3), int_of_float),
-              \"<."(\"*."(4.0), float_of_int),
+              \"<."(\"*"(3, ...), int_of_float),
+              \"<."(\"*."(4.0, ...), float_of_int),
+              ...
             ),
           ),
         },
@@ -923,175 +927,175 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
   }
 }
 
-module Array = (
-  Arr: ArrayF.ARRAY,
-  T: TEST,
-  Q: QUICKCHECK with type t = T.test,
-  A: ARBITRARY with type t = array<int> and type arbitrary<'a> = Q.arbitrary<'a>,
-  AA: ARBITRARY_A with type t<'a> = array<'a> and type arbitrary<'a> = Q.arbitrary<'a>,
-) => {
-  module M = Make(T, Q)
-  module Functor = M.Functor(Arr.Functor, AA)
-  module Apply = M.Apply(Arr.Applicative, AA)
-  module Applicative = M.Applicative(Arr.Applicative, AA)
-  module Monad = M.Monad(Arr.Monad, AA)
-  module Alt = M.Alt(Arr.Alt, AA)
-  module Eq = M.Eq(Functors.ArrayF.Int.Eq, A)
-  module Ord = M.Ord(Functors.ArrayF.Int.Ord, A)
-  module Invariant = M.Invariant(Arr.Invariant, AA)
-
-  let zip_with = T.suite(
-    "Array.zip_with",
-    list{
-      T.test("should zip_with two arrays", () =>
-        T.check(T.array(T.int), Arr.zip_with(\"*", [1, 2, 3], [4, 5, 6]), [4, 10, 18])
-      ),
-    },
-  )
-
-  let zip = T.suite(
-    "Array.zip",
-    list{
-      T.test("should zip two arrays", () =>
-        T.check(
-          T.array(T.tuple(T.int, T.string)),
-          Arr.zip([1, 2, 3], ["a", "b", "c"]),
-          [(1, "a"), (2, "b"), (3, "c")],
-        )
-      ),
-    },
-  )
-
-  let foldable = T.suite(
-    "Array.Foldable",
-    list{
-      T.test("should do a left fold", () => {
-        T.check(T.int, Arr.Foldable.fold_left(\"+", 0, [1, 2, 3, 4, 5]), 15)
-        T.check(T.int, Arr.Foldable.fold_left(\"-", 10, [3, 2, 1]), 4)
-      }),
-      T.test("should do a right fold", () =>
-        T.check(T.int, Arr.Foldable.fold_right(\"-", 10, [3, 2, 1]), -8)
-      ),
-      T.test("should do a map fold (int)", () => {
-        let fold_map = Functors.ArrayF.Int.Additive.Fold_Map.fold_map
-        T.check(T.int, fold_map(Function.Category.id, [1, 2, 3]), 6)
-      }),
-      T.test("should do a map fold (list)", () => {
-        let fold_map = Functors.ArrayF.List.Fold_Map_Plus.fold_map
-        T.check(
-          T.list(T.list(T.int)),
-          fold_map(List.Applicative.pure, [list{1, 2, 3}, list{4, 5}]),
-          list{list{1, 2, 3}, list{4, 5}},
-        )
-      }),
-    },
-  )
-
-  let unfoldable = T.suite(
-    "Array.Unfoldable",
-    list{
-      T.test("should do an unfold", () => T.check(T.array(T.int), Arr.Unfoldable.unfold(x =>
-            if x > 5 {
-              None
-            } else {
-              Some(x, x + 1)
-            }
-          , 0), [0, 1, 2, 3, 4, 5])),
-      T.test("should do an unfold", () => T.check(T.array(T.int), Arr.Unfoldable.unfold(x =>
-            if x > 20 {
-              None
-            } else {
-              Some(x, x + 5)
-            }
-          , 0), [0, 5, 10, 15, 20])),
-    },
-  )
-
-  let traversable = {
-    let (traverse, sequence) = {
-      open Functors.ArrayF.Option.Traversable
-      (traverse, sequence)
-    }
-
-    T.suite(
-      "Array.Traversable",
-      list{
-        T.test("should traverse the array", () => {
-          let positive_int = x => x >= 0 ? Some(x) : None
-
-          T.check(T.option(T.array(T.int)), traverse(positive_int, [1, 2, 3]), Some([1, 2, 3]))
-          T.check(T.option(T.array(T.int)), traverse(positive_int, [1, 2, -3]), None)
-        }),
-        T.test("should sequence the array", () => {
-          T.check(T.option(T.array(T.int)), sequence([Some(3), Some(4), Some(5)]), Some([3, 4, 5]))
-          T.check(T.option(T.array(T.int)), sequence([Some(3), Some(4), None]), None)
-        }),
-      },
-    )
-  }
-
-  let show = {
-    module S = Arr.Show(Int.Show)
-    T.suite(
-      "Array.Show",
-      list{
-        T.test("should show the array", () =>
-          T.check(T.string, S.show([1, 1, 2, 3, 5, 8, 13]), "[1, 1, 2, 3, 5, 8, 13]")
-        ),
-      },
-    )
-  }
-
-  let extend = {
-    module V = Verify.Extend(Arr.Extend)
-    let id = Function.Category.id
-    let \"<." = Function.Infix.\"<."
-    let fold = Functors.ArrayF.Int.Additive.Fold_Map.fold_map(id)
-    let fold' = Functors.ArrayF.Float.Additive.Fold_Map.fold_map(id)
-    T.suite(
-      "Array.Extend",
-      list{
-        Q.property(
-          ~name="should satisfy associativity",
-          AA.make_bound(Q.arbitrary_int),
-          V.associativity(\"<."(string_of_float, fold'), \"<."(float_of_int, fold)),
-        ),
-      },
-    )
-  }
-
-  let alt_order = T.suite(
-    "Array.Alt.alt",
-    list{
-      T.test("should order the arrays correctly", () =>
-        T.check(T.array(T.int), Arr.Alt.alt([1, 2, 3], [4, 5]), [1, 2, 3, 4, 5])
-      ),
-    },
-  )
-
-  let suites =
-    list{
-      Functor.suite,
-      Apply.suite,
-      Applicative.suite,
-      Monad.suite,
-      Alt.suite,
-      Eq.suite,
-      Ord.suite,
-      Invariant.suite,
-    }
-    |> ListLabels.map(~f=suite => suite("Array"))
-    |> ListLabels.append(list{
-      zip_with,
-      zip,
-      foldable,
-      unfoldable,
-      traversable,
-      show,
-      extend,
-      alt_order,
-    })
-}
+//module Array = (
+//  Arr: ArrayF.ARRAY,
+//  T: TEST,
+//  Q: QUICKCHECK with type t = T.test,
+//  A: ARBITRARY with type t = array<int> and type arbitrary<'a> = Q.arbitrary<'a>,
+//  AA: ARBITRARY_A with type t<'a> = array<'a> and type arbitrary<'a> = Q.arbitrary<'a>,
+//) => {
+//  module M = Make(T, Q)
+//  module Functor = M.Functor(Arr.Functor, AA)
+//  module Apply = M.Apply(Arr.Applicative, AA)
+//  module Applicative = M.Applicative(Arr.Applicative, AA)
+//  module Monad = M.Monad(Arr.Monad, AA)
+//  module Alt = M.Alt(Arr.Alt, AA)
+//  module Eq = M.Eq(Functors.ArrayF.Int.Eq, A)
+//  module Ord = M.Ord(Functors.ArrayF.Int.Ord, A)
+//  module Invariant = M.Invariant(Arr.Invariant, AA)
+//
+//  let zip_with = T.suite(
+//    "Array.zip_with",
+//    list{
+//      T.test("should zip_with two arrays", () =>
+//        T.check(T.array(T.int), Arr.zip_with(\"*", [1, 2, 3], [4, 5, 6]), [4, 10, 18])
+//      ),
+//    },
+//  )
+//
+//  let zip = T.suite(
+//    "Array.zip",
+//    list{
+//      T.test("should zip two arrays", () =>
+//        T.check(
+//          T.array(T.tuple(T.int, T.string)),
+//          Arr.zip([1, 2, 3], ["a", "b", "c"]),
+//          [(1, "a"), (2, "b"), (3, "c")],
+//        )
+//      ),
+//    },
+//  )
+//
+//  let foldable = T.suite(
+//    "Array.Foldable",
+//    list{
+//      T.test("should do a left fold", () => {
+//        T.check(T.int, Arr.Foldable.fold_left(\"+", 0, [1, 2, 3, 4, 5]), 15)
+//        T.check(T.int, Arr.Foldable.fold_left(\"-", 10, [3, 2, 1]), 4)
+//      }),
+//      T.test("should do a right fold", () =>
+//        T.check(T.int, Arr.Foldable.fold_right(\"-", 10, [3, 2, 1]), -8)
+//      ),
+//      T.test("should do a map fold (int)", () => {
+//        let fold_map = Functors.ArrayF.Int.Additive.Fold_Map.fold_map
+//        T.check(T.int, fold_map(Function.Category.id, [1, 2, 3]), 6)
+//      }),
+//      T.test("should do a map fold (list)", () => {
+//        let fold_map = Functors.ArrayF.List.Fold_Map_Plus.fold_map
+//        T.check(
+//          T.list(T.list(T.int)),
+//          fold_map(List.Applicative.pure, [list{1, 2, 3}, list{4, 5}]),
+//          list{list{1, 2, 3}, list{4, 5}},
+//        )
+//      }),
+//    },
+//  )
+//
+//  let unfoldable = T.suite(
+//    "Array.Unfoldable",
+//    list{
+//      T.test("should do an unfold", () => T.check(T.array(T.int), Arr.Unfoldable.unfold(x =>
+//            if x > 5 {
+//              None
+//            } else {
+//              Some(x, x + 1)
+//            }
+//          , 0), [0, 1, 2, 3, 4, 5])),
+//      T.test("should do an unfold", () => T.check(T.array(T.int), Arr.Unfoldable.unfold(x =>
+//            if x > 20 {
+//              None
+//            } else {
+//              Some(x, x + 5)
+//            }
+//          , 0), [0, 5, 10, 15, 20])),
+//    },
+//  )
+//
+//  let traversable = {
+//    let (traverse, sequence) = {
+//      open Functors.ArrayF.Option.Traversable
+//      (traverse, sequence)
+//    }
+//
+//    T.suite(
+//      "Array.Traversable",
+//      list{
+//        T.test("should traverse the array", () => {
+//          let positive_int = x => x >= 0 ? Some(x) : None
+//
+//          T.check(T.option(T.array(T.int)), traverse(positive_int, [1, 2, 3]), Some([1, 2, 3]))
+//          T.check(T.option(T.array(T.int)), traverse(positive_int, [1, 2, -3]), None)
+//        }),
+//        T.test("should sequence the array", () => {
+//          T.check(T.option(T.array(T.int)), sequence([Some(3), Some(4), Some(5)]), Some([3, 4, 5]))
+//          T.check(T.option(T.array(T.int)), sequence([Some(3), Some(4), None]), None)
+//        }),
+//      },
+//    )
+//  }
+//
+//  let show = {
+//    module S = Arr.Show(Int.Show)
+//    T.suite(
+//      "Array.Show",
+//      list{
+//        T.test("should show the array", () =>
+//          T.check(T.string, S.show([1, 1, 2, 3, 5, 8, 13]), "[1, 1, 2, 3, 5, 8, 13]")
+//        ),
+//      },
+//    )
+//  }
+//
+//  let extend = {
+//    module V = Verify.Extend(Arr.Extend)
+//    let id = Function.Category.id
+//    let \"<." = Function.Infix.\"<."
+//    let fold = Functors.ArrayF.Int.Additive.Fold_Map.fold_map(id)
+//    let fold' = Functors.ArrayF.Float.Additive.Fold_Map.fold_map(id)
+//    T.suite(
+//      "Array.Extend",
+//      list{
+//        Q.property(
+//          ~name="should satisfy associativity",
+//          AA.make_bound(Q.arbitrary_int),
+//          V.associativity(\"<."(string_of_float, fold'), \"<."(float_of_int, fold)),
+//        ),
+//      },
+//    )
+//  }
+//
+//  let alt_order = T.suite(
+//    "Array.Alt.alt",
+//    list{
+//      T.test("should order the arrays correctly", () =>
+//        T.check(T.array(T.int), Arr.Alt.alt([1, 2, 3], [4, 5]), [1, 2, 3, 4, 5])
+//      ),
+//    },
+//  )
+//
+//  let suites =
+//    list{
+//      Functor.suite,
+//      Apply.suite,
+//      Applicative.suite,
+//      Monad.suite,
+//      Alt.suite,
+//      Eq.suite,
+//      Ord.suite,
+//      Invariant.suite,
+//    }
+//    |> ListLabels.map(~f=suite => suite("Array"))
+//    |> ListLabels.append(list{
+//      zip_with,
+//      zip,
+//      foldable,
+//      unfoldable,
+//      traversable,
+//      show,
+//      extend,
+//      alt_order,
+//    })
+//}
 
 module Bool = (
   T: TEST,
@@ -1137,12 +1141,12 @@ module Bool = (
       Conjunctive.Medial_Magma.suite,
       Conjunctive.Semigroup.suite,
       Conjunctive.Monoid.suite,
-    } |> ListLabels.map(~f=suite => suite("Bool.Conjunctive")),
+    }->ListLabels.map(~f=suite => suite("Bool.Conjunctive")),
     list{
       Disjunctive.Medial_Magma.suite,
       Disjunctive.Semigroup.suite,
       Disjunctive.Monoid.suite,
-    } |> ListLabels.map(~f=suite => suite("Bool.Disjunctive")),
+    }->ListLabels.map(~f=suite => suite("Bool.Disjunctive")),
     list{
       Eq.suite,
       Ord.suite,
@@ -1157,110 +1161,110 @@ module Bool = (
       Heyting_Algebra.suite,
       Involutive_Heyting_Algebra.suite,
       Boolean_Algebra.suite,
-    } |> ListLabels.map(~f=suite => suite("Bool")),
+    }->ListLabels.map(~f=suite => suite("Bool")),
   })
 }
 
-module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
-  module Foldable: Interface.FOLDABLE with type t<'a> = list<'a> = {
-    type t<'a> = list<'a>
-
-    module FM: Default.FOLD_MAP with type t<'a> = list<'a> = {
-      type t<'a> = list<'a>
-
-      module Fold_Map_Any = (M: Interface.MONOID_ANY) => {
-        let fold_map = (f, x) =>
-          ListLabels.fold_left(~f=(acc, x) => M.append(acc, f(x)), ~init=M.empty, x)
-      }
-
-      module Fold_Map_Plus = (P: Interface.PLUS) => {
-        let fold_map = (f, x) =>
-          ListLabels.fold_left(~f=(acc, x) => P.alt(acc, f(x)), ~init=P.empty, x)
-      }
-    }
-
-    module Fold_Map = List.Foldable.Fold_Map
-    module Fold_Map_Any = FM.Fold_Map_Any
-    module Fold_Map_Plus = FM.Fold_Map_Plus
-    module F = Default.Fold(FM)
-
-    let (fold_left, fold_right) = (F.fold_left_default, F.fold_right_default)
-  }
-
-  module Traversable = (A: Interface.APPLICATIVE) => {
-    module List_Traversable: Interface.TRAVERSABLE
-      with type applicative_t<'a> = A.t<'a>
-      and type t<'a> = list<'a> = {
-      type t<'a> = list<'a>
-
-      type applicative_t<'a> = A.t<'a>
-
-      include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
-
-      include (List.Foldable: Interface.FOLDABLE with type t<'a> := t<'a>)
-
-      module I = Infix.Apply(A)
-
-      let sequence = xs => {
-        open I
-        ListLabels.fold_right(
-          ~f=(acc, x) => \"<*>"(\"<*>"(A.pure((y, ys) => list{y, ...ys}), acc), x),
-          ~init=A.pure(list{}),
-          xs,
-        )
-      }
-
-      module D = Default.Traverse({
-        type t<'a> = list<'a>
-
-        type applicative_t<'a> = A.t<'a>
-
-        include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
-
-        let sequence = sequence
-      })
-
-      let traverse = D.traverse_default
-    }
-
-    include List_Traversable
-  }
-
-  let foldable = {
-    open Foldable
-    T.suite(
-      "Default.Foldable",
-      list{
-        T.test("should do a left fold", () => {
-          T.check(T.int, fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
-          T.check(T.int, fold_left(\"-", 10, list{3, 2, 1}), 4)
-        }),
-      },
-    )
-  }
-
-  module Traverse = Traversable(Option.Applicative)
-
-  let traversable = {
-    open Traverse
-    T.suite(
-      "Default.Traversable",
-      list{
-        T.test("should traverse the list", () => {
-          let positive_int = x => x >= 0 ? Some(x) : None
-
-          T.check(
-            T.option(T.list(T.int)),
-            traverse(positive_int, list{1, 2, 3}),
-            Some(list{1, 2, 3}),
-          )
-        }),
-      },
-    )
-  }
-
-  let suites = list{foldable, traversable}
-}
+//module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
+//  module Foldable: Interface.FOLDABLE with type t<'a> = list<'a> = {
+//    type t<'a> = list<'a>
+//
+//    module FM: Default.FOLD_MAP with type t<'a> = list<'a> = {
+//      type t<'a> = list<'a>
+//
+//      module Fold_Map_Any = (M: Interface.MONOID_ANY) => {
+//        let fold_map = (f, x) =>
+//          ListLabels.fold_left(~f=(acc, x) => M.append(acc, f(x)), ~init=M.empty, x)
+//      }
+//
+//      module Fold_Map_Plus = (P: Interface.PLUS) => {
+//        let fold_map = (f, x) =>
+//          ListLabels.fold_left(~f=(acc, x) => P.alt(acc, f(x)), ~init=P.empty, x)
+//      }
+//    }
+//
+//    module Fold_Map = List.Foldable.Fold_Map
+//    module Fold_Map_Any = FM.Fold_Map_Any
+//    module Fold_Map_Plus = FM.Fold_Map_Plus
+//    module F = Default.Fold(FM)
+//
+//    let (fold_left, fold_right) = (F.fold_left_default, F.fold_right_default)
+//  }
+//
+//  module Traversable = (A: Interface.APPLICATIVE) => {
+//    module List_Traversable: Interface.TRAVERSABLE
+//      with type applicative_t<'a> = A.t<'a>
+//      and type t<'a> = list<'a> = {
+//      type t<'a> = list<'a>
+//
+//      type applicative_t<'a> = A.t<'a>
+//
+//      include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
+//
+//      include (List.Foldable: Interface.FOLDABLE with type t<'a> := t<'a>)
+//
+//      module I = Infix.Apply(A)
+//
+//      let sequence = xs => {
+//        open I
+//        ListLabels.fold_right(
+//          ~f=(acc, x) => \"<*>"(\"<*>"(A.pure((y, ys) => list{y, ...ys}), acc), x),
+//          ~init=A.pure(list{}),
+//          xs,
+//        )
+//      }
+//
+//      module D = Default.Traverse({
+//        type t<'a> = list<'a>
+//
+//        type applicative_t<'a> = A.t<'a>
+//
+//        include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
+//
+//        let sequence = sequence
+//      })
+//
+//      let traverse = D.traverse_default
+//    }
+//
+//    include List_Traversable
+//  }
+//
+//  let foldable = {
+//    open Foldable
+//    T.suite(
+//      "Default.Foldable",
+//      list{
+//        T.test("should do a left fold", () => {
+//          T.check(T.int, fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
+//          T.check(T.int, fold_left(\"-", 10, list{3, 2, 1}), 4)
+//        }),
+//      },
+//    )
+//  }
+//
+//  module Traverse = Traversable(Option.Applicative)
+//
+//  let traversable = {
+//    open Traverse
+//    T.suite(
+//      "Default.Traversable",
+//      list{
+//        T.test("should traverse the list", () => {
+//          let positive_int = x => x >= 0 ? Some(x) : None
+//
+//          T.check(
+//            T.option(T.list(T.int)),
+//            traverse(positive_int, list{1, 2, 3}),
+//            Some(list{1, 2, 3}),
+//          )
+//        }),
+//      },
+//    )
+//  }
+//
+//  let suites = list{foldable, traversable}
+//}
 
 module Float = (
   E: Interface.EQ with type t = float,
@@ -1317,18 +1321,18 @@ module Float = (
       Additive.Loop.suite,
       Additive.Group.suite,
       Additive.Abelian_Group.suite,
-    } |> ListLabels.map(~f=suite => suite("Float.Additive")),
+    }->ListLabels.map(~f=suite => suite("Float.Additive")),
     list{
       Multiplicative.Medial_Magma.suite,
       Multiplicative.Semigroup.suite,
       Multiplicative.Monoid.suite,
       Multiplicative.Quasigroup.suite,
       Multiplicative.Loop.suite,
-    } |> ListLabels.map(~f=suite => suite("Float.Multiplicative")),
-    list{Subtractive.Medial_Magma.suite, Subtractive.Quasigroup.suite} |> ListLabels.map(~f=suite =>
+    }->ListLabels.map(~f=suite => suite("Float.Multiplicative")),
+    list{Subtractive.Medial_Magma.suite, Subtractive.Quasigroup.suite}->ListLabels.map(~f=suite =>
       suite("Float.Subtractive")
     ),
-    list{Divisive.Medial_Magma.suite, Divisive.Quasigroup.suite} |> ListLabels.map(~f=suite =>
+    list{Divisive.Medial_Magma.suite, Divisive.Quasigroup.suite}->ListLabels.map(~f=suite =>
       suite("Float.Divisive")
     ),
     list{
@@ -1341,126 +1345,126 @@ module Float = (
       Division_Ring.suite,
       Euclidean_Ring.suite,
       Field.suite,
-    } |> ListLabels.map(~f=suite => suite("Float")),
+    }->ListLabels.map(~f=suite => suite("Float")),
   })
 }
 
-module List = (
-  T: TEST,
-  Q: QUICKCHECK with type t = T.test,
-  A: ARBITRARY with type t = list<int> and type arbitrary<'a> = Q.arbitrary<'a>,
-  AA: ARBITRARY_A with type t<'a> = list<'a> and type arbitrary<'a> = Q.arbitrary<'a>,
-) => {
-  module M = Make(T, Q)
-  module Functor = M.Functor(List.Functor, AA)
-  module Apply = M.Apply(List.Applicative, AA)
-  module Applicative = M.Applicative(List.Applicative, AA)
-  module Monad = M.Monad(List.Monad, AA)
-  module Alt = M.Alt(List.Alt, AA)
-  module Eq = M.Eq(Functors.ListF.Int.Eq, A)
-
-  let foldable = T.suite(
-    "List.Foldable",
-    list{
-      T.test("should do a left fold", () => {
-        T.check(T.int, List.Foldable.fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
-        T.check(T.int, List.Foldable.fold_left(\"-", 10, list{3, 2, 1}), 4)
-      }),
-      T.test("should do a right fold", () =>
-        T.check(T.int, List.Foldable.fold_right(\"-", 10, list{3, 2, 1}), -8)
-      ),
-      T.test("should do a map fold (int)", () => {
-        let fold_map = Functors.ListF.Int.Additive.Fold_Map.fold_map
-        T.check(T.int, fold_map(Function.Category.id, list{1, 2, 3}), 6)
-      }),
-      T.test("should do a map fold (list)", () => {
-        let fold_map = Functors.ListF.List.Fold_Map_Plus.fold_map
-        T.check(
-          T.list(T.list(T.int)),
-          fold_map(List.Applicative.pure, list{list{1, 2, 3}, list{4, 5}}),
-          list{list{1, 2, 3}, list{4, 5}},
-        )
-      }),
-    },
-  )
-
-  let unfoldable = T.suite(
-    "List.Unfoldable",
-    list{
-      T.test("should do an unfold", () => T.check(T.list(T.int), List.Unfoldable.unfold(x =>
-            if x > 5 {
-              None
-            } else {
-              Some(x, x + 1)
-            }
-          , 0), list{0, 1, 2, 3, 4, 5})),
-      T.test("should do an unfold", () => T.check(T.list(T.int), List.Unfoldable.unfold(x =>
-            if x > 20 {
-              None
-            } else {
-              Some(x, x + 5)
-            }
-          , 0), list{0, 5, 10, 15, 20})),
-    },
-  )
-
-  let traversable = {
-    let (traverse, sequence) = {
-      open Functors.ListF.Option.Traversable
-      (traverse, sequence)
-    }
-
-    T.suite(
-      "List.Traversable",
-      list{
-        T.test("should traverse the list", () => {
-          let positive_int = x => x >= 0 ? Some(x) : None
-
-          T.check(
-            T.option(T.list(T.int)),
-            traverse(positive_int, list{1, 2, 3}),
-            Some(list{1, 2, 3}),
-          )
-          T.check(T.option(T.list(T.int)), traverse(positive_int, list{1, 2, -3}), None)
-        }),
-        T.test("should sequence the list", () => {
-          T.check(
-            T.option(T.list(T.int)),
-            sequence(list{Some(3), Some(4), Some(5)}),
-            Some(list{3, 4, 5}),
-          )
-          T.check(T.option(T.list(T.int)), sequence(list{Some(3), Some(4), None}), None)
-        }),
-      },
-    )
-  }
-
-  let show = {
-    module S = List.Show(Int.Show)
-    T.suite(
-      "List.Show",
-      list{
-        T.test("should show the list", () =>
-          T.check(T.string, S.show(list{1, 1, 2, 3, 5, 8, 13}), "[1, 1, 2, 3, 5, 8, 13]")
-        ),
-      },
-    )
-  }
-
-  let alt_order = T.suite(
-    "List.Alt.alt",
-    list{
-      T.test("should order the lists correctly", () =>
-        T.check(T.list(T.int), List.Alt.alt(list{1, 2, 3}, list{4, 5}), list{1, 2, 3, 4, 5})
-      ),
-    },
-  )
-
-  let suites =
-    list{Functor.suite, Apply.suite, Applicative.suite, Monad.suite, Alt.suite, Eq.suite}
-    |> ListLabels.map(~f=suite => suite("List"))
-    |> ListLabels.append(list{foldable, unfoldable, traversable, show, alt_order})
-}
+//module List = (
+//  T: TEST,
+//  Q: QUICKCHECK with type t = T.test,
+//  A: ARBITRARY with type t = list<int> and type arbitrary<'a> = Q.arbitrary<'a>,
+//  AA: ARBITRARY_A with type t<'a> = list<'a> and type arbitrary<'a> = Q.arbitrary<'a>,
+//) => {
+//  module M = Make(T, Q)
+//  module Functor = M.Functor(List.Functor, AA)
+//  module Apply = M.Apply(List.Applicative, AA)
+//  module Applicative = M.Applicative(List.Applicative, AA)
+//  module Monad = M.Monad(List.Monad, AA)
+//  module Alt = M.Alt(List.Alt, AA)
+//  module Eq = M.Eq(Functors.ListF.Int.Eq, A)
+//
+//  let foldable = T.suite(
+//    "List.Foldable",
+//    list{
+//      T.test("should do a left fold", () => {
+//        T.check(T.int, List.Foldable.fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
+//        T.check(T.int, List.Foldable.fold_left(\"-", 10, list{3, 2, 1}), 4)
+//      }),
+//      T.test("should do a right fold", () =>
+//        T.check(T.int, List.Foldable.fold_right(\"-", 10, list{3, 2, 1}), -8)
+//      ),
+//      T.test("should do a map fold (int)", () => {
+//        let fold_map = Functors.ListF.Int.Additive.Fold_Map.fold_map
+//        T.check(T.int, fold_map(Function.Category.id, list{1, 2, 3}), 6)
+//      }),
+//      T.test("should do a map fold (list)", () => {
+//        let fold_map = Functors.ListF.List.Fold_Map_Plus.fold_map
+//        T.check(
+//          T.list(T.list(T.int)),
+//          fold_map(List.Applicative.pure, list{list{1, 2, 3}, list{4, 5}}),
+//          list{list{1, 2, 3}, list{4, 5}},
+//        )
+//      }),
+//    },
+//  )
+//
+//  let unfoldable = T.suite(
+//    "List.Unfoldable",
+//    list{
+//      T.test("should do an unfold", () => T.check(T.list(T.int), List.Unfoldable.unfold(x =>
+//            if x > 5 {
+//              None
+//            } else {
+//              Some(x, x + 1)
+//            }
+//          , 0), list{0, 1, 2, 3, 4, 5})),
+//      T.test("should do an unfold", () => T.check(T.list(T.int), List.Unfoldable.unfold(x =>
+//            if x > 20 {
+//              None
+//            } else {
+//              Some(x, x + 5)
+//            }
+//          , 0), list{0, 5, 10, 15, 20})),
+//    },
+//  )
+//
+//  let traversable = {
+//    let (traverse, sequence) = {
+//      open Functors.ListF.Option.Traversable
+//      (traverse, sequence)
+//    }
+//
+//    T.suite(
+//      "List.Traversable",
+//      list{
+//        T.test("should traverse the list", () => {
+//          let positive_int = x => x >= 0 ? Some(x) : None
+//
+//          T.check(
+//            T.option(T.list(T.int)),
+//            traverse(positive_int, list{1, 2, 3}),
+//            Some(list{1, 2, 3}),
+//          )
+//          T.check(T.option(T.list(T.int)), traverse(positive_int, list{1, 2, -3}), None)
+//        }),
+//        T.test("should sequence the list", () => {
+//          T.check(
+//            T.option(T.list(T.int)),
+//            sequence(list{Some(3), Some(4), Some(5)}),
+//            Some(list{3, 4, 5}),
+//          )
+//          T.check(T.option(T.list(T.int)), sequence(list{Some(3), Some(4), None}), None)
+//        }),
+//      },
+//    )
+//  }
+//
+//  let show = {
+//    module S = List.Show(Int.Show)
+//    T.suite(
+//      "List.Show",
+//      list{
+//        T.test("should show the list", () =>
+//          T.check(T.string, S.show(list{1, 1, 2, 3, 5, 8, 13}), "[1, 1, 2, 3, 5, 8, 13]")
+//        ),
+//      },
+//    )
+//  }
+//
+//  let alt_order = T.suite(
+//    "List.Alt.alt",
+//    list{
+//      T.test("should order the lists correctly", () =>
+//        T.check(T.list(T.int), List.Alt.alt(list{1, 2, 3}, list{4, 5}), list{1, 2, 3, 4, 5})
+//      ),
+//    },
+//  )
+//
+//  let suites =
+//    list{Functor.suite, Apply.suite, Applicative.suite, Monad.suite, Alt.suite, Eq.suite}
+//    |> ListLabels.map(~f=suite => suite("List"))
+//    |> ListLabels.append(list{foldable, unfoldable, traversable, show, alt_order})
+//}
 
 module Int = (
   T: TEST,
@@ -1509,15 +1513,15 @@ module Int = (
       Additive.Loop.suite,
       Additive.Group.suite,
       Additive.Abelian_Group.suite,
-    } |> ListLabels.map(~f=suite => suite("Int.Additive")),
+    }->ListLabels.map(~f=suite => suite("Int.Additive")),
     list{
       Multiplicative.Medial_Magma.suite,
       Multiplicative.Semigroup.suite,
       Multiplicative.Monoid.suite,
       Multiplicative.Quasigroup.suite,
       Multiplicative.Loop.suite,
-    } |> ListLabels.map(~f=suite => suite("Int.Multiplicative")),
-    list{Subtractive.Medial_Magma.suite, Subtractive.Quasigroup.suite} |> ListLabels.map(~f=suite =>
+    }->ListLabels.map(~f=suite => suite("Int.Multiplicative")),
+    list{Subtractive.Medial_Magma.suite, Subtractive.Quasigroup.suite}->ListLabels.map(~f=suite =>
       suite("Int.Subtractive")
     ),
     list{
@@ -1528,113 +1532,113 @@ module Int = (
       Ring.suite,
       Commutative_Ring.suite,
       Euclidean_Ring.suite,
-    } |> ListLabels.map(~f=suite => suite("Int")),
+    }->ListLabels.map(~f=suite => suite("Int")),
   })
 }
 
-module Option = (
-  T: TEST,
-  Q: QUICKCHECK with type t = T.test,
-  A: ARBITRARY with type t = option<int> and type arbitrary<'a> = Q.arbitrary<'a>,
-  AA: ARBITRARY_A with type t<'a> = option<'a> and type arbitrary<'a> = Q.arbitrary<'a>,
-) => {
-  module M = Make(T, Q)
-  module Semigroup = M.Semigroup(Functors.OptionF.Int.Additive.Semigroup, A)
-  module Monoid = M.Monoid(Functors.OptionF.Int.Additive.Monoid, A)
-  module Functor = M.Functor(Option.Functor, AA)
-  module Apply = M.Apply(Option.Applicative, AA)
-  module Applicative = M.Applicative(Option.Applicative, AA)
-  module Monad = M.Monad(Option.Monad, AA)
-  module Alt = M.Alt(Option.Alt, AA)
-  module Plus = M.Plus(Option.Plus, AA)
-  module Alternative = M.Alternative(Option.Alternative, AA)
-  module Eq = M.Eq(Functors.OptionF.Int.Eq, A)
-  module Ord = M.Ord(Functors.OptionF.Int.Ord, A)
-
-  let infix = T.suite(
-    "Option.Infix",
-    list{
-      T.test("should apply a default value if it's None", () => {
-        let \"|?" = Option.Infix.\"|?"
-        T.check(T.string, \"|?"("foo", Some("bar")), "bar")
-        T.check(T.string, \"|?"("foo", None), "foo")
-      }),
-    },
-  )
-
-  let foldable = T.suite(
-    "Option.Foldable",
-    list{
-      T.test("should do a left fold", () =>
-        T.check(T.int, Option.Foldable.fold_left(\"+", 0, Some(1)), 1)
-      ),
-      T.test("should do a right fold", () => {
-        T.check(T.int, Option.Foldable.fold_right(\"+", 0, Some(1)), 1)
-        T.check(T.int, Option.Foldable.fold_right(\"+", 0, None), 0)
-      }),
-      T.test("should do a map fold (int)", () => {
-        let fold_map = {
-          open Functors.OptionF.Int.Additive.Fold_Map
-          fold_map
-        }
-
-        T.check(T.int, fold_map(\"*"(2), Some(3)), 6)
-        T.check(T.int, fold_map(\"+"(1), None), 0)
-      }),
-      T.test("should do a map fold (list)", () => {
-        let fold_map = {
-          open Functors.OptionF.List.Fold_Map_Plus
-          fold_map
-        }
-
-        T.check(T.list(T.int), fold_map(x => list{x}, Some(123)), list{123})
-      }),
-    },
-  )
-
-  let traversable = {
-    let (traverse, sequence) = {
-      open Functors.OptionF.List.Traversable
-      (traverse, sequence)
-    }
-
-    T.suite(
-      "Option.Traversable",
-      list{
-        T.test("should traverse the list", () => {
-          let positive_int = x => x >= 0 ? list{x} : list{}
-
-          T.check(T.list(T.option(T.int)), traverse(positive_int, Some(123)), list{Some(123)})
-        }),
-        T.test("should sequence the list", () => {
-          T.check(
-            T.list(T.option(T.int)),
-            sequence(Some(list{3, 4, 5})),
-            list{Some(3), Some(4), Some(5)},
-          )
-          T.check(T.list(T.option(T.int)), sequence(None), list{None})
-        }),
-      },
-    )
-  }
-
-  let suites =
-    list{
-      Semigroup.suite,
-      Monoid.suite,
-      Functor.suite,
-      Apply.suite,
-      Applicative.suite,
-      Monad.suite,
-      Alt.suite,
-      Alternative.suite,
-      Plus.suite,
-      Eq.suite,
-      Ord.suite,
-    }
-    |> ListLabels.map(~f=suite => suite("Option"))
-    |> ListLabels.append(list{infix, foldable, traversable})
-}
+//module Option = (
+//  T: TEST,
+//  Q: QUICKCHECK with type t = T.test,
+//  A: ARBITRARY with type t = option<int> and type arbitrary<'a> = Q.arbitrary<'a>,
+//  AA: ARBITRARY_A with type t<'a> = option<'a> and type arbitrary<'a> = Q.arbitrary<'a>,
+//) => {
+//  module M = Make(T, Q)
+//  module Semigroup = M.Semigroup(Functors.OptionF.Int.Additive.Semigroup, A)
+//  module Monoid = M.Monoid(Functors.OptionF.Int.Additive.Monoid, A)
+//  module Functor = M.Functor(Option.Functor, AA)
+//  module Apply = M.Apply(Option.Applicative, AA)
+//  module Applicative = M.Applicative(Option.Applicative, AA)
+//  module Monad = M.Monad(Option.Monad, AA)
+//  module Alt = M.Alt(Option.Alt, AA)
+//  module Plus = M.Plus(Option.Plus, AA)
+//  module Alternative = M.Alternative(Option.Alternative, AA)
+//  module Eq = M.Eq(Functors.OptionF.Int.Eq, A)
+//  module Ord = M.Ord(Functors.OptionF.Int.Ord, A)
+//
+//  let infix = T.suite(
+//    "Option.Infix",
+//    list{
+//      T.test("should apply a default value if it's None", () => {
+//        let \"|?" = Option.Infix.\"|?"
+//        T.check(T.string, \"|?"("foo", Some("bar")), "bar")
+//        T.check(T.string, \"|?"("foo", None), "foo")
+//      }),
+//    },
+//  )
+//
+//  let foldable = T.suite(
+//    "Option.Foldable",
+//    list{
+//      T.test("should do a left fold", () =>
+//        T.check(T.int, Option.Foldable.fold_left(\"+", 0, Some(1)), 1)
+//      ),
+//      T.test("should do a right fold", () => {
+//        T.check(T.int, Option.Foldable.fold_right(\"+", 0, Some(1)), 1)
+//        T.check(T.int, Option.Foldable.fold_right(\"+", 0, None), 0)
+//      }),
+//      T.test("should do a map fold (int)", () => {
+//        let fold_map = {
+//          open Functors.OptionF.Int.Additive.Fold_Map
+//          fold_map
+//        }
+//
+//        T.check(T.int, fold_map(\"*"(2), Some(3)), 6)
+//        T.check(T.int, fold_map(\"+"(1), None), 0)
+//      }),
+//      T.test("should do a map fold (list)", () => {
+//        let fold_map = {
+//          open Functors.OptionF.List.Fold_Map_Plus
+//          fold_map
+//        }
+//
+//        T.check(T.list(T.int), fold_map(x => list{x}, Some(123)), list{123})
+//      }),
+//    },
+//  )
+//
+//  let traversable = {
+//    let (traverse, sequence) = {
+//      open Functors.OptionF.List.Traversable
+//      (traverse, sequence)
+//    }
+//
+//    T.suite(
+//      "Option.Traversable",
+//      list{
+//        T.test("should traverse the list", () => {
+//          let positive_int = x => x >= 0 ? list{x} : list{}
+//
+//          T.check(T.list(T.option(T.int)), traverse(positive_int, Some(123)), list{Some(123)})
+//        }),
+//        T.test("should sequence the list", () => {
+//          T.check(
+//            T.list(T.option(T.int)),
+//            sequence(Some(list{3, 4, 5})),
+//            list{Some(3), Some(4), Some(5)},
+//          )
+//          T.check(T.list(T.option(T.int)), sequence(None), list{None})
+//        }),
+//      },
+//    )
+//  }
+//
+//  let suites =
+//    list{
+//      Semigroup.suite,
+//      Monoid.suite,
+//      Functor.suite,
+//      Apply.suite,
+//      Applicative.suite,
+//      Monad.suite,
+//      Alt.suite,
+//      Alternative.suite,
+//      Plus.suite,
+//      Eq.suite,
+//      Ord.suite,
+//    }
+//    |> ListLabels.map(~f=suite => suite("Option"))
+//    |> ListLabels.append(list{infix, foldable, traversable})
+//}
 
 module String = (
   T: TEST,
@@ -1657,5 +1661,5 @@ module String = (
       Loop.suite,
       Eq.suite,
       Ord.suite,
-    } |> ListLabels.map(~f=suite => suite("String"))
+    }->ListLabels.map(~f=suite => suite("String"))
 }

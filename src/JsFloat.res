@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 @@ocaml.text(" Promives a Show instance using [Js.Float.toString]. You might not need to use this version
@@ -7,5 +10,5 @@ open Interface
 module Show: SHOW with type t = float = {
   type t = float
 
-  let show = Js.Float.toString
+  let show = x => Js.Float.toString(x)
 }

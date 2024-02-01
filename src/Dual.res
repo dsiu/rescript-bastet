@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 @ocaml.doc(" A data structure representing the dual of a monoid ")
@@ -37,13 +40,13 @@ module Monoid: MONOID_F = (M: MONOID) => {
 module Functor: FUNCTOR with type t<'a> = dual<'a> = {
   type t<'a> = dual<'a>
 
-  let map = (f, Dual(a)) => Dual(f(a))
+  let map = (. f, Dual(a)) => Dual(f(a))
 }
 
 module Applicative: APPLICATIVE with type t<'a> = dual<'a> = {
   include Functor
 
-  let apply = (Dual(f), Dual(a)) => Dual(f(a))
+  let apply = (. Dual(f), Dual(a)) => Dual(f(a))
 
   let pure = a => Dual(a)
 }

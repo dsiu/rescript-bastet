@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 @@ocaml.text(" Note: `int` is not a fully law abiding member of Additive.Semigroup,
@@ -40,7 +43,7 @@ module Additive = {
   module Group: GROUP with type t = int = {
     include Monoid
 
-    let inverse = \"*"(-1)
+    let inverse = \"*"(-1, ...)
   }
 
   module Abelian_Group: ABELIAN_GROUP with type t = int = {

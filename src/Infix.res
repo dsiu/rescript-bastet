@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 module Magma = (M: MAGMA) => {
@@ -44,9 +47,9 @@ module Alternative = (A: ALTERNATIVE) => {
 }
 
 module Semigroupoid = (S: SEMIGROUPOID) => {
-  let \"<." = S.compose
+  let \"<." = (. f, g) => S.compose(f, g)
 
-  and \">." = (g, f) => S.compose(f, g)
+  and \">." = (. g, f) => S.compose(f, g)
 }
 
 module Eq = (E: EQ) => {

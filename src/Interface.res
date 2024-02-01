@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 @@ocaml.text(" {e Note}:
     Any data structure implementing one of these interfaces must also satisfy the corresponding laws in
     the corresponding {!Verify} module. ")
@@ -110,13 +113,13 @@ module type ABELIAN_GROUP_ANY = {
 module type FUNCTOR = {
   type t<'a>
 
-  let map: ('a => 'b, t<'a>) => t<'b>
+  let map: (. 'a => 'b, t<'a>) => t<'b>
 }
 
 module type APPLY = {
   include FUNCTOR
 
-  let apply: (t<'a => 'b>, t<'a>) => t<'b>
+  let apply: (. t<'a => 'b>, t<'a>) => t<'b>
 }
 
 module type APPLICATIVE = {
@@ -195,7 +198,7 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) => (TRAVERSABLE with type applicati
 module type SEMIGROUPOID = {
   type t<'a, 'b>
 
-  let compose: (t<'b, 'c>, t<'a, 'b>) => t<'a, 'c>
+  let compose: (. t<'b, 'c>, t<'a, 'b>) => t<'a, 'c>
 }
 
 module type CATEGORY = {
@@ -382,7 +385,7 @@ module type FIELD = {
 module type INVARIANT = {
   type t<'a>
 
-  let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b>
+  let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b>
 }
 
 module type CONTRAVARIANT = {
@@ -446,17 +449,17 @@ module type BIFOLDABLE = {
 
   module Fold_Map: (M: MONOID) =>
   {
-    let fold_map: ('a => M.t, 'b => M.t, t<'a, 'b>) => M.t
+    let fold_map: (. (. 'a) => M.t, (. 'b) => M.t, t<'a, 'b>) => M.t
   }
 
   module Fold_Map_Any: (M: MONOID_ANY) =>
   {
-    let fold_map: ('a => M.t<'a>, 'b => M.t<'a>, t<'a, 'b>) => M.t<'a>
+    let fold_map: (. (. 'a) => M.t<'a>, (. 'b) => M.t<'a>, t<'a, 'b>) => M.t<'a>
   }
 
   module Fold_Map_Plus: (P: PLUS) =>
   {
-    let fold_map: ('a => P.t<'a>, 'b => P.t<'a>, t<'a, 'b>) => P.t<'a>
+    let fold_map: (. (. 'a) => P.t<'a>, (. 'b) => P.t<'a>, t<'a, 'b>) => P.t<'a>
   }
 }
 
