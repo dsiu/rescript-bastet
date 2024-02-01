@@ -1165,106 +1165,110 @@ module Bool = (
   })
 }
 
-//module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
-//  module Foldable: Interface.FOLDABLE with type t<'a> = list<'a> = {
-//    type t<'a> = list<'a>
-//
-//    module FM: Default.FOLD_MAP with type t<'a> = list<'a> = {
-//      type t<'a> = list<'a>
-//
-//      module Fold_Map_Any = (M: Interface.MONOID_ANY) => {
-//        let fold_map = (f, x) =>
-//          ListLabels.fold_left(~f=(acc, x) => M.append(acc, f(x)), ~init=M.empty, x)
-//      }
-//
-//      module Fold_Map_Plus = (P: Interface.PLUS) => {
-//        let fold_map = (f, x) =>
-//          ListLabels.fold_left(~f=(acc, x) => P.alt(acc, f(x)), ~init=P.empty, x)
-//      }
-//    }
-//
-//    module Fold_Map = List.Foldable.Fold_Map
-//    module Fold_Map_Any = FM.Fold_Map_Any
-//    module Fold_Map_Plus = FM.Fold_Map_Plus
-//    module F = Default.Fold(FM)
-//
-//    let (fold_left, fold_right) = (F.fold_left_default, F.fold_right_default)
-//  }
-//
-//  module Traversable = (A: Interface.APPLICATIVE) => {
-//    module List_Traversable: Interface.TRAVERSABLE
-//      with type applicative_t<'a> = A.t<'a>
-//      and type t<'a> = list<'a> = {
-//      type t<'a> = list<'a>
-//
-//      type applicative_t<'a> = A.t<'a>
-//
-//      include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
-//
-//      include (List.Foldable: Interface.FOLDABLE with type t<'a> := t<'a>)
-//
-//      module I = Infix.Apply(A)
-//
-//      let sequence = xs => {
-//        open I
-//        ListLabels.fold_right(
-//          ~f=(acc, x) => \"<*>"(\"<*>"(A.pure((y, ys) => list{y, ...ys}), acc), x),
-//          ~init=A.pure(list{}),
-//          xs,
-//        )
-//      }
-//
-//      module D = Default.Traverse({
-//        type t<'a> = list<'a>
-//
-//        type applicative_t<'a> = A.t<'a>
-//
-//        include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
-//
-//        let sequence = sequence
-//      })
-//
-//      let traverse = D.traverse_default
-//    }
-//
-//    include List_Traversable
-//  }
-//
-//  let foldable = {
-//    open Foldable
-//    T.suite(
-//      "Default.Foldable",
-//      list{
-//        T.test("should do a left fold", () => {
-//          T.check(T.int, fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
-//          T.check(T.int, fold_left(\"-", 10, list{3, 2, 1}), 4)
-//        }),
-//      },
-//    )
-//  }
-//
-//  module Traverse = Traversable(Option.Applicative)
-//
-//  let traversable = {
-//    open Traverse
-//    T.suite(
-//      "Default.Traversable",
-//      list{
-//        T.test("should traverse the list", () => {
-//          let positive_int = x => x >= 0 ? Some(x) : None
-//
-//          T.check(
-//            T.option(T.list(T.int)),
-//            traverse(positive_int, list{1, 2, 3}),
-//            Some(list{1, 2, 3}),
-//          )
-//        }),
-//      },
-//    )
-//  }
-//
-//  let suites = list{foldable, traversable}
-//}
+module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
+  module Foldable: Interface.FOLDABLE with type t<'a> = list<'a> = {
+    type t<'a> = list<'a>
+
+    module FM: Default.FOLD_MAP with type t<'a> = list<'a> = {
+      type t<'a> = list<'a>
+
+      module Fold_Map_Any = (M: Interface.MONOID_ANY) => {
+        let fold_map = (f, x) =>
+          ListLabels.fold_left(~f=(acc, x) => M.append(acc, f(x)), ~init=M.empty, x)
+      }
+
+      module Fold_Map_Plus = (P: Interface.PLUS) => {
+        let fold_map = (f, x) =>
+          ListLabels.fold_left(~f=(acc, x) => P.alt(acc, f(x)), ~init=P.empty, x)
+      }
+    }
+
+    module Fold_Map = List.Foldable.Fold_Map
+    module Fold_Map_Any = FM.Fold_Map_Any
+    module Fold_Map_Plus = FM.Fold_Map_Plus
+    module F = Default.Fold(FM)
+
+    let fold_left = F.fold_left_default
+    let fold_right = F.fold_right_default
+  }
+
+  //  module Traversable = (A: Interface.APPLICATIVE) => {
+  //    module List_Traversable: Interface.TRAVERSABLE
+  //      with type applicative_t<'a> = A.t<'a>
+  //      and type t<'a> = list<'a> = {
+  //      type t<'a> = list<'a>
+  //
+  //      type applicative_t<'a> = A.t<'a>
+  //
+  //      include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
+  //
+  //      include (List.Foldable: Interface.FOLDABLE with type t<'a> := t<'a>)
+  //
+  //      module I = Infix.Apply(A)
+  //
+  //      let sequence = xs => {
+  //        open I
+  //        ListLabels.fold_right(
+  //          ~f=(acc, x) => \"<*>"(\"<*>"(A.pure((y, ys) => list{y, ...ys}), acc), x),
+  //          ~init=A.pure(list{}),
+  //          xs,
+  //        )
+  //      }
+  //
+  //      module D = Default.Traverse({
+  //        type t<'a> = list<'a>
+  //
+  //        type applicative_t<'a> = A.t<'a>
+  //
+  //        include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
+  //
+  //        let sequence = sequence
+  //      })
+  //
+  //      let traverse = D.traverse_default
+  //    }
+  //
+  //    include List_Traversable
+  //  }
+
+  let foldable = {
+    open Foldable
+    T.suite(
+      "Default.Foldable",
+      list{
+        T.test("should do a left fold", () => {
+          T.check(T.int, fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
+          T.check(T.int, fold_left(\"-", 10, list{3, 2, 1}), 4)
+        }),
+      },
+    )
+  }
+
+  //  module Traverse = Traversable(Option.Applicative)
+  //
+  //  let traversable = {
+  //    open Traverse
+  //    T.suite(
+  //      "Default.Traversable",
+  //      list{
+  //        T.test("should traverse the list", () => {
+  //          let positive_int = x => x >= 0 ? Some(x) : None
+  //
+  //          T.check(
+  //            T.option(T.list(T.int)),
+  //            traverse(positive_int, list{1, 2, 3}),
+  //            Some(list{1, 2, 3}),
+  //          )
+  //        }),
+  //      },
+  //    )
+  //  }
+
+  let suites = list{
+    foldable,
+    //  traversable
+  }
+}
 
 module Float = (
   E: Interface.EQ with type t = float,
