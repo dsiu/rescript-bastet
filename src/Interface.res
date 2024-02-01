@@ -137,7 +137,7 @@ module type MONAD = {
 module type ALT = {
   include FUNCTOR
 
-  let alt: (t<'a>, t<'a>) => t<'a>
+  let alt: (. t<'a>, t<'a>) => t<'a>
 }
 
 module type PLUS = {
@@ -188,9 +188,9 @@ module type TRAVERSABLE = {
 
   type applicative_t<'a>
 
-  let traverse: ('a => applicative_t<'b>, t<'a>) => applicative_t<t<'b>>
+  //  let traverse: ('a => applicative_t<'b>, t<'a>) => applicative_t<t<'b>>
 
-  let sequence: t<applicative_t<'a>> => applicative_t<t<'a>>
+  //  let sequence: t<applicative_t<'a>> => applicative_t<t<'a>>
 }
 
 module type TRAVERSABLE_F = (A: APPLICATIVE) => (TRAVERSABLE with type applicative_t<'a> = A.t<'a>)

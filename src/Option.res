@@ -108,7 +108,7 @@ module Loop: LOOP_F = (L: LOOP) => {
 module Alt: ALT with type t<'a> = option<'a> = {
   include Functor
 
-  let alt = (a, b) =>
+  let alt = (. a, b) =>
     switch (a, b) {
     | (Some(a), _) => Some(a)
     | (None, a) => a

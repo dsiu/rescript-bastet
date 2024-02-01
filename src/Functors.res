@@ -10,83 +10,83 @@ module OcamlAbstractBool = Bool
 module OcamlAbstractString = String
 module OcamlAbstractFloat = Float
 
-//module ArrayF = {
-//  module Functions = {
-//    module Travsersable = Functions.Traversable(Array.Traversable)
-//  }
-//
-//  module Int = {
-//    module Eq = Array.Eq(Int.Eq)
-//    module Ord = Array.Ord(Int.Ord)
-//    module Show = Array.Show(Int.Show)
-//
-//    module Additive = {
-//      module Fold_Map = Array.Foldable.Fold_Map(Int.Additive.Monoid)
-//    }
-//
-//    module Multiplicative = {
-//      module Fold_Map = Array.Foldable.Fold_Map(Int.Multiplicative.Monoid)
-//    }
-//
-//    module Functions = {
-//      module Scan = Functions.Travsersable.Scan({
-//        type t = int
-//      })
-//    }
-//  }
-//
-//  module Float = {
-//    module Eq = Array.Eq(Float.Eq)
-//    module Ord = Array.Ord(Float.Ord)
-//    module Show = Array.Show(Float.Show)
-//
-//    module Additive = {
-//      module Fold_Map = Array.Foldable.Fold_Map(Float.Additive.Monoid)
-//    }
-//
-//    module Multiplicative = {
-//      module Fold_Map = Array.Foldable.Fold_Map(Float.Multiplicative.Monoid)
-//    }
-//
-//    module Functions = {
-//      module Scan = Functions.Travsersable.Scan({
-//        type t = float
-//      })
-//    }
-//  }
-//
-//  module Bool = {
-//    module Eq = Array.Eq(Bool.Eq)
-//    module Ord = Array.Ord(Bool.Ord)
-//    module Show = Array.Show(Bool.Show)
-//  }
-//
-//  module String = {
-//    module Eq = Array.Eq(String.Eq)
-//    module Ord = Array.Ord(String.Ord)
-//  }
-//
-//  module List = {
-//    module Fold_Map_Plus = Array.Foldable.Fold_Map_Plus(List.Plus)
-//    module Traversable = Array.Traversable(List.Applicative)
-//  }
-//
-//  module Option = {
-//    module Fold_Map_Plus = Array.Foldable.Fold_Map_Plus(Option.Plus)
-//    module Traversable = Array.Traversable(Option.Applicative)
-//  }
-//
-//  module Infix = {
-//    module Functor = Infix.Functor(Array.Functor)
-//    module Apply = Infix.Apply(Array.Apply)
-//    module Monad = Infix.Monad(Array.Monad)
-//    module Alt = Infix.Alt(Array.Alt)
-//  }
-//
-//  module Array = {
-//    module Traversable = Array.Traversable(Array.Applicative)
-//  }
-//}
+module ArrayF = {
+  module Functions = {
+    module Travsersable = Functions.Traversable(Array.Traversable)
+  }
+
+  module Int = {
+    module Eq = Array.Eq(Int.Eq)
+    module Ord = Array.Ord(Int.Ord)
+    module Show = Array.Show(Int.Show)
+
+    module Additive = {
+      module Fold_Map = Array.Foldable.Fold_Map(Int.Additive.Monoid)
+    }
+
+    module Multiplicative = {
+      module Fold_Map = Array.Foldable.Fold_Map(Int.Multiplicative.Monoid)
+    }
+
+    //    module Functions = {
+    //      module Scan = Functions.Travsersable.Scan({
+    //        type t = int
+    //      })
+    //    }
+  }
+
+  module Float = {
+    module Eq = Array.Eq(Float.Eq)
+    module Ord = Array.Ord(Float.Ord)
+    module Show = Array.Show(Float.Show)
+
+    module Additive = {
+      module Fold_Map = Array.Foldable.Fold_Map(Float.Additive.Monoid)
+    }
+
+    module Multiplicative = {
+      module Fold_Map = Array.Foldable.Fold_Map(Float.Multiplicative.Monoid)
+    }
+
+    //    module Functions = {
+    //      module Scan = Functions.Travsersable.Scan({
+    //        type t = float
+    //      })
+    //    }
+  }
+
+  module Bool = {
+    module Eq = Array.Eq(Bool.Eq)
+    module Ord = Array.Ord(Bool.Ord)
+    module Show = Array.Show(Bool.Show)
+  }
+
+  module String = {
+    module Eq = Array.Eq(String.Eq)
+    module Ord = Array.Ord(String.Ord)
+  }
+
+  //  module List = {
+  //    module Fold_Map_Plus = Array.Foldable.Fold_Map_Plus(List.Plus)
+  //    module Traversable = Array.Traversable(List.Applicative)
+  //  }
+
+  module Option = {
+    module Fold_Map_Plus = Array.Foldable.Fold_Map_Plus(Option.Plus)
+    module Traversable = Array.Traversable(Option.Applicative)
+  }
+
+  module Infix = {
+    module Functor = Infix.Functor(Array.Functor)
+    module Apply = Infix.Apply(Array.Apply)
+    module Monad = Infix.Monad(Array.Monad)
+    module Alt = Infix.Alt(Array.Alt)
+  }
+
+  module Array = {
+    module Traversable = Array.Traversable(Array.Applicative)
+  }
+}
 //
 //module ListF = {
 //  module Functions = {

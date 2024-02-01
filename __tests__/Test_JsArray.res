@@ -1,4 +1,7 @@
-open BsMocha.Mocha
+@@uncurried
+@@uncurried.swap
+
+open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 
 /* Bisect.Runtime.write_coverage_data_on_exit () */

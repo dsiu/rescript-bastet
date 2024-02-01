@@ -230,7 +230,7 @@ module Foldable = (F: FOLDABLE) => {
   }
 
   module Plus = (P: PLUS) => {
-    let one_of: F.t<P.t<'a>> => P.t<'a> = fa => F.fold_right(P.alt, P.empty, fa)
+    let one_of: F.t<P.t<'a>> => P.t<'a> = fa => F.fold_right((a, b) => P.alt(a, b), P.empty, fa)
   }
 
   module Monad = (M: MONAD) => {
@@ -281,7 +281,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Applicative: APPLICATIVE with type t<'a> = state<Type.t, 'a> = {
         include Apply
 
-        let pure_x = (a, s) => {accum: s, value: a}
+        let pure_x = (. a, s) => {accum: s, value: a}
         let pure = x => pure_x(x, _)
       }
     }
@@ -320,52 +320,52 @@ module Traversable = (T: TRAVERSABLE_F) => {
       }
     }
 
-    module Map_Accum = (Type: TYPE, T: TRAVERSABLE_F) => {
-      module SL = State_Left({
-        type t = Type.t
-      })
-
-      module SR = State_Right({
-        type t = Type.t
-      })
-
-      module TSL = T(SL.Applicative)
-      module TSR = T(SR.Applicative)
-
-      let map_accum_left: (('s, 'a) => accum<'s, 'b>, 's, TSL.t<'a>) => accum<'s, TSL.t<'b>> = (
-        f,
-        s,
-        xs,
-      ) => apply_state(TSL.traverse(a => s' => f(s', a), xs), s)
-
-      and map_accum_right: (('s, 'a) => accum<'s, 'b>, 's, TSR.t<'a>) => accum<'s, TSR.t<'b>> = (
-        f,
-        s,
-        xs,
-      ) => apply_state(TSR.traverse(a => s' => f(s', a), xs), s)
-    }
+    //    module Map_Accum = (Type: TYPE, T: TRAVERSABLE_F) => {
+    //      module SL = State_Left({
+    //        type t = Type.t
+    //      })
+    //
+    //      module SR = State_Right({
+    //        type t = Type.t
+    //      })
+    //
+    //      module TSL = T(SL.Applicative)
+    //      module TSR = T(SR.Applicative)
+    //
+    //      let map_accum_left: (('s, 'a) => accum<'s, 'b>, 's, TSL.t<'a>) => accum<'s, TSL.t<'b>> = (
+    //        f,
+    //        s,
+    //        xs,
+    //      ) => apply_state(TSL.traverse(a => s' => f(s', a), xs), s)
+    //
+    //      and map_accum_right: (('s, 'a) => accum<'s, 'b>, 's, TSR.t<'a>) => accum<'s, TSR.t<'b>> = (
+    //        f,
+    //        s,
+    //        xs,
+    //      ) => apply_state(TSR.traverse(a => s' => f(s', a), xs), s)
+    //    }
   }
 
-  module Scan = (Type: TYPE) => {
-    module MA = Internal.Map_Accum(
-      {
-        type t = Type.t
-      },
-      T,
-    )
-
-    let scan_left: (('b, 'a) => 'b, 'b, MA.TSL.t<'a>) => MA.TSL.t<'b> = (f, init, xs) =>
-      MA.map_accum_left((b, a) => {
-        let b' = f(b, a)
-        {accum: b', value: b'}
-      }, init, xs).value
-
-    and scan_right: (('a, 'b) => 'b, 'b, MA.TSR.t<'a>) => MA.TSR.t<'b> = (f, init, xs) =>
-      MA.map_accum_right((b, a) => {
-        let b' = f(a, b)
-        {accum: b', value: b'}
-      }, init, xs).value
-  }
+  //  module Scan = (Type: TYPE) => {
+  //    module MA = Internal.Map_Accum(
+  //      {
+  //        type t = Type.t
+  //      },
+  //      T,
+  //    )
+  //
+  //    let scan_left: (('b, 'a) => 'b, 'b, MA.TSL.t<'a>) => MA.TSL.t<'b> = (f, init, xs) =>
+  //      MA.map_accum_left((b, a) => {
+  //        let b' = f(b, a)
+  //        {accum: b', value: b'}
+  //      }, init, xs).value
+  //
+  //    and scan_right: (('a, 'b) => 'b, 'b, MA.TSR.t<'a>) => MA.TSR.t<'b> = (f, init, xs) =>
+  //      MA.map_accum_right((b, a) => {
+  //        let b' = f(a, b)
+  //        {accum: b', value: b'}
+  //      }, init, xs).value
+  //  }
 }
 
 module Infix = {
