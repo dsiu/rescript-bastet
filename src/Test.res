@@ -1011,28 +1011,28 @@ module Array = (
     },
   )
 
-  //  let traversable = {
-  //    let (traverse, sequence) = {
-  //      open Functors.ArrayF.Option.Traversable
-  //      (traverse, sequence)
-  //    }
-  //
-  //    T.suite(
-  //      "Array.Traversable",
-  //      list{
-  //        T.test("should traverse the array", () => {
-  //          let positive_int = x => x >= 0 ? Some(x) : None
-  //
-  //          T.check(T.option(T.array(T.int)), traverse(positive_int, [1, 2, 3]), Some([1, 2, 3]))
-  //          T.check(T.option(T.array(T.int)), traverse(positive_int, [1, 2, -3]), None)
-  //        }),
-  //        T.test("should sequence the array", () => {
-  //          T.check(T.option(T.array(T.int)), sequence([Some(3), Some(4), Some(5)]), Some([3, 4, 5]))
-  //          T.check(T.option(T.array(T.int)), sequence([Some(3), Some(4), None]), None)
-  //        }),
-  //      },
-  //    )
-  //  }
+  let traversable = {
+    let (traverse, sequence) = {
+      open Functors.ArrayF.Option.Traversable
+      (traverse, sequence)
+    }
+
+    T.suite(
+      "Array.Traversable",
+      list{
+        T.test("should traverse the array", () => {
+          let positive_int = x => x >= 0 ? Some(x) : None
+
+          T.check(T.option(T.array(T.int)), traverse(positive_int, [1, 2, 3]), Some([1, 2, 3]))
+          T.check(T.option(T.array(T.int)), traverse(positive_int, [1, 2, -3]), None)
+        }),
+        T.test("should sequence the array", () => {
+          T.check(T.option(T.array(T.int)), sequence([Some(3), Some(4), Some(5)]), Some([3, 4, 5]))
+          T.check(T.option(T.array(T.int)), sequence([Some(3), Some(4), None]), None)
+        }),
+      },
+    )
+  }
 
   let show = {
     module S = Arr.Show(Int.Show)
@@ -1090,7 +1090,7 @@ module Array = (
       zip,
       foldable,
       unfoldable,
-      //      traversable,
+      traversable,
       show,
       extend,
       alt_order,
@@ -1192,44 +1192,45 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
     let fold_right = F.fold_right_default
   }
 
-  //  module Traversable = (A: Interface.APPLICATIVE) => {
-  //    module List_Traversable: Interface.TRAVERSABLE
-  //      with type applicative_t<'a> = A.t<'a>
-  //      and type t<'a> = list<'a> = {
-  //      type t<'a> = list<'a>
-  //
-  //      type applicative_t<'a> = A.t<'a>
-  //
-  //      include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
-  //
-  //      include (List.Foldable: Interface.FOLDABLE with type t<'a> := t<'a>)
-  //
-  //      module I = Infix.Apply(A)
-  //
-  //      let sequence = xs => {
-  //        open I
-  //        ListLabels.fold_right(
-  //          ~f=(acc, x) => \"<*>"(\"<*>"(A.pure((y, ys) => list{y, ...ys}), acc), x),
-  //          ~init=A.pure(list{}),
-  //          xs,
-  //        )
-  //      }
-  //
-  //      module D = Default.Traverse({
-  //        type t<'a> = list<'a>
-  //
-  //        type applicative_t<'a> = A.t<'a>
-  //
-  //        include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
-  //
-  //        let sequence = sequence
-  //      })
-  //
-  //      let traverse = D.traverse_default
-  //    }
-  //
-  //    include List_Traversable
-  //  }
+  module Traversable = (A: Interface.APPLICATIVE) => {
+    module List_Traversable: Interface.TRAVERSABLE
+      with type applicative_t<'a> = A.t<'a>
+      and type t<'a> = list<'a> = {
+      type t<'a> = list<'a>
+
+      type applicative_t<'a> = A.t<'a>
+
+      include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
+
+      include (List.Foldable: Interface.FOLDABLE with type t<'a> := t<'a>)
+
+      module I = Infix.Apply(A)
+
+      let sequence = xs => {
+        open I
+        ListLabels.fold_right(~f=(acc, x) => {
+          let ff = y => ys => list{y, ...ys}
+          let ap = A.pure(ff)
+          let ap1 = \"<*>"(ap, acc)
+          \"<*>"(ap1, x)
+        }, ~init=A.pure(list{}), xs)
+      }
+
+      module D = Default.Traverse({
+        type t<'a> = list<'a>
+
+        type applicative_t<'a> = A.t<'a>
+
+        include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
+
+        let sequence = sequence
+      })
+
+      let traverse = D.traverse_default
+    }
+
+    include List_Traversable
+  }
 
   let foldable = {
     open Foldable
@@ -1244,25 +1245,25 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
     )
   }
 
-  //  module Traverse = Traversable(Option.Applicative)
-  //
-  //  let traversable = {
-  //    open Traverse
-  //    T.suite(
-  //      "Default.Traversable",
-  //      list{
-  //        T.test("should traverse the list", () => {
-  //          let positive_int = x => x >= 0 ? Some(x) : None
-  //
-  //          T.check(
-  //            T.option(T.list(T.int)),
-  //            traverse(positive_int, list{1, 2, 3}),
-  //            Some(list{1, 2, 3}),
-  //          )
-  //        }),
-  //      },
-  //    )
-  //  }
+  module Traverse = Traversable(Option.Applicative)
+
+  let traversable = {
+    open Traverse
+    T.suite(
+      "Default.Traversable",
+      list{
+        T.test("should traverse the list", () => {
+          let positive_int = x => x >= 0 ? Some(x) : None
+
+          T.check(
+            T.option(T.list(T.int)),
+            traverse(positive_int, list{1, 2, 3}),
+            Some(list{1, 2, 3}),
+          )
+        }),
+      },
+    )
+  }
 
   let suites = list{
     foldable,
@@ -1412,36 +1413,36 @@ module List = (
     },
   )
 
-  //  let traversable = {
-  //    let (traverse, sequence) = {
-  //      open Functors.ListF.Option.Traversable
-  //      (traverse, sequence)
-  //    }
-  //
-  //    T.suite(
-  //      "List.Traversable",
-  //      list{
-  //        T.test("should traverse the list", () => {
-  //          let positive_int = x => x >= 0 ? Some(x) : None
-  //
-  //          T.check(
-  //            T.option(T.list(T.int)),
-  //            traverse(positive_int, list{1, 2, 3}),
-  //            Some(list{1, 2, 3}),
-  //          )
-  //          T.check(T.option(T.list(T.int)), traverse(positive_int, list{1, 2, -3}), None)
-  //        }),
-  //        T.test("should sequence the list", () => {
-  //          T.check(
-  //            T.option(T.list(T.int)),
-  //            sequence(list{Some(3), Some(4), Some(5)}),
-  //            Some(list{3, 4, 5}),
-  //          )
-  //          T.check(T.option(T.list(T.int)), sequence(list{Some(3), Some(4), None}), None)
-  //        }),
-  //      },
-  //    )
-  //  }
+  let traversable = {
+    let (traverse, sequence) = {
+      open Functors.ListF.Option.Traversable
+      (traverse, sequence)
+    }
+
+    T.suite(
+      "List.Traversable",
+      list{
+        T.test("should traverse the list", () => {
+          let positive_int = x => x >= 0 ? Some(x) : None
+
+          T.check(
+            T.option(T.list(T.int)),
+            traverse(positive_int, list{1, 2, 3}),
+            Some(list{1, 2, 3}),
+          )
+          T.check(T.option(T.list(T.int)), traverse(positive_int, list{1, 2, -3}), None)
+        }),
+        T.test("should sequence the list", () => {
+          T.check(
+            T.option(T.list(T.int)),
+            sequence(list{Some(3), Some(4), Some(5)}),
+            Some(list{3, 4, 5}),
+          )
+          T.check(T.option(T.list(T.int)), sequence(list{Some(3), Some(4), None}), None)
+        }),
+      },
+    )
+  }
 
   let show = {
     module S = List.Show(Int.Show)

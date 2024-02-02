@@ -28,11 +28,11 @@ module ArrayF = {
       module Fold_Map = Array.Foldable.Fold_Map(Int.Multiplicative.Monoid)
     }
 
-    //    module Functions = {
-    //      module Scan = Functions.Travsersable.Scan({
-    //        type t = int
-    //      })
-    //    }
+    module Functions = {
+      module Scan = Functions.Travsersable.Scan({
+        type t = int
+      })
+    }
   }
 
   module Float = {
@@ -48,11 +48,11 @@ module ArrayF = {
       module Fold_Map = Array.Foldable.Fold_Map(Float.Multiplicative.Monoid)
     }
 
-    //    module Functions = {
-    //      module Scan = Functions.Travsersable.Scan({
-    //        type t = float
-    //      })
-    //    }
+    module Functions = {
+      module Scan = Functions.Travsersable.Scan({
+        type t = float
+      })
+    }
   }
 
   module Bool = {
@@ -66,10 +66,10 @@ module ArrayF = {
     module Ord = Array.Ord(String.Ord)
   }
 
-  //  module List = {
-  //    module Fold_Map_Plus = Array.Foldable.Fold_Map_Plus(List.Plus)
-  //    module Traversable = Array.Traversable(List.Applicative)
-  //  }
+  module List = {
+    module Fold_Map_Plus = Array.Foldable.Fold_Map_Plus(List.Plus)
+    module Traversable = Array.Traversable(List.Applicative)
+  }
 
   module Option = {
     module Fold_Map_Plus = Array.Foldable.Fold_Map_Plus(Option.Plus)
@@ -105,11 +105,11 @@ module ListF = {
       module Fold_Map = List.Foldable.Fold_Map(Int.Multiplicative.Monoid)
     }
 
-    //    module Functions = {
-    //      module Scan = Functions.Travsersable.Scan({
-    //        type t = int
-    //      })
-    //    }
+    module Functions = {
+      module Scan = Functions.Travsersable.Scan({
+        type t = int
+      })
+    }
   }
 
   module Float = {
@@ -124,11 +124,11 @@ module ListF = {
       module Fold_Map = List.Foldable.Fold_Map(Float.Multiplicative.Monoid)
     }
 
-    //    module Functions = {
-    //      module Scan = Functions.Travsersable.Scan({
-    //        type t = float
-    //      })
-    //    }
+    module Functions = {
+      module Scan = Functions.Travsersable.Scan({
+        type t = float
+      })
+    }
   }
 
   module Bool = {
@@ -235,14 +235,14 @@ module OptionF = {
     module Monoid = Option.Monoid(String.Semigroup)
   }
 
-  //  module List = {
-  //    module Fold_Map_Plus = Option.Foldable.Fold_Map_Plus(List.Plus)
-  //    module Traversable = Option.Traversable(List.Applicative)
-  //  }
-  //
-  //  module Array = {
-  //    module Traversable = Option.Traversable(Array.Applicative)
-  //  }
+  module List = {
+    module Fold_Map_Plus = Option.Foldable.Fold_Map_Plus(List.Plus)
+    module Traversable = Option.Traversable(List.Applicative)
+  }
+
+  module Array = {
+    module Traversable = Option.Traversable(Array.Applicative)
+  }
 
   module Infix = {
     module Functor = Infix.Functor(Option.Functor)
@@ -287,23 +287,23 @@ module ResultF = {
       type t = int
     })
 
-    //    module List = {
-    //      module Traversable = Result.Traversable(
-    //        {
-    //          type t = int
-    //        },
-    //        List.Applicative,
-    //      )
-    //    }
-    //
-    //    module Array = {
-    //      module Traversable = Result.Traversable(
-    //        {
-    //          type t = int
-    //        },
-    //        Array.Applicative,
-    //      )
-    //    }
+    module List = {
+      module Traversable = Result.Traversable(
+        {
+          type t = int
+        },
+        List.Applicative,
+      )
+    }
+
+    module Array = {
+      module Traversable = Result.Traversable(
+        {
+          type t = int
+        },
+        Array.Applicative,
+      )
+    }
 
     module Option = {
       module Traversable = Result.Traversable(
@@ -362,23 +362,23 @@ module ResultF = {
       type t = float
     })
 
-    //    module List = {
-    //      module Traversable = Result.Traversable(
-    //        {
-    //          type t = float
-    //        },
-    //        List.Applicative,
-    //      )
-    //    }
-    //
-    //    module Array = {
-    //      module Traversable = Result.Traversable(
-    //        {
-    //          type t = float
-    //        },
-    //        Array.Applicative,
-    //      )
-    //    }
+    module List = {
+      module Traversable = Result.Traversable(
+        {
+          type t = float
+        },
+        List.Applicative,
+      )
+    }
+
+    module Array = {
+      module Traversable = Result.Traversable(
+        {
+          type t = float
+        },
+        Array.Applicative,
+      )
+    }
 
     module Option = {
       module Traversable = Result.Traversable(
@@ -437,23 +437,23 @@ module ResultF = {
       type t = bool
     })
 
-    //    module List = {
-    //      module Traversable = Result.Traversable(
-    //        {
-    //          type t = bool
-    //        },
-    //        List.Applicative,
-    //      )
-    //    }
-    //
-    //    module Array = {
-    //      module Traversable = Result.Traversable(
-    //        {
-    //          type t = bool
-    //        },
-    //        Array.Applicative,
-    //      )
-    //    }
+    module List = {
+      module Traversable = Result.Traversable(
+        {
+          type t = bool
+        },
+        List.Applicative,
+      )
+    }
+
+    module Array = {
+      module Traversable = Result.Traversable(
+        {
+          type t = bool
+        },
+        Array.Applicative,
+      )
+    }
 
     module Option = {
       module Traversable = Result.Traversable(
@@ -512,23 +512,23 @@ module ResultF = {
       type t = string
     })
 
-    //    module List = {
-    //      module Traversable = Result.Traversable(
-    //        {
-    //          type t = string
-    //        },
-    //        List.Applicative,
-    //      )
-    //    }
-    //
-    //    module Array = {
-    //      module Traversable = Result.Traversable(
-    //        {
-    //          type t = string
-    //        },
-    //        Array.Applicative,
-    //      )
-    //    }
+    module List = {
+      module Traversable = Result.Traversable(
+        {
+          type t = string
+        },
+        List.Applicative,
+      )
+    }
+
+    module Array = {
+      module Traversable = Result.Traversable(
+        {
+          type t = string
+        },
+        Array.Applicative,
+      )
+    }
 
     module Option = {
       module Traversable = Result.Traversable(

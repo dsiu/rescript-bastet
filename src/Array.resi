@@ -55,9 +55,9 @@ module type TRAVERSABLE_F = (A: Interface.APPLICATIVE) =>
 
   type applicative_t<'a> = A.t<'a>
 
-  //  let π: ('a => applicative_t<'b>, t<'a>) => applicative_t<t<'b>>
+  let traverse: ('a => applicative_t<'b>, t<'a>) => applicative_t<t<'b>>
 
-  //  let sequence: t<applicative_t<'a>> => applicative_t<t<'a>>
+  let sequence: t<applicative_t<'a>> => applicative_t<t<'a>>
 }
 
 module Functor: {

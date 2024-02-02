@@ -76,9 +76,9 @@ module type ARRAY = {
 
     type applicative_t<'a> = A.t<'a>
 
-    //    let traverse: ('a => applicative_t<'b>, t<'a>) => applicative_t<t<'b>>
+    let traverse: ('a => applicative_t<'b>, t<'a>) => applicative_t<t<'b>>
 
-    //    let sequence: t<applicative_t<'a>> => applicative_t<t<'a>>
+    let sequence: t<applicative_t<'a>> => applicative_t<t<'a>>
   }
 
   module Functor: {
@@ -328,27 +328,26 @@ module Make = (A: IMPL): ARRAY => {
 
     module I = Infix.Apply(A)
 
-    //      let traverse = (f, xs: array<'a>) => {
-    //        open I
-    //        ArrayLabels.fold_right(~f=(acc, x) => {
-    //          let ff = (x, y) => Alt.alt([x], y)
-    //          let ap = A.pure(ff)
-    //          let i = 1
-    //          let ap1 = \"<*>"(ap, f(acc))
-    //
-    //          \"<*>"(ap1, x)
-    //        }, ~init=A.pure([]), xs)
-    //      }
+    let traverse = (f, xs: array<'a>) => {
+      open I
+      ArrayLabels.fold_right(~f=(acc, x) => {
+        let ff = x => y => Alt.alt([x], y)
+        let ap = A.pure(ff)
+        let ap1 = \"<*>"(ap, f(acc))
 
-    //      module D = Default.Sequence({
-    //        type rec t<'a> = array<'a>
-    //
-    //        and applicative_t<'a> = A.t<'a>
-    //
-    //        let traverse = traverse
-    //      })
-    //
-    //      let sequence = D.sequence_default
+        \"<*>"(ap1, x)
+      }, ~init=A.pure([]), xs)
+    }
+
+    module D = Default.Sequence({
+      type rec t<'a> = array<'a>
+
+      and applicative_t<'a> = A.t<'a>
+
+      let traverse = traverse
+    })
+
+    let sequence = D.sequence_default
   }
 
   module Eq: EQ_F = (E: EQ) => {

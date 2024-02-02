@@ -123,26 +123,28 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
 
   include (Foldable: FOLDABLE with type t<'a> := t<'a>)
 
-  // module I = Infix.Apply(A)
+  module I = Infix.Apply(A)
 
-  //  let traverse = f => {
-  //    open I
-  //
-  //    ListLabels.fold_right(
-  //      ~f=(acc, x) => \"<*>"(\"<*>"(A.pure((y, ys) => list{y, ...ys}), f(acc)), x),
-  //      ~init=A.pure(list{}),
-  //    )
-  //  }
-  //
-  //  module D = Default.Sequence({
-  //    type t<'a> = list<'a>
-  //
-  //    type applicative_t<'a> = A.t<'a>
-  //
-  //    let traverse = traverse
-  //  })
-  //
-  //  let sequence = D.sequence_default
+  let traverse = (f, xs: t<'a>) => {
+    open I
+
+    ListLabels.fold_right(~f=(acc, x) => {
+      let ff = y => ys => list{y, ...ys}
+      let ap = A.pure(ff)
+      let ap1 = \"<*>"(ap, f(acc))
+      \"<*>"(ap1, x)
+    }, ~init=A.pure(list{}), xs)
+  }
+
+  module D = Default.Sequence({
+    type t<'a> = list<'a>
+
+    type applicative_t<'a> = A.t<'a>
+
+    let traverse = traverse
+  })
+
+  let sequence = D.sequence_default
 }
 
 module Eq: EQ_F = (E: EQ) => {
