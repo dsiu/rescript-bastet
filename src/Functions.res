@@ -41,9 +41,9 @@ module Monoid = (M: MONOID) => {
 module Functor = (F: FUNCTOR) => {
   let void: F.t<'a> => F.t<unit> = fa => F.map(((x, y)) => const(x, y), fa)
 
-  and void_right: ('a, F.t<'b>) => F.t<'a> = (a, fb) => F.map(const(a, ...), fb)
+  and void_right: ('a, F.t<'b>) => F.t<'a> = (a, fb) => F.map(x => const(a, x), fb)
 
-  and void_left: (F.t<'a>, 'b) => F.t<'b> = (fa, b) => F.map(const(b, ...), fa)
+  and void_left: (F.t<'a>, 'b) => F.t<'b> = (fa, b) => F.map(x => const(b, x), fa)
 
   and flap: (F.t<'a => 'b>, 'a) => F.t<'b> = (fs, a) => F.map(f => f(a, ...), fs)
 }
@@ -52,19 +52,18 @@ module Apply = (A: APPLY) => {
   module I = Infix.Apply(A)
   open I
 
-  let apply_first: (A.t<'a>, A.t<'b>) => A.t<'a> = (a, b) =>
-    \"<*>"(\"<$>"(x => const(x, ...), a), b)
+  let apply_first: (A.t<'a>, A.t<'b>) => A.t<'a> = (a, b) => \"<*>"(\"<$>"(x => const(_, x), a), b)
 
-  and apply_second: (A.t<'a>, A.t<'b>) => A.t<'b> = (a, b) =>
-    \"<*>"(\"<$>"(x => const(id, x), a), b)
+  and apply_second: (A.t<'a>, A.t<'b>) => A.t<'b> = (a, b) => \"<*>"(\"<$>"(x => const(x, _), a), b)
 
   and apply_both: (A.t<'a>, A.t<'b>) => A.t<('a, 'b)> = (a, b) =>
-    \"<*>"(\"<$>"((a', b') => (a', b'), a), b)
+    \"<*>"(\"<$>"(a' => b' => (a', b'), a), b)
 
-  and lift2: (('a, 'b) => 'c, A.t<'a>, A.t<'b>) => A.t<'c> = (f, a, b) => \"<*>"(\"<$>"(f, a), b)
+  and lift2: (('a, 'b) => 'c, A.t<'a>, A.t<'b>) => A.t<'c> = (f, a, b) =>
+    \"<*>"(\"<$>"(x => f(x, _), a), b)
 
   and lift3: (('a, 'b, 'c) => 'd, A.t<'a>, A.t<'b>, A.t<'c>) => A.t<'d> = (f, a, b, c) =>
-    \"<*>"(\"<*>"(\"<$>"(f, a), b), c)
+    \"<*>"(\"<*>"(\"<$>"(x => y => z => f(x, y, z), a), b), c)
 
   and lift4: (('a, 'b, 'c, 'd) => 'e, A.t<'a>, A.t<'b>, A.t<'c>, A.t<'d>) => A.t<'e> = (
     f,
@@ -72,7 +71,7 @@ module Apply = (A: APPLY) => {
     b,
     c,
     d,
-  ) => \"<*>"(\"<*>"(\"<*>"(\"<$>"(f, a), b), c), d)
+  ) => \"<*>"(\"<*>"(\"<*>"(\"<$>"(w => x => y => z => f(w, x, y, z), a), b), c), d)
 
   and lift5: (
     ('a, 'b, 'c, 'd, 'e) => 'f,
@@ -81,7 +80,8 @@ module Apply = (A: APPLY) => {
     A.t<'c>,
     A.t<'d>,
     A.t<'e>,
-  ) => A.t<'f> = (f, a, b, c, d, e) => \"<*>"(\"<*>"(\"<*>"(\"<*>"(\"<$>"(f, a), b), c), d), e)
+  ) => A.t<'f> = (f, a, b, c, d, e) =>
+    \"<*>"(\"<*>"(\"<*>"(\"<*>"(\"<$>"(v => w => x => y => z => f(v, w, x, y, z), a), b), c), d), e)
 
   module Infix = {
     let \"<*" = apply_first
@@ -103,16 +103,16 @@ module Apply' = (A: APPLY, T: TYPE) => {
   module Apply_A = Apply(A)
 
   let apply_const: (A.t<T.t> => A.t<'a>, A.t<T.t>) => A.t<T.t> = (f, x) =>
-    F'.apply(Apply_A.apply_first, f, x)
+    F'.apply(x => Apply_A.apply_first(x, _), f)(x)
 
   let apply_first: (T.t => A.t<'a>, T.t => A.t<'b>, T.t) => A.t<'a> = (f, g, x) =>
-    Apply_F.lift2(Apply_A.apply_first, f, g, x)
+    Apply_F.lift2(Apply_A.apply_first, f, g)(x)
 
   and apply_second: (T.t => A.t<'a>, T.t => A.t<'b>, T.t) => A.t<'b> = (f, g, x) =>
-    Apply_F.lift2(Apply_A.apply_second, f, g, x)
+    Apply_F.lift2(Apply_A.apply_second, f, g)(x)
 
   and apply_both: (T.t => A.t<'a>, T.t => A.t<'b>, T.t) => A.t<('a, 'b)> = (f, g, x) =>
-    Apply_F.lift2(Apply_A.apply_both, f, g, x)
+    Apply_F.lift2(Apply_A.apply_both, f, g)(x)
 }
 
 module Applicative = (A: APPLICATIVE) => {
@@ -198,7 +198,7 @@ module Foldable = (F: FOLDABLE) => {
       acc: M.t,
     }
 
-    let fold: F.t<M.t> => M.t = FM.fold_map(id)
+    let fold: F.t<M.t> => M.t = x => FM.fold_map(id, x)
 
     and intercalate: (~separator: M.t, F.t<M.t>) => M.t = (~separator, xs) => {
       let go = (acc, x) =>
@@ -217,7 +217,7 @@ module Foldable = (F: FOLDABLE) => {
     module Fn = Apply(A)
 
     let traverse': ('a => A.t<'b>, F.t<'a>) => A.t<unit> = (f, fa) =>
-      F.fold_right(\"<."(Fn.apply_second, f), A.pure(), fa)
+      F.fold_right((x, y) => \"<."(x => Fn.apply_second(x, _), f)(x)(y), A.pure(), fa)
 
     let sequence': F.t<A.t<'a>> => A.t<unit> = fa => traverse'(id, fa)
   }
@@ -231,7 +231,7 @@ module Foldable = (F: FOLDABLE) => {
 
     let fold_monad: (('a, 'b) => M.t<'a>, 'a, F.t<'b>) => M.t<'a> = (f, a, fa) => {
       open I
-      F.fold_left((acc, x) => \">>="(acc, flip(f, x)), M.pure(a), fa)
+      F.fold_left((acc, x) => \">>="(acc, flip(f)(x, _)), M.pure(a), fa)
     }
   }
 }
@@ -251,7 +251,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Functor: FUNCTOR with type t<'a> = state<Type.t, 'a> = {
         type t<'a> = state<Type.t, 'a>
 
-        let map = (f, k, s) =>
+        let map = (. f, k) => s =>
           switch apply_state(k, s) {
           | {accum: s1, value: a} => {accum: s1, value: f(a)}
           }
@@ -260,7 +260,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Apply: APPLY with type t<'a> = state<Type.t, 'a> = {
         include Functor
 
-        let apply = (f, x, s) =>
+        let apply = (. f, x) => s =>
           switch apply_state(f, s) {
           | {accum: s1, value: f'} =>
             switch apply_state(x, s1) {
@@ -272,7 +272,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Applicative: APPLICATIVE with type t<'a> = state<Type.t, 'a> = {
         include Apply
 
-        let pure = (a, s) => {accum: s, value: a}
+        let pure = a => s => {accum: s, value: a}
       }
     }
 
@@ -280,7 +280,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Functor: FUNCTOR with type t<'a> = state<Type.t, 'a> = {
         type t<'a> = state<Type.t, 'a>
 
-        let map = (f, k, s) =>
+        let map = (. f, k) => s =>
           switch apply_state(k, s) {
           | {accum: s1, value: a} => {accum: s1, value: f(a)}
           }
@@ -289,7 +289,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Apply: APPLY with type t<'a> = state<Type.t, 'a> = {
         include Functor
 
-        let apply = (f, x, s) =>
+        let apply = (. f, x) => s =>
           switch apply_state(x, s) {
           | {accum: s1, value: x'} =>
             switch apply_state(f, s1) {
@@ -301,7 +301,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Applicative: APPLICATIVE with type t<'a> = state<Type.t, 'a> = {
         include Apply
 
-        let pure = (a, s) => {accum: s, value: a}
+        let pure = a => s => {accum: s, value: a}
       }
     }
 
@@ -321,13 +321,13 @@ module Traversable = (T: TRAVERSABLE_F) => {
         f,
         s,
         xs,
-      ) => apply_state(TSL.traverse((a, s') => f(s', a), xs), s)
+      ) => apply_state(TSL.traverse(a => s' => f(s', a), xs), s)
 
       and map_accum_right: (('s, 'a) => accum<'s, 'b>, 's, TSR.t<'a>) => accum<'s, TSR.t<'b>> = (
         f,
         s,
         xs,
-      ) => apply_state(TSR.traverse((a, s') => f(s', a), xs), s)
+      ) => apply_state(TSR.traverse(a => s' => f(s', a), xs), s)
     }
   }
 

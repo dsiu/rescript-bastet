@@ -23,12 +23,12 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "bs-stdlib-shims": "^0.1.0",
-    "@rescript/core": "^0.5.0"
+    "@rescript/core": "^0.6.0"
   },
   "devDependencies": {
     "bs-chai": "github:dsiu/bs-chai#rescript-v11",
     "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v11",
     "rescript-mocha": "github:dsiu/rescript-mocha#rescript-v11",
-    "rescript": "^11.0.0-rc.6"
+    "rescript": "^11.0.1"
   }
 }

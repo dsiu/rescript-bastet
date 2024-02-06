@@ -262,7 +262,8 @@ module Make = (A: IMPL): ARRAY => {
 
     let fold_left = A.fold_left
 
-    and fold_right = (f, init) => ArrayLabels.fold_right(~f, ~init)
+    and fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a = (f, init, x) =>
+      ArrayLabels.fold_right(~f, ~init, x)
 
     module Fold_Map = (M: MONOID) => {
       module D = Default.Fold_Map(

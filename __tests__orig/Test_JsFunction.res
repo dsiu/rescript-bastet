@@ -1,4 +1,7 @@
-open BsMocha.Mocha
+@@uncurried
+@@uncurried.swap
+
+open RescriptMocha.Mocha
 open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End
 open BsJsverify.Verify.Arbitrary
