@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 let \"<." = Function.Infix.\"<."
@@ -27,7 +30,7 @@ var merge = function(a, b) {
 
 @val external fold_left_keys: (('a, string, 'b) => 'a, 'a, Js.Dict.t<'b>) => 'a = "fold_left_keys"
 
-@val external merge: (Js.Dict.t<'a>, Js.Dict.t<'a>) => Js.Dict.t<'a> = "merge"
+@val external merge: (. Js.Dict.t<'a>, Js.Dict.t<'a>) => Js.Dict.t<'a> = "merge"
 
 external unsafe_from_object: 'a => Js.Dict.t<'b> = "%identity"
 
@@ -42,13 +45,13 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = Js.Dict.t<'a> = {
   type t<'a> = Js.Dict.t<'a>
 
-  let map = (f, a) => Js.Dict.map((. x) => f(x), a)
+  let map = (. f, a) => Js.Dict.map(x => f(x), a)
 }
 
 module Apply: APPLY with type t<'a> = Js.Dict.t<'a> = {
   include Functor
 
-  let apply = (fn_array, a) =>
+  let apply = (. fn_array, a) =>
     fold_left((acc, f) => merge(acc, map(f, a)), Obj.magic(Js.Dict.empty()), fn_array)
 }
 
@@ -69,7 +72,8 @@ module Foldable: FOLDABLE with type t<'a> = Js.Dict.t<'a> = {
 
   let fold_left = fold_left
 
-  and fold_right = (f, init, a) => ArrayLabels.fold_right(~f, ~init, Js.Dict.values(a))
+  and fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a = (f, init, a) =>
+    ArrayLabels.fold_right(~f, ~init, Js.Dict.values(a))
 
   module Fold_Map = (M: MONOID) => {
     module D = Default.Fold_Map(
@@ -125,12 +129,17 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
   let traverse_with_index = (f, a) => {
     open I
     fold_left_keys(
-      (acc, k, v) => \"<*>"(\"<$>"(Function.flip(insert(k)), acc), f(k, v)),
+      (acc, k, v) =>
+        \"<*>"(
+          \"<$>"(a => b => Function.flip((v, dict) => insert(k, v, dict))(a)(b), acc),
+          f(k, v),
+        ),
       A.pure(Js.Dict.empty()),
       a,
     )
   }
 
+  //  let traverse = Obj.magic(\"<."(traverse_with_index, Function.const))
   let traverse = Obj.magic(\"<."(traverse_with_index, Function.const))
 
   module D = Default.Sequence({

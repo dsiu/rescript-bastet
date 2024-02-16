@@ -559,146 +559,146 @@ module ResultF = {
   }
 }
 
-//module TupleF = {
-//  module Int = {
-//    module Functor = Tuple.Functor({
-//      type t = int
-//    })
-//
-//    module Foldable = Tuple.Foldable({
-//      type t = int
-//    })
-//
-//    module Additive = {
-//      module Apply = Tuple.Apply(Int.Additive.Semigroup)
-//      module Applicative = Tuple.Applicative(Int.Additive.Monoid)
-//      module Monad = Tuple.Monad(Int.Additive.Monoid)
-//    }
-//
-//    module Multiplicative = {
-//      module Apply = Tuple.Apply(Int.Multiplicative.Semigroup)
-//      module Applicative = Tuple.Applicative(Int.Multiplicative.Monoid)
-//      module Monad = Tuple.Monad(Int.Multiplicative.Monoid)
-//    }
-//
-//    module List = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = int
-//        },
-//        List.Applicative,
-//      )
-//    }
-//
-//    module Array = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = int
-//        },
-//        Array.Applicative,
-//      )
-//    }
-//
-//    module Option = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = int
-//        },
-//        Option.Applicative,
-//      )
-//    }
-//  }
-//
-//  module Bool = {
-//    module Functor = Tuple.Functor({
-//      type t = bool
-//    })
-//
-//    module Foldable = Tuple.Foldable({
-//      type t = bool
-//    })
-//
-//    module Conjunctive = {
-//      module Apply = Tuple.Apply(Bool.Conjunctive.Semigroup)
-//      module Applicative = Tuple.Applicative(Bool.Conjunctive.Monoid)
-//      module Monad = Tuple.Monad(Bool.Conjunctive.Monoid)
-//    }
-//
-//    module Disjunctive = {
-//      module Apply = Tuple.Apply(Bool.Disjunctive.Semigroup)
-//      module Applicative = Tuple.Applicative(Bool.Disjunctive.Monoid)
-//      module Monad = Tuple.Monad(Bool.Disjunctive.Monoid)
-//    }
-//
-//    module List = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = bool
-//        },
-//        List.Applicative,
-//      )
-//    }
-//
-//    module Array = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = bool
-//        },
-//        Array.Applicative,
-//      )
-//    }
-//
-//    module Option = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = bool
-//        },
-//        Option.Applicative,
-//      )
-//    }
-//  }
-//
-//  module String = {
-//    module Functor = Tuple.Functor({
-//      type t = string
-//    })
-//
-//    module Foldable = Tuple.Foldable({
-//      type t = string
-//    })
-//
-//    module Apply = Tuple.Apply(String.Semigroup)
-//    module Applicative = Tuple.Applicative(String.Monoid)
-//    module Monad = Tuple.Monad(String.Monoid)
-//
-//    module List = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = string
-//        },
-//        List.Applicative,
-//      )
-//    }
-//
-//    module Array = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = string
-//        },
-//        Array.Applicative,
-//      )
-//    }
-//
-//    module Option = {
-//      module Traversable = Tuple.Traversable(
-//        {
-//          type t = string
-//        },
-//        Option.Applicative,
-//      )
-//    }
-//  }
-//}
+module TupleF = {
+  module Int = {
+    module Functor = Tuple.Functor({
+      type t = int
+    })
+
+    module Foldable = Tuple.Foldable({
+      type t = int
+    })
+
+    module Additive = {
+      module Apply = Tuple.Apply(Int.Additive.Semigroup)
+      module Applicative = Tuple.Applicative(Int.Additive.Monoid)
+      module Monad = Tuple.Monad(Int.Additive.Monoid)
+    }
+
+    module Multiplicative = {
+      module Apply = Tuple.Apply(Int.Multiplicative.Semigroup)
+      module Applicative = Tuple.Applicative(Int.Multiplicative.Monoid)
+      module Monad = Tuple.Monad(Int.Multiplicative.Monoid)
+    }
+
+    module List = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = int
+        },
+        List.Applicative,
+      )
+    }
+
+    module Array = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = int
+        },
+        Array.Applicative,
+      )
+    }
+
+    module Option = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = int
+        },
+        Option.Applicative,
+      )
+    }
+  }
+
+  module Bool = {
+    module Functor = Tuple.Functor({
+      type t = bool
+    })
+
+    module Foldable = Tuple.Foldable({
+      type t = bool
+    })
+
+    module Conjunctive = {
+      module Apply = Tuple.Apply(Bool.Conjunctive.Semigroup)
+      module Applicative = Tuple.Applicative(Bool.Conjunctive.Monoid)
+      module Monad = Tuple.Monad(Bool.Conjunctive.Monoid)
+    }
+
+    module Disjunctive = {
+      module Apply = Tuple.Apply(Bool.Disjunctive.Semigroup)
+      module Applicative = Tuple.Applicative(Bool.Disjunctive.Monoid)
+      module Monad = Tuple.Monad(Bool.Disjunctive.Monoid)
+    }
+
+    module List = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = bool
+        },
+        List.Applicative,
+      )
+    }
+
+    module Array = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = bool
+        },
+        Array.Applicative,
+      )
+    }
+
+    module Option = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = bool
+        },
+        Option.Applicative,
+      )
+    }
+  }
+
+  module String = {
+    module Functor = Tuple.Functor({
+      type t = string
+    })
+
+    module Foldable = Tuple.Foldable({
+      type t = string
+    })
+
+    module Apply = Tuple.Apply(String.Semigroup)
+    module Applicative = Tuple.Applicative(String.Monoid)
+    module Monad = Tuple.Monad(String.Monoid)
+
+    module List = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = string
+        },
+        List.Applicative,
+      )
+    }
+
+    module Array = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = string
+        },
+        Array.Applicative,
+      )
+    }
+
+    module Option = {
+      module Traversable = Tuple.Traversable(
+        {
+          type t = string
+        },
+        Option.Applicative,
+      )
+    }
+  }
+}
 
 module FunctionF = {
   module Int = {

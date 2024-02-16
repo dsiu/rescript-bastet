@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 let first = ((a, _)) => a
@@ -53,13 +56,13 @@ module Monoid: MONOID_F = (First: MONOID, Second: MONOID) => {
 module Functor: FUNCTOR_F = (T: TYPE) => {
   type t<'a> = (T.t, 'a)
 
-  let map = (f, (a, b)) => (a, f(b))
+  let map = (. f, (a, b)) => (a, f(b))
 }
 
 module Apply: APPLY_F = (S: SEMIGROUP) => {
   include Functor(S)
 
-  let apply = ((a, f), (a', x)) => (S.append(a, a'), f(x))
+  let apply = (. (a, f), (a', x)) => (S.append(a, a'), f(x))
 }
 
 module Applicative: APPLICATIVE_F = (M: MONOID) => {
@@ -71,7 +74,7 @@ module Applicative: APPLICATIVE_F = (M: MONOID) => {
 module Monad: MONAD_F = (M: MONOID) => {
   include Applicative(M)
 
-  let flat_map = ((a, b), f) =>
+  let flat_map = (. (a, b), f) =>
     switch f(b) {
     | (a', c) => (M.append(a, a'), c)
     }
@@ -124,7 +127,7 @@ module Eq: EQ_F = (First: EQ, Second: EQ) => {
 module Semigroupoid: SEMIGROUPOID with type t<'a, 'b> = ('a, 'b) = {
   type t<'a, 'b> = ('a, 'b)
 
-  let compose = ((_, c), (a, _)) => (a, c)
+  let compose = (. (_, c), (a, _)) => (a, c)
 }
 
 module Show: SHOW_F = (First: SHOW, Second: SHOW) => {
@@ -159,15 +162,15 @@ module Bifoldable: BIFOLDABLE with type t<'a, 'b> = ('a, 'b) = {
   and bifold_right = (f, g, init, (a, b)) => f(a, g(b, init))
 
   module Fold_Map = (M: MONOID) => {
-    let fold_map = (f, g, (a, b)) => M.append(f(a), g(b))
+    let fold_map = (. f, g, (a, b)) => M.append(f(a, ...), g(b, ...))
   }
 
   module Fold_Map_Any = (M: MONOID_ANY) => {
-    let fold_map = (f, g, (a, b)) => M.append(f(a), g(b))
+    let fold_map = (. f, g, (a, b)) => M.append(f(a, ...), g(b, ...))
   }
 
   module Fold_Map_Plus = (P: PLUS) => {
-    let fold_map = (f, g, (a, b)) => P.alt(f(a), g(b))
+    let fold_map = (. f, g, (a, b)) => P.alt(f(a, ...), g(b, ...))
   }
 }
 
@@ -187,12 +190,12 @@ module Bitraversable: BITRAVERSABLE_F = (A: APPLICATIVE) => {
 
   let bitraverse = (f, g, (a, b)) => {
     open I
-    \"<*>"(A.map((a, b) => (a, b), f(a)), g(b))
+    \"<*>"(A.map(a => b => (a, b), f(a)), g(b))
   }
 
   and bisequence = ((a, b)) => {
     open I
-    \"<*>"(A.map((a, b) => (a, b), a), b)
+    \"<*>"(A.map(a => b => (a, b), a), b)
   }
 }
 
