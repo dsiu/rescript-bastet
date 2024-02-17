@@ -30,7 +30,7 @@ var merge = function(a, b) {
 
 @val external fold_left_keys: (('a, string, 'b) => 'a, 'a, Js.Dict.t<'b>) => 'a = "fold_left_keys"
 
-@val external merge: (. Js.Dict.t<'a>, Js.Dict.t<'a>) => Js.Dict.t<'a> = "merge"
+@val external merge: (Js.Dict.t<'a>, Js.Dict.t<'a>) => Js.Dict.t<'a> = "merge"
 
 external unsafe_from_object: 'a => Js.Dict.t<'b> = "%identity"
 
@@ -45,13 +45,13 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = Js.Dict.t<'a> = {
   type t<'a> = Js.Dict.t<'a>
 
-  let map = (. f, a) => Js.Dict.map(x => f(x), a)
+  let map = (f, a) => Js.Dict.map(x => f(x), a)
 }
 
 module Apply: APPLY with type t<'a> = Js.Dict.t<'a> = {
   include Functor
 
-  let apply = (. fn_array, a) =>
+  let apply = (fn_array, a) =>
     fold_left((acc, f) => merge(acc, map(f, a)), Obj.magic(Js.Dict.empty()), fn_array)
 }
 
@@ -131,7 +131,7 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
     fold_left_keys(
       (acc, k, v) =>
         \"<*>"(
-          \"<$>"(a => b => Function.flip((v, dict) => insert(k, v, dict))(a)(b), acc),
+          \"<$>"(a => b => Function.flip((v, dict) => insert(k, v, dict), a, b), acc),
           f(k, v),
         ),
       A.pure(Js.Dict.empty()),
@@ -140,7 +140,8 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
   }
 
   //  let traverse = Obj.magic(\"<."(traverse_with_index, Function.const))
-  let traverse = Obj.magic(\"<."(traverse_with_index, Function.const))
+  // todo: hack? passed the type check but doesn't pass the test
+  //  let traverse = Obj.magic((a, b) => traverse_with_index((x, y) => Function.const(a, _), b))
 
   module D = Default.Sequence({
     type rec t<'a> = Js.Dict.t<'a>

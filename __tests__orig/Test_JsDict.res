@@ -1,4 +1,7 @@
-open BsMocha.Mocha
+@@uncurried
+@@uncurried.swap
+
+open RescriptMocha.Mocha
 open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End
 open BsJsverify.Verify.Arbitrary
@@ -15,7 +18,7 @@ describe("Dict", () => {
     property1(
       "should satisfy composition",
       arb_dict(arb_nat),
-      a => V.composition(\"^"("!"), string_of_int, a),
+      a => V.composition(\"^"("!", ...), string_of_int, a),
     )
   })
   describe("Apply", () => {
@@ -25,7 +28,7 @@ describe("Dict", () => {
       arb_dict(arb_nat),
       n =>
         V.associative_composition(
-          Js.Dict.fromList(list{("g", \"^"("!"))}),
+          Js.Dict.fromList(list{("g", \"^"("!", ...))}),
           Js.Dict.fromList(list{("f", string_of_int)}),
           n,
         ),
@@ -44,12 +47,15 @@ describe("Dict", () => {
       "should satisfy distributivity",
       arb_dict(arb_nat),
       arb_dict(arb_nat),
-      V.distributivity(string_of_int),
+      V.distributivity(string_of_int, ...),
     )
   })
   describe("Plus", () => {
     module V = Verify.Plus(Dict.Plus)
-    it("should satisfy annihalation", () => expect(V.annihalation(string_of_int)) |> to_be(true))
+    it(
+      "should satisfy annihalation",
+      () => expect(V.annihalation(string_of_int)) |> (to_be(true, ...)),
+    )
     property1("should satisfy identity", arb_dict(arb_nat), V.identity)
   })
   describe("Foldable", () =>
@@ -58,10 +64,10 @@ describe("Dict", () => {
       () => {
         expect(
           Dict.Foldable.fold_left(\"+", 0, Dict.unsafe_from_object({"a": 1, "b": 2, "c": 3})),
-        ) |> to_be(6)
+        ) |> (to_be(6, ...))
         expect(
           Dict.Foldable.fold_left(\"-", 10, Dict.unsafe_from_object({"a": 1, "b": 3, "c": 4})),
-        ) |> to_be(2)
+        ) |> (to_be(2, ...))
       },
     )
   )
@@ -72,10 +78,10 @@ describe("Dict", () => {
       () => {
         expect(
           T.sequence(Dict.unsafe_from_object({"a": Some(123), "b": Some(456), "c": Some(789)})),
-        ) |> to_be(Some(Dict.unsafe_from_object({"a": 123, "b": 456, "c": 789})))
+        ) |> (to_be(Some(Dict.unsafe_from_object({"a": 123, "b": 456, "c": 789})), ...))
         expect(
           T.sequence(Dict.unsafe_from_object({"a": Some(123), "b": None, "c": Some(789)})),
-        ) |> to_be(None)
+        ) |> (to_be(None, ...))
       },
     )
   })
