@@ -26,9 +26,9 @@ module type TEST = {
 
   let check: (check<'a>, ~name: string=?, 'a, 'a) => unit
 
-  let test: (. string, unit => unit) => test
+  let test: (string, unit => unit) => test
 
-  let suite: (. string, list<test>) => suite<test>
+  let suite: (string, list<test>) => suite<test>
 }
 
 module type ARBITRARY = {

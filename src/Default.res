@@ -78,7 +78,7 @@ module Fold = (F: FOLD_MAP) => {
 
   let fold_left_default = (f, init, xs) => {
     let Dual.Dual(Endo.Endo(r)) = Dual_Fold_Map.fold_map(
-      \"<."(x => Dual.Dual(Endo.Endo(x)), y => Function.flip(f)(y, _)),
+      \"<."(x => Dual.Dual(Endo.Endo(x)), y => Function.flip(f, y, _)),
       xs,
     )
     r(init)

@@ -4,7 +4,7 @@
 module A = ArrayF.Make({
   let length = xs => ArrayLabels.length(xs)
 
-  let make = ArrayLabels.make
+  let make = (i, a) => ArrayLabels.make(i, a)
 
   let append = (a, b) => ArrayLabels.append(a, b)
 

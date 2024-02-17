@@ -7,7 +7,7 @@
 module A = ArrayF.Make({
   let length = x => Js.Array.length(x)
 
-  let make = (. n, value) => {
+  let make = (n, value) => {
     let arr = []
     for _ in 1 to n {
       Js.Array.push(value, arr) |> ignore

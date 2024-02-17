@@ -6,7 +6,7 @@ open Interface
 module type IMPL = {
   let length: array<'a> => int
 
-  let make: (. int, 'a) => array<'a>
+  let make: (int, 'a) => array<'a>
 
   let append: (array<'a>, array<'a>) => array<'a>
 

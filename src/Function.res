@@ -4,9 +4,9 @@
 open Interface
 
 //let flip: (('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
-let flip: (. ('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
+let flip: (('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
 
-and const: (. 'a, 'b) => 'a = (a, _) => a
+and const: ('a, 'b) => 'a = (a, _) => a
 
 module type FUNCTOR_F = (T: TYPE) => (FUNCTOR with type t<'a> = T.t => 'a)
 
@@ -21,7 +21,7 @@ module type BICONTRAVARIANT_F = (T: TYPE) => (BICONTRAVARIANT with type t<'a, 'b
 module Functor: FUNCTOR_F = (T: TYPE) => {
   type t<'b> = T.t => 'b
 
-  let map_x = (. f, g) => x => f(g(x))
+  let map_x = (f, g) => x => f(g(x))
   let map = (f, g) => map_x(f, g)
 }
 
@@ -29,14 +29,14 @@ module Apply: APPLY_F = (T: TYPE) => {
   module Functor = Functor(T)
   include Functor
 
-  let apply_x = (. f, g) => x => f(x)(g(x))
+  let apply_x = (f, g) => x => f(x)(g(x))
   let apply = (f, g) => apply_x(f, g)
 }
 
 module Semigroupoid: SEMIGROUPOID with type t<'a, 'b> = 'a => 'b = {
   type t<'a, 'b> = 'a => 'b
 
-  let compose_x = (. f, g) => x => f(g(x))
+  let compose_x = (f, g) => x => f(g(x))
   let compose = (f, g) => compose_x(f, g)
 
   //  let compose = (. f, g) => x => f(g(x))
