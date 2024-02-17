@@ -15,7 +15,7 @@ module A = ArrayF.Make({
     arr
   }
 
-  let append = Belt.Array.concat
+  let append = (a, b) => Belt.Array.concat(a, b)
 
   let map: ('a => 'b, array<'a>) => array<'b> = (f, xs) => Js.Array.map(f, xs)
 

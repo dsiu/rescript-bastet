@@ -120,7 +120,7 @@ module Monad: MONAD_F = (T: TYPE) => {
 module Alt: ALT_F = (T: TYPE) => {
   include Functor(T)
 
-  let alt = (. a, b) =>
+  let alt = (a, b) =>
     switch (a, b) {
     | (Error(_), b') => b'
     | (a', _) => a'

@@ -137,7 +137,7 @@ module type MONAD = {
 module type ALT = {
   include FUNCTOR
 
-  let alt: (. t<'a>, t<'a>) => t<'a>
+  let alt: (t<'a>, t<'a>) => t<'a>
 }
 
 module type PLUS = {

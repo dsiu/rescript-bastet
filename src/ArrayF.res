@@ -8,7 +8,7 @@ module type IMPL = {
 
   let make: (. int, 'a) => array<'a>
 
-  let append: (. array<'a>, array<'a>) => array<'a>
+  let append: (array<'a>, array<'a>) => array<'a>
 
   let map: ('a => 'b, array<'a>) => array<'b>
 
@@ -92,7 +92,7 @@ module type ARRAY = {
 
     let map: ('a => 'b, t<'a>) => t<'b>
 
-    let alt: (. t<'a>, t<'a>) => t<'a>
+    let alt: (t<'a>, t<'a>) => t<'a>
   }
 
   module Apply: {

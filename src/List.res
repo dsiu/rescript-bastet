@@ -19,7 +19,7 @@ module Functor: FUNCTOR with type t<'a> = list<'a> = {
 module Alt: ALT with type t<'a> = list<'a> = {
   include Functor
 
-  let alt = ListLabels.append
+  let alt = (a, b) => ListLabels.append(a, b)
 }
 
 module Apply: APPLY with type t<'a> = list<'a> = {

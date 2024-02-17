@@ -71,7 +71,7 @@ module Alt: {
 
   let map: ('a => 'b, t<'a>) => t<'b>
 
-  let alt: (. t<'a>, t<'a>) => t<'a>
+  let alt: (t<'a>, t<'a>) => t<'a>
 }
 
 module Apply: {

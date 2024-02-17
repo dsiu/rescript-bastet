@@ -6,7 +6,7 @@ module A = ArrayF.Make({
 
   let make = ArrayLabels.make
 
-  let append = ArrayLabels.append
+  let append = (a, b) => ArrayLabels.append(a, b)
 
   let map: ('a => 'b, array<'a>) => array<'b> = (f, arr) => ArrayLabels.map(~f, arr)
 
