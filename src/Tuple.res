@@ -162,15 +162,15 @@ module Bifoldable: BIFOLDABLE with type t<'a, 'b> = ('a, 'b) = {
   and bifold_right = (f, g, init, (a, b)) => f(a, g(b, init))
 
   module Fold_Map = (M: MONOID) => {
-    let fold_map = (. f, g, (a, b)) => M.append(f(a, ...), g(b, ...))
+    let fold_map = (f, g, (a, b)) => M.append(f(a), g(b))
   }
 
   module Fold_Map_Any = (M: MONOID_ANY) => {
-    let fold_map = (. f, g, (a, b)) => M.append(f(a, ...), g(b, ...))
+    let fold_map = (f, g, (a, b)) => M.append(f(a), g(b))
   }
 
   module Fold_Map_Plus = (P: PLUS) => {
-    let fold_map = (. f, g, (a, b)) => P.alt(f(a, ...), g(b, ...))
+    let fold_map = (f, g, (a, b)) => P.alt(f(a), g(b))
   }
 }
 

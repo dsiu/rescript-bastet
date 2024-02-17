@@ -449,17 +449,17 @@ module type BIFOLDABLE = {
 
   module Fold_Map: (M: MONOID) =>
   {
-    let fold_map: (. (. 'a) => M.t, (. 'b) => M.t, t<'a, 'b>) => M.t
+    let fold_map: ('a => M.t, 'b => M.t, t<'a, 'b>) => M.t
   }
 
   module Fold_Map_Any: (M: MONOID_ANY) =>
   {
-    let fold_map: (. (. 'a) => M.t<'a>, (. 'b) => M.t<'a>, t<'a, 'b>) => M.t<'a>
+    let fold_map: ('a => M.t<'a>, 'b => M.t<'a>, t<'a, 'b>) => M.t<'a>
   }
 
   module Fold_Map_Plus: (P: PLUS) =>
   {
-    let fold_map: (. (. 'a) => P.t<'a>, (. 'b) => P.t<'a>, t<'a, 'b>) => P.t<'a>
+    let fold_map: ('a => P.t<'a>, 'b => P.t<'a>, t<'a, 'b>) => P.t<'a>
   }
 }
 

@@ -10,7 +10,7 @@ let (flip, const) = {
   (flip, const)
 }
 
-let result: (. (. 'a) => 'c, (. 'b) => 'c, result<'a, 'b>) => 'c = (f, g, a) =>
+let result: ('a => 'c, 'b => 'c, result<'a, 'b>) => 'c = (f, g, a) =>
   switch (f, g, a) {
   | (f, _, Ok(a')) => f(a')
   | (_, g, Error(a')) => g(a')
@@ -140,7 +140,7 @@ module Extend: EXTEND_F = (T: TYPE) => {
 module Show: SHOW_F = (Ok: SHOW, Error: SHOW) => {
   type t = result<Ok.t, Error.t>
 
-  let show = x => result(Ok.show, Error.show)(x)
+  let show = result(Ok.show, Error.show, ...)
 }
 
 module Eq: EQ_F = (Ok: EQ, Error: EQ) => {
@@ -461,13 +461,13 @@ module Unsafe = {
     }
 }
 
-let is_ok = a => result(const(true), const(false), a)
+let is_ok = a => result(const(true, _), const(false, _), a)
 
-and is_error = a => result(const(false), const(true), a)
+and is_error = a => result(const(false, _), const(true, _), a)
 
 and note: ('err, option<'a>) => result<'a, 'err> = (default, o) => {
   let okx = x => Ok(x)
   let errd = Error(default)
   Option.maybe(~f=okx, ~default=errd, o)
 }
-and hush: result<'a, 'err> => option<'a> = e => result(Option.Applicative.pure, const(None), e)
+and hush: result<'a, 'err> => option<'a> = e => result(Option.Applicative.pure, const(None, _), e)
