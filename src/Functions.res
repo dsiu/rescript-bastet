@@ -275,7 +275,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
             | {accum: s2, value: x'} => {accum: s2, value: f'(x')}
             }
           }
-        let apply = (. f, x) => apply_x(f, x)
+        let apply = (f, x) => apply_x(f, x)
       }
 
       module Applicative: APPLICATIVE with type t<'a> = state<Type.t, 'a> = {
@@ -309,7 +309,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
             }
           }
 
-        let apply = (. f, x) => apply_x(f, x)
+        let apply = (f, x) => apply_x(f, x)
       }
 
       module Applicative: APPLICATIVE with type t<'a> = state<Type.t, 'a> = {

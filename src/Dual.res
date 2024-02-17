@@ -46,7 +46,7 @@ module Functor: FUNCTOR with type t<'a> = dual<'a> = {
 module Applicative: APPLICATIVE with type t<'a> = dual<'a> = {
   include Functor
 
-  let apply = (. Dual(f), Dual(a)) => Dual(f(a))
+  let apply = (Dual(f), Dual(a)) => Dual(f(a))
 
   let pure = a => Dual(a)
 }

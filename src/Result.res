@@ -94,7 +94,7 @@ module Bifunctor: BIFUNCTOR with type t<'a, 'b> = result<'a, 'b> = {
 module Apply: APPLY_F = (T: TYPE) => {
   include Functor(T)
 
-  let apply = (. f, a) =>
+  let apply = (f, a) =>
     switch (f, a) {
     | (Ok(f'), a') => map(f', a')
     | (Error(f'), _) => Error(f')

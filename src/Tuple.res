@@ -62,7 +62,7 @@ module Functor: FUNCTOR_F = (T: TYPE) => {
 module Apply: APPLY_F = (S: SEMIGROUP) => {
   include Functor(S)
 
-  let apply = (. (a, f), (a', x)) => (S.append(a, a'), f(x))
+  let apply = ((a, f), (a', x)) => (S.append(a, a'), f(x))
 }
 
 module Applicative: APPLICATIVE_F = (M: MONOID) => {

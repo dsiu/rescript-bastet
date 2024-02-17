@@ -100,7 +100,7 @@ module type ARRAY = {
 
     let map: ('a => 'b, t<'a>) => t<'b>
 
-    let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+    let apply: (t<'a => 'b>, t<'a>) => t<'b>
   }
 
   module Applicative: {
@@ -108,7 +108,7 @@ module type ARRAY = {
 
     let map: ('a => 'b, t<'a>) => t<'b>
 
-    let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+    let apply: (t<'a => 'b>, t<'a>) => t<'b>
 
     let pure: 'a => t<'a>
   }
@@ -118,7 +118,7 @@ module type ARRAY = {
 
     let map: ('a => 'b, t<'a>) => t<'b>
 
-    let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+    let apply: (t<'a => 'b>, t<'a>) => t<'b>
 
     let pure: 'a => t<'a>
 
@@ -181,7 +181,7 @@ module type ARRAY = {
 
     let \"<@>": (Monad.t<'a>, 'a => 'b) => Monad.t<'b>
 
-    let \"<*>": (. Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
+    let \"<*>": (Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
 
     let \">>=": (Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
 
@@ -242,7 +242,7 @@ module Make = (A: IMPL): ARRAY => {
   module Apply: APPLY with type t<'a> = array<'a> = {
     include Functor
 
-    let apply = (. fn_array, a) => A.fold_left((acc, f) => Alt.alt(acc, map(f, a)), [], fn_array)
+    let apply = (fn_array, a) => A.fold_left((acc, f) => Alt.alt(acc, map(f, a)), [], fn_array)
   }
 
   module Applicative: APPLICATIVE with type t<'a> = array<'a> = {

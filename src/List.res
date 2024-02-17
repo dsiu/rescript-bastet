@@ -25,7 +25,7 @@ module Alt: ALT with type t<'a> = list<'a> = {
 module Apply: APPLY with type t<'a> = list<'a> = {
   include Functor
 
-  let apply = (. fn_array, a) =>
+  let apply = (fn_array, a) =>
     ListLabels.fold_left(~f=(acc, f) => Alt.alt(acc, map(f, a)), ~init=list{}, fn_array)
 }
 

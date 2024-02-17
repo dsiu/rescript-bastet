@@ -30,7 +30,7 @@ module Apply: APPLY_F = (T: TYPE) => {
   include Functor
 
   let apply_x = (. f, g) => x => f(x)(g(x))
-  let apply = (. f, g) => apply_x(f, g)
+  let apply = (f, g) => apply_x(f, g)
 }
 
 module Semigroupoid: SEMIGROUPOID with type t<'a, 'b> = 'a => 'b = {

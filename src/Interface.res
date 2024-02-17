@@ -119,7 +119,7 @@ module type FUNCTOR = {
 module type APPLY = {
   include FUNCTOR
 
-  let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+  let apply: (t<'a => 'b>, t<'a>) => t<'b>
 }
 
 module type APPLICATIVE = {

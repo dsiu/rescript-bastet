@@ -51,7 +51,7 @@ module Functor: FUNCTOR with type t<'a> = option<'a> = {
 module Apply: APPLY with type t<'a> = option<'a> = {
   include Functor
 
-  let apply = (. fn_opt, a) =>
+  let apply = (fn_opt, a) =>
     switch fn_opt {
     | Some(f) => map(f, a)
     | None => None

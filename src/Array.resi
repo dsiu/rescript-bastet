@@ -79,7 +79,7 @@ module Apply: {
 
   let map: ('a => 'b, t<'a>) => t<'b>
 
-  let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+  let apply: (t<'a => 'b>, t<'a>) => t<'b>
 }
 
 module Applicative: {
@@ -87,7 +87,7 @@ module Applicative: {
 
   let map: ('a => 'b, t<'a>) => t<'b>
 
-  let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+  let apply: (t<'a => 'b>, t<'a>) => t<'b>
 
   let pure: 'a => t<'a>
 }
@@ -97,7 +97,7 @@ module Monad: {
 
   let map: ('a => 'b, t<'a>) => t<'b>
 
-  let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+  let apply: (t<'a => 'b>, t<'a>) => t<'b>
 
   let pure: 'a => t<'a>
 
@@ -160,7 +160,7 @@ module Infix: {
 
   let \"<@>": (Monad.t<'a>, 'a => 'b) => Monad.t<'b>
 
-  let \"<*>": (. Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
+  let \"<*>": (Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
 
   let \">>=": (Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
 
