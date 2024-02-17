@@ -501,8 +501,7 @@ module Compare = {
       a,
     ) => {
       // ORIG:
-      // E.eq(\"<."(I.imap(g1, g2), I.imap(f1, f2))(a), I.imap(\"<."(g1, f1), \"<."(f2, g2), a))
-      let eqa = \"<."(x => I.imap(g1, g2)(x), y => I.imap(f1, f2)(y))(a)
+      let eqa = \"<."(x => I.imap(g1, g2, x), y => I.imap(f1, f2, y))(a)
       let eqb = I.imap(\"<."(g1, f1), \"<."(f2, g2), a)
       E.eq(eqa, eqb)
     }

@@ -53,7 +53,7 @@ module Invariant: INVARIANT_F = (T: TYPE) => {
 
   type t<'b> = T.t => 'b
 
-  let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b> = (. f, _) => F.map(f, ...)
+  let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b> = (f, _, x) => F.map(f, x)
 }
 
 module Profunctor: PROFUNCTOR with type t<'a, 'b> = 'a => 'b = {

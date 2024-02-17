@@ -385,7 +385,7 @@ module type FIELD = {
 module type INVARIANT = {
   type t<'a>
 
-  let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b>
+  let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b>
 }
 
 module type CONTRAVARIANT = {

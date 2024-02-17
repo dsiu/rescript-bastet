@@ -165,7 +165,7 @@ module type ARRAY = {
   module Invariant: {
     type t<'a> = array<'a>
 
-    let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b>
+    let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b>
   }
 
   module Extend: {
@@ -388,7 +388,7 @@ module Make = (A: IMPL): ARRAY => {
     type t<'a> = array<'a>
 
     //    let imap = (. f, _) => Functor.map(f)
-    let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b> = (. f, _) => Functor.map(f, ...)
+    let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b> = (f, _, x) => Functor.map(f, x)
   }
 
   module Extend: EXTEND with type t<'a> = array<'a> = {

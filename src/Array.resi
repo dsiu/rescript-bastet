@@ -144,7 +144,7 @@ module Show: SHOW_F
 module Invariant: {
   type t<'a> = array<'a>
 
-  let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b>
+  let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b>
 }
 
 module Extend: {
