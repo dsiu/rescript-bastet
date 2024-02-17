@@ -37,7 +37,7 @@ module Semigroupoid: SEMIGROUPOID with type t<'a, 'b> = 'a => 'b = {
   type t<'a, 'b> = 'a => 'b
 
   let compose_x = (. f, g) => x => f(g(x))
-  let compose = (. f, g) => compose_x(f, g)
+  let compose = (f, g) => compose_x(f, g)
 
   //  let compose = (. f, g) => x => f(g(x))
 }

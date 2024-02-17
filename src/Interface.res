@@ -198,7 +198,7 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) => (TRAVERSABLE with type applicati
 module type SEMIGROUPOID = {
   type t<'a, 'b>
 
-  let compose: (. t<'b, 'c>, t<'a, 'b>) => t<'a, 'c>
+  let compose: (t<'b, 'c>, t<'a, 'b>) => t<'a, 'c>
 }
 
 module type CATEGORY = {

@@ -127,7 +127,7 @@ module Eq: EQ_F = (First: EQ, Second: EQ) => {
 module Semigroupoid: SEMIGROUPOID with type t<'a, 'b> = ('a, 'b) = {
   type t<'a, 'b> = ('a, 'b)
 
-  let compose = (. (_, c), (a, _)) => (a, c)
+  let compose = ((_, c), (a, _)) => (a, c)
 }
 
 module Show: SHOW_F = (First: SHOW, Second: SHOW) => {
