@@ -110,7 +110,7 @@ module Applicative: APPLICATIVE_F = (T: TYPE) => {
 module Monad: MONAD_F = (T: TYPE) => {
   include Applicative(T)
 
-  let flat_map = (. a, f) =>
+  let flat_map = (a, f) =>
     switch a {
     | Ok(a') => f(a')
     | Error(a') => Error(a')

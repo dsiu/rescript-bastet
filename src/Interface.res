@@ -131,7 +131,7 @@ module type APPLICATIVE = {
 module type MONAD = {
   include APPLICATIVE
 
-  let flat_map: (. t<'a>, 'a => t<'b>) => t<'b>
+  let flat_map: (t<'a>, 'a => t<'b>) => t<'b>
 }
 
 module type ALT = {

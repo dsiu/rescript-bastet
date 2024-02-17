@@ -74,7 +74,7 @@ module Applicative: APPLICATIVE_F = (M: MONOID) => {
 module Monad: MONAD_F = (M: MONOID) => {
   include Applicative(M)
 
-  let flat_map = (. (a, b), f) =>
+  let flat_map = ((a, b), f) =>
     switch f(b) {
     | (a', c) => (M.append(a, a'), c)
     }

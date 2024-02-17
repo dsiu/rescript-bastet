@@ -38,8 +38,7 @@ module Applicative: APPLICATIVE with type t<'a> = list<'a> = {
 module Monad: MONAD with type t<'a> = list<'a> = {
   include Applicative
 
-  let flat_map = (. x, f) =>
-    ListLabels.fold_left(~f=(acc, a) => Alt.alt(acc, f(a)), ~init=list{}, x)
+  let flat_map = (x, f) => ListLabels.fold_left(~f=(acc, a) => Alt.alt(acc, f(a)), ~init=list{}, x)
 }
 
 module Plus: PLUS with type t<'a> = list<'a> = {

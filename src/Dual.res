@@ -54,7 +54,7 @@ module Applicative: APPLICATIVE with type t<'a> = dual<'a> = {
 module Monad: MONAD with type t<'a> = dual<'a> = {
   include Applicative
 
-  let flat_map = (. Dual(a), f) => f(a)
+  let flat_map = (Dual(a), f) => f(a)
 }
 
 module Magma_Any: MAGMA_ANY_F = (M: MAGMA_ANY) => {

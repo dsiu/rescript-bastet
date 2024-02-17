@@ -122,7 +122,7 @@ module type ARRAY = {
 
     let pure: 'a => t<'a>
 
-    let flat_map: (. t<'a>, 'a => t<'b>) => t<'b>
+    let flat_map: (t<'a>, 'a => t<'b>) => t<'b>
   }
 
   module Foldable: {
@@ -183,7 +183,7 @@ module type ARRAY = {
 
     let \"<*>": (. Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
 
-    let \">>=": (. Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
+    let \">>=": (Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
 
     let \"=<<": ('a => Monad.t<'b>, Monad.t<'a>) => Monad.t<'b>
 
@@ -254,7 +254,7 @@ module Make = (A: IMPL): ARRAY => {
   module Monad: MONAD with type t<'a> = array<'a> = {
     include Applicative
 
-    let flat_map = (. x, f) => A.fold_left((acc, a) => Alt.alt(acc, f(a)), [], x)
+    let flat_map = (x, f) => A.fold_left((acc, a) => Alt.alt(acc, f(a)), [], x)
   }
 
   module Foldable: FOLDABLE with type t<'a> = array<'a> = {

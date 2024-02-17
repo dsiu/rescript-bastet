@@ -101,7 +101,7 @@ module Monad: {
 
   let pure: 'a => t<'a>
 
-  let flat_map: (. t<'a>, 'a => t<'b>) => t<'b>
+  let flat_map: (t<'a>, 'a => t<'b>) => t<'b>
 }
 
 module Foldable: {
@@ -162,7 +162,7 @@ module Infix: {
 
   let \"<*>": (. Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
 
-  let \">>=": (. Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
+  let \">>=": (Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
 
   let \"=<<": ('a => Monad.t<'b>, Monad.t<'a>) => Monad.t<'b>
 
