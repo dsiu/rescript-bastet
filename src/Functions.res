@@ -238,7 +238,7 @@ module Foldable = (F: FOLDABLE) => {
 
     let fold_monad: (('a, 'b) => M.t<'a>, 'a, F.t<'b>) => M.t<'a> = (f, a, fa) => {
       open I
-      F.fold_left((acc, x) => \">>="(acc, c => flip(f, x)(c)), M.pure(a), fa)
+      F.fold_left((acc, x) => \">>="(acc, flip(f, x, _)), M.pure(a), fa)
     }
   }
 }
@@ -258,30 +258,30 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Functor: FUNCTOR with type t<'a> = state<Type.t, 'a> = {
         type t<'a> = state<Type.t, 'a>
 
-        let map_x = (. f, k) => s =>
+        let map_x = (f, k) => s =>
           switch apply_state(k, s) {
           | {accum: s1, value: a} => {accum: s1, value: f(a)}
           }
-        let map = (. f, k) => map_x(f, k)
+        let map = (f, k) => map_x(f, k)
       }
 
       module Apply: APPLY with type t<'a> = state<Type.t, 'a> = {
         include Functor
 
-        let apply_x = (. f, x) => s =>
+        let apply_x = (f, x) => s =>
           switch apply_state(f, s) {
           | {accum: s1, value: f'} =>
             switch apply_state(x, s1) {
             | {accum: s2, value: x'} => {accum: s2, value: f'(x')}
             }
           }
-        let apply = (. f, x) => apply_x(f, x)
+        let apply = (f, x) => apply_x(f, x)
       }
 
       module Applicative: APPLICATIVE with type t<'a> = state<Type.t, 'a> = {
         include Apply
 
-        let pure_x = (. a, s) => {accum: s, value: a}
+        let pure_x = (a, s) => {accum: s, value: a}
         let pure = x => pure_x(x, _)
       }
     }
@@ -290,12 +290,12 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Functor: FUNCTOR with type t<'a> = state<Type.t, 'a> = {
         type t<'a> = state<Type.t, 'a>
 
-        let map_x = (. f, k) => s =>
+        let map_x = (f, k) => s =>
           switch apply_state(k, s) {
           | {accum: s1, value: a} => {accum: s1, value: f(a)}
           }
 
-        let map = (. f, k) => map_x(f, k)
+        let map = (f, k) => map_x(f, k)
       }
 
       module Apply: APPLY with type t<'a> = state<Type.t, 'a> = {
@@ -309,7 +309,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
             }
           }
 
-        let apply = (. f, x) => apply_x(f, x)
+        let apply = (f, x) => apply_x(f, x)
       }
 
       module Applicative: APPLICATIVE with type t<'a> = state<Type.t, 'a> = {

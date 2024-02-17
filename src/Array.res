@@ -4,11 +4,11 @@
 module A = ArrayF.Make({
   let length = xs => ArrayLabels.length(xs)
 
-  let make = ArrayLabels.make
+  let make = (i, a) => ArrayLabels.make(i, a)
 
-  let append = ArrayLabels.append
+  let append = (a, b) => ArrayLabels.append(a, b)
 
-  let map: (. 'a => 'b, array<'a>) => array<'b> = (. f, arr) => ArrayLabels.map(~f, arr)
+  let map: ('a => 'b, array<'a>) => array<'b> = (f, arr) => ArrayLabels.map(~f, arr)
 
   let mapi = (f, arr) => ArrayLabels.mapi(~f=(index, e) => f(e, index), arr)
 

@@ -47,9 +47,9 @@ module Alternative = (A: ALTERNATIVE) => {
 }
 
 module Semigroupoid = (S: SEMIGROUPOID) => {
-  let \"<." = (. f, g) => S.compose(f, g)
+  let \"<." = (f, g) => S.compose(f, g)
 
-  and \">." = (. g, f) => S.compose(f, g)
+  and \">." = (g, f) => S.compose(f, g)
 }
 
 module Eq = (E: EQ) => {

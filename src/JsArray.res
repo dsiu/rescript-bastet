@@ -7,7 +7,7 @@
 module A = ArrayF.Make({
   let length = x => Js.Array.length(x)
 
-  let make = (. n, value) => {
+  let make = (n, value) => {
     let arr = []
     for _ in 1 to n {
       Js.Array.push(value, arr) |> ignore
@@ -15,9 +15,9 @@ module A = ArrayF.Make({
     arr
   }
 
-  let append = Belt.Array.concat
+  let append = (a, b) => Belt.Array.concat(a, b)
 
-  let map: (. 'a => 'b, array<'a>) => array<'b> = (. f, xs) => Js.Array.map(f, xs)
+  let map: ('a => 'b, array<'a>) => array<'b> = (f, xs) => Js.Array.map(f, xs)
 
   let mapi: (('a, int) => 'b, array<'a>) => array<'b> = (f, xs) => Js.Array.mapi(f, xs)
 

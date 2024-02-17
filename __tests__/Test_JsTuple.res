@@ -55,7 +55,7 @@ describe("Tuple", () => {
     property1(
       "should satisfy homomorphism",
       arb_tuple((arb_string, arb_nat)),
-      V.homomorphism(x => TupleF.String.Functor.map(string_of_int)(x), ...),
+      V.homomorphism(x => TupleF.String.Functor.map(string_of_int, x), ...),
     )
     property1(
       "should satisfy interchange",

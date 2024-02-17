@@ -6,11 +6,11 @@ open Interface
 module type IMPL = {
   let length: array<'a> => int
 
-  let make: (. int, 'a) => array<'a>
+  let make: (int, 'a) => array<'a>
 
-  let append: (. array<'a>, array<'a>) => array<'a>
+  let append: (array<'a>, array<'a>) => array<'a>
 
-  let map: (. 'a => 'b, array<'a>) => array<'b>
+  let map: ('a => 'b, array<'a>) => array<'b>
 
   let mapi: (('a, int) => 'b, array<'a>) => array<'b>
 
@@ -53,7 +53,7 @@ module type ARRAY = {
   {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
     let fold_left: (('a, 'b) => 'a, 'a, t<'b>) => 'a
 
@@ -84,31 +84,31 @@ module type ARRAY = {
   module Functor: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
   }
 
   module Alt: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
-    let alt: (. t<'a>, t<'a>) => t<'a>
+    let alt: (t<'a>, t<'a>) => t<'a>
   }
 
   module Apply: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
-    let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+    let apply: (t<'a => 'b>, t<'a>) => t<'b>
   }
 
   module Applicative: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
-    let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+    let apply: (t<'a => 'b>, t<'a>) => t<'b>
 
     let pure: 'a => t<'a>
   }
@@ -116,13 +116,13 @@ module type ARRAY = {
   module Monad: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
-    let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+    let apply: (t<'a => 'b>, t<'a>) => t<'b>
 
     let pure: 'a => t<'a>
 
-    let flat_map: (. t<'a>, 'a => t<'b>) => t<'b>
+    let flat_map: (t<'a>, 'a => t<'b>) => t<'b>
   }
 
   module Foldable: {
@@ -165,25 +165,25 @@ module type ARRAY = {
   module Invariant: {
     type t<'a> = array<'a>
 
-    let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b>
+    let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b>
   }
 
   module Extend: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
     let extend: (t<'a> => 'b, t<'a>) => t<'b>
   }
 
   module Infix: {
-    let \"<$>": (. 'a => 'b, Monad.t<'a>) => Monad.t<'b>
+    let \"<$>": ('a => 'b, Monad.t<'a>) => Monad.t<'b>
 
     let \"<@>": (Monad.t<'a>, 'a => 'b) => Monad.t<'b>
 
-    let \"<*>": (. Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
+    let \"<*>": (Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
 
-    let \">>=": (. Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
+    let \">>=": (Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
 
     let \"=<<": ('a => Monad.t<'b>, Monad.t<'a>) => Monad.t<'b>
 
@@ -242,7 +242,7 @@ module Make = (A: IMPL): ARRAY => {
   module Apply: APPLY with type t<'a> = array<'a> = {
     include Functor
 
-    let apply = (. fn_array, a) => A.fold_left((acc, f) => Alt.alt(acc, map(f, a)), [], fn_array)
+    let apply = (fn_array, a) => A.fold_left((acc, f) => Alt.alt(acc, map(f, a)), [], fn_array)
   }
 
   module Applicative: APPLICATIVE with type t<'a> = array<'a> = {
@@ -254,7 +254,7 @@ module Make = (A: IMPL): ARRAY => {
   module Monad: MONAD with type t<'a> = array<'a> = {
     include Applicative
 
-    let flat_map = (. x, f) => A.fold_left((acc, a) => Alt.alt(acc, f(a)), [], x)
+    let flat_map = (x, f) => A.fold_left((acc, a) => Alt.alt(acc, f(a)), [], x)
   }
 
   module Foldable: FOLDABLE with type t<'a> = array<'a> = {
@@ -387,7 +387,8 @@ module Make = (A: IMPL): ARRAY => {
   module Invariant: INVARIANT with type t<'a> = array<'a> = {
     type t<'a> = array<'a>
 
-    let imap = (. f, _) => Functor.map(f)
+    //    let imap = (. f, _) => Functor.map(f)
+    let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b> = (f, _, x) => Functor.map(f, x)
   }
 
   module Extend: EXTEND with type t<'a> = array<'a> = {

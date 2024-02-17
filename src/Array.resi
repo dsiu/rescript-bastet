@@ -32,7 +32,7 @@ module type TRAVERSABLE_F = (A: Interface.APPLICATIVE) =>
 {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
   let fold_left: (('a, 'b) => 'a, 'a, t<'b>) => 'a
 
@@ -63,31 +63,31 @@ module type TRAVERSABLE_F = (A: Interface.APPLICATIVE) =>
 module Functor: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 }
 
 module Alt: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
-  let alt: (. t<'a>, t<'a>) => t<'a>
+  let alt: (t<'a>, t<'a>) => t<'a>
 }
 
 module Apply: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
-  let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+  let apply: (t<'a => 'b>, t<'a>) => t<'b>
 }
 
 module Applicative: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
-  let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+  let apply: (t<'a => 'b>, t<'a>) => t<'b>
 
   let pure: 'a => t<'a>
 }
@@ -95,13 +95,13 @@ module Applicative: {
 module Monad: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
-  let apply: (. t<'a => 'b>, t<'a>) => t<'b>
+  let apply: (t<'a => 'b>, t<'a>) => t<'b>
 
   let pure: 'a => t<'a>
 
-  let flat_map: (. t<'a>, 'a => t<'b>) => t<'b>
+  let flat_map: (t<'a>, 'a => t<'b>) => t<'b>
 }
 
 module Foldable: {
@@ -144,25 +144,25 @@ module Show: SHOW_F
 module Invariant: {
   type t<'a> = array<'a>
 
-  let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b>
+  let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b>
 }
 
 module Extend: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
   let extend: (t<'a> => 'b, t<'a>) => t<'b>
 }
 
 module Infix: {
-  let \"<$>": (. 'a => 'b, Monad.t<'a>) => Monad.t<'b>
+  let \"<$>": ('a => 'b, Monad.t<'a>) => Monad.t<'b>
 
   let \"<@>": (Monad.t<'a>, 'a => 'b) => Monad.t<'b>
 
-  let \"<*>": (. Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
+  let \"<*>": (Monad.t<'a => 'b>, Monad.t<'a>) => Monad.t<'b>
 
-  let \">>=": (. Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
+  let \">>=": (Monad.t<'a>, 'a => Monad.t<'b>) => Monad.t<'b>
 
   let \"=<<": ('a => Monad.t<'b>, Monad.t<'a>) => Monad.t<'b>
 

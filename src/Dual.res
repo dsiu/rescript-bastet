@@ -40,13 +40,13 @@ module Monoid: MONOID_F = (M: MONOID) => {
 module Functor: FUNCTOR with type t<'a> = dual<'a> = {
   type t<'a> = dual<'a>
 
-  let map = (. f, Dual(a)) => Dual(f(a))
+  let map = (f, Dual(a)) => Dual(f(a))
 }
 
 module Applicative: APPLICATIVE with type t<'a> = dual<'a> = {
   include Functor
 
-  let apply = (. Dual(f), Dual(a)) => Dual(f(a))
+  let apply = (Dual(f), Dual(a)) => Dual(f(a))
 
   let pure = a => Dual(a)
 }
@@ -54,7 +54,7 @@ module Applicative: APPLICATIVE with type t<'a> = dual<'a> = {
 module Monad: MONAD with type t<'a> = dual<'a> = {
   include Applicative
 
-  let flat_map = (. Dual(a), f) => f(a)
+  let flat_map = (Dual(a), f) => f(a)
 }
 
 module Magma_Any: MAGMA_ANY_F = (M: MAGMA_ANY) => {

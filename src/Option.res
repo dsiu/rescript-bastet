@@ -41,7 +41,7 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = option<'a> = {
   type t<'a> = option<'a>
 
-  let map = (. f, a) =>
+  let map = (f, a) =>
     switch a {
     | Some(a') => Some(f(a'))
     | None => None
@@ -51,7 +51,7 @@ module Functor: FUNCTOR with type t<'a> = option<'a> = {
 module Apply: APPLY with type t<'a> = option<'a> = {
   include Functor
 
-  let apply = (. fn_opt, a) =>
+  let apply = (fn_opt, a) =>
     switch fn_opt {
     | Some(f) => map(f, a)
     | None => None
@@ -67,7 +67,7 @@ module Applicative: APPLICATIVE with type t<'a> = option<'a> = {
 module Monad: MONAD with type t<'a> = option<'a> = {
   include Applicative
 
-  let flat_map = (. x, f) =>
+  let flat_map = (x, f) =>
     switch x {
     | Some(x') => f(x')
     | None => None
@@ -108,7 +108,7 @@ module Loop: LOOP_F = (L: LOOP) => {
 module Alt: ALT with type t<'a> = option<'a> = {
   include Functor
 
-  let alt = (. a, b) =>
+  let alt = (a, b) =>
     switch (a, b) {
     | (Some(a), _) => Some(a)
     | (None, a) => a
@@ -159,12 +159,12 @@ module Traversable = (A: APPLICATIVE) => {
   include (Foldable: FOLDABLE with type t<'a> := t<'a>)
 
   let traverse = (f, x) => {
-    let ma = x => A.map(a => Some(a))(x)
+    let ma = x => A.map(a => Some(a), x)
     maybe(~f=\"<."(ma, f), ~default=A.pure(None), x)
   }
 
   and sequence = x => {
-    let ma = x => A.map(a => Some(a))(x)
+    let ma = x => A.map(a => Some(a), x)
     maybe(~f=ma, ~default=A.pure(None), x)
   }
 }

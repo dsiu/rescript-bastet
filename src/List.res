@@ -13,19 +13,19 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = list<'a> = {
   type t<'a> = list<'a>
 
-  let map: (. 'a => 'b, list<'a>) => list<'b> = (. f, xs) => ListLabels.map(~f, xs)
+  let map: ('a => 'b, list<'a>) => list<'b> = (f, xs) => ListLabels.map(~f, xs)
 }
 
 module Alt: ALT with type t<'a> = list<'a> = {
   include Functor
 
-  let alt = ListLabels.append
+  let alt = (a, b) => ListLabels.append(a, b)
 }
 
 module Apply: APPLY with type t<'a> = list<'a> = {
   include Functor
 
-  let apply = (. fn_array, a) =>
+  let apply = (fn_array, a) =>
     ListLabels.fold_left(~f=(acc, f) => Alt.alt(acc, map(f, a)), ~init=list{}, fn_array)
 }
 
@@ -38,8 +38,7 @@ module Applicative: APPLICATIVE with type t<'a> = list<'a> = {
 module Monad: MONAD with type t<'a> = list<'a> = {
   include Applicative
 
-  let flat_map = (. x, f) =>
-    ListLabels.fold_left(~f=(acc, a) => Alt.alt(acc, f(a)), ~init=list{}, x)
+  let flat_map = (x, f) => ListLabels.fold_left(~f=(acc, a) => Alt.alt(acc, f(a)), ~init=list{}, x)
 }
 
 module Plus: PLUS with type t<'a> = list<'a> = {

@@ -30,13 +30,13 @@ module Test: Test.TEST
     RescriptMocha.Assert.deepEqual(~message=name, expected, actual)
   }
 
-  let test: (. string, unit => unit) => test = (. name, fn) => {
+  let test: (string, unit => unit) => test = (name, fn) => {
     RescriptMocha.Mocha.it(name, fn)
     // a hack
     () => ()
   }
 
-  let suite: (. string, list<test>) => suite<test> = (name, tests) => {
+  let suite: (string, list<test>) => suite<test> = (name, tests) => {
     RescriptMocha.Mocha.describe(name, () => ListLabels.iter(~f=cb => cb(), tests))
     () => ()
   }
