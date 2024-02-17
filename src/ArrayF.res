@@ -10,7 +10,7 @@ module type IMPL = {
 
   let append: (. array<'a>, array<'a>) => array<'a>
 
-  let map: (. 'a => 'b, array<'a>) => array<'b>
+  let map: ('a => 'b, array<'a>) => array<'b>
 
   let mapi: (('a, int) => 'b, array<'a>) => array<'b>
 
@@ -53,7 +53,7 @@ module type ARRAY = {
   {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
     let fold_left: (('a, 'b) => 'a, 'a, t<'b>) => 'a
 
@@ -84,13 +84,13 @@ module type ARRAY = {
   module Functor: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
   }
 
   module Alt: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
     let alt: (. t<'a>, t<'a>) => t<'a>
   }
@@ -98,7 +98,7 @@ module type ARRAY = {
   module Apply: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
     let apply: (. t<'a => 'b>, t<'a>) => t<'b>
   }
@@ -106,7 +106,7 @@ module type ARRAY = {
   module Applicative: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
     let apply: (. t<'a => 'b>, t<'a>) => t<'b>
 
@@ -116,7 +116,7 @@ module type ARRAY = {
   module Monad: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
     let apply: (. t<'a => 'b>, t<'a>) => t<'b>
 
@@ -171,13 +171,13 @@ module type ARRAY = {
   module Extend: {
     type t<'a> = array<'a>
 
-    let map: (. 'a => 'b, t<'a>) => t<'b>
+    let map: ('a => 'b, t<'a>) => t<'b>
 
     let extend: (t<'a> => 'b, t<'a>) => t<'b>
   }
 
   module Infix: {
-    let \"<$>": (. 'a => 'b, Monad.t<'a>) => Monad.t<'b>
+    let \"<$>": ('a => 'b, Monad.t<'a>) => Monad.t<'b>
 
     let \"<@>": (Monad.t<'a>, 'a => 'b) => Monad.t<'b>
 
@@ -387,7 +387,8 @@ module Make = (A: IMPL): ARRAY => {
   module Invariant: INVARIANT with type t<'a> = array<'a> = {
     type t<'a> = array<'a>
 
-    let imap = (. f, _) => Functor.map(f)
+    //    let imap = (. f, _) => Functor.map(f)
+    let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b> = (. f, _) => Functor.map(f, ...)
   }
 
   module Extend: EXTEND with type t<'a> = array<'a> = {

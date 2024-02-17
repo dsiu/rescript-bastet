@@ -113,7 +113,7 @@ module type ABELIAN_GROUP_ANY = {
 module type FUNCTOR = {
   type t<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 }
 
 module type APPLY = {

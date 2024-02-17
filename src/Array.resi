@@ -32,7 +32,7 @@ module type TRAVERSABLE_F = (A: Interface.APPLICATIVE) =>
 {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
   let fold_left: (('a, 'b) => 'a, 'a, t<'b>) => 'a
 
@@ -63,13 +63,13 @@ module type TRAVERSABLE_F = (A: Interface.APPLICATIVE) =>
 module Functor: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 }
 
 module Alt: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
   let alt: (. t<'a>, t<'a>) => t<'a>
 }
@@ -77,7 +77,7 @@ module Alt: {
 module Apply: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
   let apply: (. t<'a => 'b>, t<'a>) => t<'b>
 }
@@ -85,7 +85,7 @@ module Apply: {
 module Applicative: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
   let apply: (. t<'a => 'b>, t<'a>) => t<'b>
 
@@ -95,7 +95,7 @@ module Applicative: {
 module Monad: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
   let apply: (. t<'a => 'b>, t<'a>) => t<'b>
 
@@ -150,13 +150,13 @@ module Invariant: {
 module Extend: {
   type t<'a> = array<'a>
 
-  let map: (. 'a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b, t<'a>) => t<'b>
 
   let extend: (t<'a> => 'b, t<'a>) => t<'b>
 }
 
 module Infix: {
-  let \"<$>": (. 'a => 'b, Monad.t<'a>) => Monad.t<'b>
+  let \"<$>": ('a => 'b, Monad.t<'a>) => Monad.t<'b>
 
   let \"<@>": (Monad.t<'a>, 'a => 'b) => Monad.t<'b>
 

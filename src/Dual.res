@@ -40,7 +40,7 @@ module Monoid: MONOID_F = (M: MONOID) => {
 module Functor: FUNCTOR with type t<'a> = dual<'a> = {
   type t<'a> = dual<'a>
 
-  let map = (. f, Dual(a)) => Dual(f(a))
+  let map = (f, Dual(a)) => Dual(f(a))
 }
 
 module Applicative: APPLICATIVE with type t<'a> = dual<'a> = {

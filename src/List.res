@@ -13,7 +13,7 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = list<'a> = {
   type t<'a> = list<'a>
 
-  let map: (. 'a => 'b, list<'a>) => list<'b> = (. f, xs) => ListLabels.map(~f, xs)
+  let map: ('a => 'b, list<'a>) => list<'b> = (f, xs) => ListLabels.map(~f, xs)
 }
 
 module Alt: ALT with type t<'a> = list<'a> = {

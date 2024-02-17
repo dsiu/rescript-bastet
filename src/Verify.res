@@ -155,8 +155,8 @@ module Compare = {
       //      let compose_fmgm = \"<."(fm, gm)
 
       // workaround
-      let fm' = x => F.map(f)(x)
-      let gm' = y => F.map(g)(y)
+      let fm' = x => F.map(f, x)
+      let gm' = y => F.map(g, y)
       let compose_fm'gm' = \"<."(fm', gm')
 
       E.eq(F.map(\"<."(f, g), a), compose_fm'gm'(a))

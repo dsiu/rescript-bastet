@@ -74,7 +74,7 @@ module Semigroup: SEMIGROUP_F = (T: TYPE, S: SEMIGROUP) => {
 module Functor: FUNCTOR_F = (T: TYPE) => {
   type t<'a> = result<'a, T.t>
 
-  let map = (. f, a) =>
+  let map = (f, a) =>
     switch a {
     | Ok(r) => Ok(f(r))
     | Error(l) => Error(l)

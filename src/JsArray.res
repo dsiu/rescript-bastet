@@ -17,7 +17,7 @@ module A = ArrayF.Make({
 
   let append = Belt.Array.concat
 
-  let map: (. 'a => 'b, array<'a>) => array<'b> = (. f, xs) => Js.Array.map(f, xs)
+  let map: ('a => 'b, array<'a>) => array<'b> = (f, xs) => Js.Array.map(f, xs)
 
   let mapi: (('a, int) => 'b, array<'a>) => array<'b> = (f, xs) => Js.Array.mapi(f, xs)
 

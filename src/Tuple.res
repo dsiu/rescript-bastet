@@ -56,7 +56,7 @@ module Monoid: MONOID_F = (First: MONOID, Second: MONOID) => {
 module Functor: FUNCTOR_F = (T: TYPE) => {
   type t<'a> = (T.t, 'a)
 
-  let map = (. f, (a, b)) => (a, f(b))
+  let map = (f, (a, b)) => (a, f(b))
 }
 
 module Apply: APPLY_F = (S: SEMIGROUP) => {

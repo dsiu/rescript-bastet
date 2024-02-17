@@ -22,7 +22,7 @@ module Functor: FUNCTOR_F = (T: TYPE) => {
   type t<'b> = T.t => 'b
 
   let map_x = (. f, g) => x => f(g(x))
-  let map = (. f, g) => map_x(f, g)
+  let map = (f, g) => map_x(f, g)
 }
 
 module Apply: APPLY_F = (T: TYPE) => {
@@ -53,7 +53,7 @@ module Invariant: INVARIANT_F = (T: TYPE) => {
 
   type t<'b> = T.t => 'b
 
-  let imap = (. f, _) => F.map(f)
+  let imap: (. 'a => 'b, 'b => 'a, t<'a>) => t<'b> = (. f, _) => F.map(f, ...)
 }
 
 module Profunctor: PROFUNCTOR with type t<'a, 'b> = 'a => 'b = {

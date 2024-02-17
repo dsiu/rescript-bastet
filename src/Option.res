@@ -41,7 +41,7 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = option<'a> = {
   type t<'a> = option<'a>
 
-  let map = (. f, a) =>
+  let map = (f, a) =>
     switch a {
     | Some(a') => Some(f(a'))
     | None => None
@@ -159,12 +159,12 @@ module Traversable = (A: APPLICATIVE) => {
   include (Foldable: FOLDABLE with type t<'a> := t<'a>)
 
   let traverse = (f, x) => {
-    let ma = x => A.map(a => Some(a))(x)
+    let ma = x => A.map(a => Some(a), x)
     maybe(~f=\"<."(ma, f), ~default=A.pure(None), x)
   }
 
   and sequence = x => {
-    let ma = x => A.map(a => Some(a))(x)
+    let ma = x => A.map(a => Some(a), x)
     maybe(~f=ma, ~default=A.pure(None), x)
   }
 }

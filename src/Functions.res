@@ -262,7 +262,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
           switch apply_state(k, s) {
           | {accum: s1, value: a} => {accum: s1, value: f(a)}
           }
-        let map = (. f, k) => map_x(f, k)
+        let map = (f, k) => map_x(f, k)
       }
 
       module Apply: APPLY with type t<'a> = state<Type.t, 'a> = {
@@ -295,7 +295,7 @@ module Traversable = (T: TRAVERSABLE_F) => {
           | {accum: s1, value: a} => {accum: s1, value: f(a)}
           }
 
-        let map = (. f, k) => map_x(f, k)
+        let map = (f, k) => map_x(f, k)
       }
 
       module Apply: APPLY with type t<'a> = state<Type.t, 'a> = {
