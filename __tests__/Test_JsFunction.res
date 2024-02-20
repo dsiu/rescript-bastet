@@ -1,4 +1,7 @@
-open BsMocha.Mocha
+@@uncurried
+@@uncurried.swap
+
+open RescriptMocha.Mocha
 open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End
 open BsJsverify.Verify.Arbitrary
@@ -44,7 +47,7 @@ describe("Function", () => {
           },
         )
 
-        V.composition(\"^"("!"), string_of_int, \"+"(1))
+        V.composition(\"^"("!", ...), string_of_int, \"+"(1, ...))
       },
     )
   })
@@ -64,7 +67,7 @@ describe("Function", () => {
           },
         )
 
-        V.associative_composition(\"+", \"-", \"+"(1))
+        V.associative_composition(a => \"+"(a, ...), b => \"-"(b, ...), \"+"(1, ...))
       },
     )
     it(
@@ -74,8 +77,12 @@ describe("Function", () => {
           type t = int
         })
         module Apply_Util = Functions.Apply(Apply_Fn_Int)
-        let fn = Apply_Util.lift2(Function.Semigroupoid.compose, \"-", \"*")
-        expect(fn(3, 4)) |> to_be(-9)
+        let fn = Apply_Util.lift2(
+          Function.Semigroupoid.compose,
+          a => \"-"(a, ...),
+          b => \"*"(b, ...),
+        )
+        expect(fn(3)(4)) |> (to_be(-9, ...))
       },
     )
   })
@@ -93,7 +100,7 @@ describe("Function", () => {
           },
         )
 
-        V.associativity(\"="("123!"), \"^"("!"), string_of_int)
+        V.associativity(\"="("123!", ...), \"^"("!", ...), string_of_int)
       },
     )
   )
@@ -145,7 +152,13 @@ describe("Function", () => {
           },
         )
 
-        V.composition(float_of_int, Js.Float.toString, \"*"(4), \"^"("!"), \"*."(2.0))
+        V.composition(
+          float_of_int,
+          f => Js.Float.toString(f),
+          \"*"(4, ...),
+          \"^"("!", ...),
+          \"*."(2.0, ...),
+        )
       },
     )
   })
@@ -183,7 +196,7 @@ describe("Function", () => {
           },
         )
 
-        V.composition(\"+"(1), string_of_int, \"^"("!"))
+        V.composition(\"+"(1, ...), string_of_int, \"^"("!", ...))
       },
     )
   })
@@ -223,7 +236,7 @@ describe("Function", () => {
           },
         )
 
-        V.composition(\"+"(1), \"+"(2), \"*"(3), \"*"(4), \"+")
+        V.composition(\"+"(1, ...), \"+"(2, ...), \"*"(3, ...), \"*"(4, ...), \"+")
       },
     )
   })
