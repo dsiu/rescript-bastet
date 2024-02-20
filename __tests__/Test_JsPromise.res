@@ -1,4 +1,4 @@
-open BsMocha.Mocha
+open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 open BsJsverify.Verify.Property
 
@@ -15,26 +15,27 @@ module ComparePromise = {
   type t<'a> = Js.Promise.t<'a>
 
   let eq = (a, b) =>
-    Js.Promise.then_(a' => Js.Promise.then_(b' => Js.Promise.resolve(a' == b'), b), a) |> Obj.magic
+    Obj.magic(Js.Promise.then_(a' => Js.Promise.then_(b' => Js.Promise.resolve(a' == b'), b), a))
 }
 
 describe("Promise", () => {
   let promise = a =>
-    Js.Promise.make((~resolve, ~reject as _) =>
-      Js.Global.setTimeout(() => resolve(. a), 10) |> ignore
-    )
+    Js.Promise.make((~resolve, ~reject as _) => ignore(Js.Global.setTimeout(() => resolve(a), 10)))
 
   describe("Functor", () => {
     module V = Verify.Compare.Functor(Promise.Functor, ComparePromise)
     async_property1(
       "should satisfy identity",
       arb_nat,
-      \"<."(\"<."(Obj.magic, V.identity), promise),
+      \"<."(\"<."(o => Obj.magic(o, ...), V.identity), promise),
     )
     async_property1(
       "should satisfy composition",
       arb_nat,
-      \"<."(\"<."(Obj.magic, V.composition(\"^"("!"), string_of_int)), promise),
+      \"<."(
+        \"<."(o => Obj.magic(o, ...), V.composition(\"^"("!", ...), string_of_int, ...)),
+        promise,
+      ),
     )
   })
   describe("Apply", () => {
@@ -44,10 +45,11 @@ describe("Promise", () => {
       arb_nat,
       \"<."(
         \"<."(
-          Obj.magic,
+          o => Obj.magic(o),
           V.associative_composition(
-            Js.Promise.resolve(\"^"("!")),
+            Js.Promise.resolve(\"^"("!", ...)),
             Js.Promise.resolve(string_of_int),
+            ...
           ),
         ),
         promise,
@@ -59,12 +61,12 @@ describe("Promise", () => {
     async_property1(
       "should satisfy identity",
       arb_nat,
-      \"<."(\"<."(Obj.magic, V.identity), promise),
+      \"<."(\"<."(o => Obj.magic(o, ...), V.identity), promise),
     )
     async_property1(
       "should satisfy homomorphism",
       arb_nat,
-      \"<."(Obj.magic, V.homomorphism(string_of_int)),
+      \"<."(o => Obj.magic(o, ...), V.homomorphism(string_of_int, ...)),
     )
   })
 })

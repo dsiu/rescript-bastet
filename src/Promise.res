@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Interface
 
 let \"<." = Function.Infix.\"<."
@@ -9,7 +12,8 @@ let \"<." = Function.Infix.\"<."
 module Functor: FUNCTOR with type t<'a> = Js.Promise.t<'a> = {
   type t<'a> = Js.Promise.t<'a>
 
-  let map = (f, a) => Js.Promise.then_(\"<."(Js.Promise.resolve, f), a)
+  //  let map = (f, a) => Js.Promise.then_(\"<."(Js.Promise.resolve, f), a)
+  let map = (f, a) => Js.Promise.then_(x => Js.Promise.resolve(f(x)), a)
 }
 
 module Apply: APPLY with type t<'a> = Js.Promise.t<'a> = {
@@ -22,5 +26,5 @@ module Apply: APPLY with type t<'a> = Js.Promise.t<'a> = {
 module Applicative: APPLICATIVE with type t<'a> = Js.Promise.t<'a> = {
   include Apply
 
-  let pure = Js.Promise.resolve
+  let pure = p => Js.Promise.resolve(p)
 }
