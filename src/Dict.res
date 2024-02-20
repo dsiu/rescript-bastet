@@ -140,8 +140,7 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
   }
 
   //  let traverse = Obj.magic(\"<."(traverse_with_index, Function.const))
-  // todo: hack? passed the type check but doesn't pass the test
-  //  let traverse = Obj.magic((a, b) => traverse_with_index((x, y) => Function.const(a, _), b))
+  let traverse = Obj.magic((f, ta) => traverse_with_index((_, a) => f(a), ta))
 
   module D = Default.Sequence({
     type rec t<'a> = Js.Dict.t<'a>
