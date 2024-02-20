@@ -26,7 +26,7 @@ module ArbitraryOptionInt: Test.ARBITRARY
   let make = arb_option(arb_int(-1000, 1000))
 }
 
-module TestOption = Test_Option.Option(
+module TestOption = Test.Option(
   MochaI.Test,
   JsVerifyI.Quickcheck,
   ArbitraryOptionInt,

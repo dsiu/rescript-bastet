@@ -335,15 +335,16 @@ describe("Result", () => {
     )
   })
   describe("Extend", () => {
-    //    module V = Verify.Extend(Functors.ResultF.Bool.Extend)
-    //    property1(
-    //      "should satisfy associativity",
-    //      arb_result(arb_nat, arb_bool),
-    //      V.associativity(
-    //        Result.result(Js.Float.toString, const(String.Monoid.empty)),
-    //        Result.result(float_of_int, const(Float.Additive.Monoid.empty)),
-    //      ),
-    //    )
+    module V = Verify.Extend(Functors.ResultF.Bool.Extend)
+    property1(
+      "should satisfy associativity",
+      arb_result(arb_nat, arb_bool),
+      V.associativity(
+        Result.result(f => Js.Float.toString(f), const(String.Monoid.empty, ...), ...),
+        Result.result(float_of_int, const(Float.Additive.Monoid.empty, ...), ...),
+        ...
+      ),
+    )
     ()
   })
   describe("Show", () =>
