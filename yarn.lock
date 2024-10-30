@@ -2,7 +2,12 @@
 # yarn lockfile v1
 
 
-"@rescript/core@^1.3.0", "@rescript/core@^1.4.0":
+"@rescript/core@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@rescript/core/-/core-0.6.0.tgz#d2aae335c2a91dd68acce0ec11716861e08500d5"
+  integrity sha512-D4ykxSpbmxbQa99kCg6/DztwCNt1tV3t11BLSOvJPHNLSIuQxfAU3ddgRruaH9LQSKOrMUjxQS9z6RdG5iFPoA==
+
+"@rescript/core@^1.3.0":
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/@rescript/core/-/core-1.6.1.tgz#159670c94d64a2b8236f46be2bf09a007b1ece08"
   integrity sha512-vyb5k90ck+65Fgui+5vCja/mUfzKaK3kOPT4Z6aAJdHLH1eljEi1zKhXroCiCtpNLSWp8k4ulh1bdB5WS0hvqA==
@@ -893,7 +898,7 @@ js-yaml@4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-jsverify@^0.8.4:
+jsverify@^0.8.3:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/jsverify/-/jsverify-0.8.4.tgz#b914ccc024103d946b503f18ee780ec43febeece"
   integrity sha512-nUG73Sfi8L4eOkc7pv9sflgAm43v+z6XMuePGVdRoBUxBLJiVcMcf3Xgc4h19eHHF3JwsaagOkUu825UnPBLJw==
