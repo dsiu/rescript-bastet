@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open RescriptMocha.Mocha
 open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End
@@ -82,7 +79,7 @@ describe("Function", () => {
           a => \"-"(a, ...),
           b => \"*"(b, ...),
         )
-        expect(fn(3)(4)) |> (to_be(-9, ...))
+        to_be(-9, expect(fn(3)(4)), ...)
       },
     )
   })
@@ -157,7 +154,7 @@ describe("Function", () => {
           f => Js.Float.toString(f),
           \"*"(4, ...),
           \"^"("!", ...),
-          \"*."(2.0, ...),
+          \"*."(2.0, ...)
         )
       },
     )

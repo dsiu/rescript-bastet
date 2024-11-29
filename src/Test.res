@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 @@ocaml.text(" These helpers provide generative tests for implementations. ")
 
 module type TEST = {
@@ -413,12 +410,12 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy homomorphism",
             AA.make(Q.arbitrary_int),
-            V.homomorphism(x => A.map(string_of_int, x), ...),
+            V.homomorphism(x => A.map(string_of_int, x), ...)
           ),
           Q.property(
             ~name="should satisfy interchange",
             Q.arbitrary_int,
-            V.interchange(A.pure(string_of_int), ...),
+            V.interchange(A.pure(string_of_int), ...)
           ),
         },
       )
@@ -437,12 +434,12 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy associativity",
             AA.make_bound(Q.arbitrary_int),
-            V.associativity(\"<."(M.pure, string_of_int), \"<."(M.pure, \"^"("!", ...)), ...),
+            V.associativity(\"<."(M.pure, string_of_int), \"<."(M.pure, \"^"("!", ...)), ...)
           ),
           Q.property(
             ~name="should satisfy identity",
             Q.arbitrary_int,
-            V.identity(\"<."(M.pure, string_of_int), ...),
+            V.identity(\"<."(M.pure, string_of_int), ...)
           ),
         },
       )
@@ -469,7 +466,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
             ~name="should satisfy distributivity",
             AA.make(Q.arbitrary_int),
             AA.make(Q.arbitrary_int),
-            V.distributivity(string_of_int, ...),
+            V.distributivity(string_of_int, ...)
           ),
         },
       )
@@ -488,10 +485,10 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy distributivity",
             AA.make(Q.arbitrary_int),
-            V.distributivity(A.pure(\"*"(2, ...)), A.pure(\"+"(3, ...)), ...),
+            V.distributivity(A.pure(\"*"(2, ...)), A.pure(\"+"(3, ...)), ...)
           ),
           T.test("should satisfy annihalation", () =>
-            T.check(T.bool, V.annihalation(string_of_int |> A.pure), true)
+            T.check(T.bool, V.annihalation(A.pure(string_of_int)), true)
           ),
         },
       )
@@ -920,7 +917,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
               \"<."(\"*"(3, ...), int_of_float),
               \"<."(\"*."(4.0, ...), float_of_int),
               ...
-            ),
+            )
           ),
         },
       )
@@ -1058,7 +1055,11 @@ module Array = (
         Q.property(
           ~name="should satisfy associativity",
           AA.make_bound(Q.arbitrary_int),
-          V.associativity(\"<."(string_of_float, fold'), \"<."(float_of_int, fold), ...),
+          V.associativity(
+            \"<."(RescriptCore.Float.toString(_), fold'),
+            \"<."(float_of_int, fold),
+            ...
+          )
         ),
       },
     )
@@ -1084,8 +1085,8 @@ module Array = (
       Ord.suite,
       Invariant.suite,
     }
-    ->ListLabels.map(~f=suite => suite("Array"))
-    ->ListLabels.append(list{
+    ->RescriptCore.List.map(suite => suite("Array"))
+    ->RescriptCore.List.concat(list{
       zip_with,
       zip,
       foldable,
@@ -1136,17 +1137,17 @@ module Bool = (
   )
   module Boolean_Algebra = M.Boolean_Algebra(Bool.Boolean_Algebra, A)
 
-  let suites = ListLabels.concat(list{
+  let suites = RescriptCore.List.flat(list{
     list{
       Conjunctive.Medial_Magma.suite,
       Conjunctive.Semigroup.suite,
       Conjunctive.Monoid.suite,
-    }->ListLabels.map(~f=suite => suite("Bool.Conjunctive")),
+    }->RescriptCore.List.map(suite => suite("Bool.Conjunctive")),
     list{
       Disjunctive.Medial_Magma.suite,
       Disjunctive.Semigroup.suite,
       Disjunctive.Monoid.suite,
-    }->ListLabels.map(~f=suite => suite("Bool.Disjunctive")),
+    }->RescriptCore.List.map(suite => suite("Bool.Disjunctive")),
     list{
       Eq.suite,
       Ord.suite,
@@ -1161,7 +1162,7 @@ module Bool = (
       Heyting_Algebra.suite,
       Involutive_Heyting_Algebra.suite,
       Boolean_Algebra.suite,
-    }->ListLabels.map(~f=suite => suite("Bool")),
+    }->RescriptCore.List.map(suite => suite("Bool")),
   })
 }
 
@@ -1174,12 +1175,11 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
 
       module Fold_Map_Any = (M: Interface.MONOID_ANY) => {
         let fold_map = (f, x) =>
-          ListLabels.fold_left(~f=(acc, x) => M.append(acc, f(x)), ~init=M.empty, x)
+          RescriptCore.List.reduce(x, M.empty, (acc, x) => M.append(acc, f(x)))
       }
 
       module Fold_Map_Plus = (P: Interface.PLUS) => {
-        let fold_map = (f, x) =>
-          ListLabels.fold_left(~f=(acc, x) => P.alt(acc, f(x)), ~init=P.empty, x)
+        let fold_map = (f, x) => RescriptCore.List.reduce(x, P.empty, (acc, x) => P.alt(acc, f(x)))
       }
     }
 
@@ -1207,12 +1207,12 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
 
       let sequence = xs => {
         open I
-        ListLabels.fold_right(~f=(acc, x) => {
+        RescriptCore.List.reduceReverse(xs, A.pure(list{}), (x, acc) => {
           let ff = y => ys => list{y, ...ys}
           let ap = A.pure(ff)
           let ap1 = \"<*>"(ap, acc)
           \"<*>"(ap1, x)
-        }, ~init=A.pure(list{}), xs)
+        })
       }
 
       module D = Default.Traverse({
@@ -1313,7 +1313,7 @@ module Float = (
   module Euclidean_Ring = M.Compare.Euclidean_Ring(Float.Euclidean_Ring, E, A)
   module Field = M.Field(Float.Field, A)
 
-  let suites = ListLabels.concat(list{
+  let suites = RescriptCore.List.flat(list{
     list{
       Additive.Medial_Magma.suite,
       Additive.Semigroup.suite,
@@ -1322,18 +1322,19 @@ module Float = (
       Additive.Loop.suite,
       Additive.Group.suite,
       Additive.Abelian_Group.suite,
-    }->ListLabels.map(~f=suite => suite("Float.Additive")),
+    }->RescriptCore.List.map(suite => suite("Float.Additive")),
     list{
       Multiplicative.Medial_Magma.suite,
       Multiplicative.Semigroup.suite,
       Multiplicative.Monoid.suite,
       Multiplicative.Quasigroup.suite,
       Multiplicative.Loop.suite,
-    }->ListLabels.map(~f=suite => suite("Float.Multiplicative")),
-    list{Subtractive.Medial_Magma.suite, Subtractive.Quasigroup.suite}->ListLabels.map(~f=suite =>
-      suite("Float.Subtractive")
-    ),
-    list{Divisive.Medial_Magma.suite, Divisive.Quasigroup.suite}->ListLabels.map(~f=suite =>
+    }->RescriptCore.List.map(suite => suite("Float.Multiplicative")),
+    list{
+      Subtractive.Medial_Magma.suite,
+      Subtractive.Quasigroup.suite,
+    }->RescriptCore.List.map(suite => suite("Float.Subtractive")),
+    list{Divisive.Medial_Magma.suite, Divisive.Quasigroup.suite}->RescriptCore.List.map(suite =>
       suite("Float.Divisive")
     ),
     list{
@@ -1346,7 +1347,7 @@ module Float = (
       Division_Ring.suite,
       Euclidean_Ring.suite,
       Field.suite,
-    }->ListLabels.map(~f=suite => suite("Float")),
+    }->RescriptCore.List.map(suite => suite("Float")),
   })
 }
 
@@ -1463,8 +1464,8 @@ module List = (
 
   let suites =
     list{Functor.suite, Apply.suite, Applicative.suite, Monad.suite, Alt.suite, Eq.suite}
-    ->ListLabels.map(~f=suite => suite("List"))
-    ->ListLabels.append(list{foldable, unfoldable, traversable, show, alt_order})
+    ->RescriptCore.List.map(suite => suite("List"))
+    ->RescriptCore.List.concat(list{foldable, unfoldable, traversable, show, alt_order})
 }
 
 module Int = (
@@ -1505,7 +1506,7 @@ module Int = (
   module Commutative_Ring = M.Commutative_Ring(Int.Commutative_Ring, A)
   module Euclidean_Ring = M.Euclidean_Ring(Int.Euclidean_Ring, A)
 
-  let suites = ListLabels.concat(list{
+  let suites = RescriptCore.List.flat(list{
     list{
       Additive.Medial_Magma.suite,
       Additive.Semigroup.suite,
@@ -1514,17 +1515,18 @@ module Int = (
       Additive.Loop.suite,
       Additive.Group.suite,
       Additive.Abelian_Group.suite,
-    }->ListLabels.map(~f=suite => suite("Int.Additive")),
+    }->RescriptCore.List.map(suite => suite("Int.Additive")),
     list{
       Multiplicative.Medial_Magma.suite,
       Multiplicative.Semigroup.suite,
       Multiplicative.Monoid.suite,
       Multiplicative.Quasigroup.suite,
       Multiplicative.Loop.suite,
-    }->ListLabels.map(~f=suite => suite("Int.Multiplicative")),
-    list{Subtractive.Medial_Magma.suite, Subtractive.Quasigroup.suite}->ListLabels.map(~f=suite =>
-      suite("Int.Subtractive")
-    ),
+    }->RescriptCore.List.map(suite => suite("Int.Multiplicative")),
+    list{
+      Subtractive.Medial_Magma.suite,
+      Subtractive.Quasigroup.suite,
+    }->RescriptCore.List.map(suite => suite("Int.Subtractive")),
     list{
       Eq.suite,
       Ord.suite,
@@ -1533,7 +1535,7 @@ module Int = (
       Ring.suite,
       Commutative_Ring.suite,
       Euclidean_Ring.suite,
-    }->ListLabels.map(~f=suite => suite("Int")),
+    }->RescriptCore.List.map(suite => suite("Int")),
   })
 }
 
@@ -1637,8 +1639,8 @@ module Option = (
       Eq.suite,
       Ord.suite,
     }
-    ->ListLabels.map(~f=suite => suite("Option"))
-    ->ListLabels.append(list{infix, foldable, traversable})
+    ->RescriptCore.List.map(suite => suite("Option"))
+    ->RescriptCore.List.concat(list{infix, foldable, traversable})
 }
 
 module String = (
@@ -1662,5 +1664,5 @@ module String = (
       Loop.suite,
       Eq.suite,
       Ord.suite,
-    }->ListLabels.map(~f=suite => suite("String"))
+    }->RescriptCore.List.map(suite => suite("String"))
 }

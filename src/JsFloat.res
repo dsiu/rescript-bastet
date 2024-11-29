@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 @@ocaml.text(" Promives a Show instance using [Js.Float.toString]. You might not need to use this version

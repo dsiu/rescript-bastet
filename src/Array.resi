@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 let zip_with: (('a, 'b) => 'c, array<'a>, array<'b>) => array<'c>
 
 let zip: (array<'a>, array<'b>) => array<('a, 'b)>

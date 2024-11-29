@@ -2,12 +2,7 @@
 # yarn lockfile v1
 
 
-"@rescript/core@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@rescript/core/-/core-0.6.0.tgz#d2aae335c2a91dd68acce0ec11716861e08500d5"
-  integrity sha512-D4ykxSpbmxbQa99kCg6/DztwCNt1tV3t11BLSOvJPHNLSIuQxfAU3ddgRruaH9LQSKOrMUjxQS9z6RdG5iFPoA==
-
-"@rescript/core@^1.3.0":
+"@rescript/core@^1.4.0":
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/@rescript/core/-/core-1.6.1.tgz#159670c94d64a2b8236f46be2bf09a007b1ece08"
   integrity sha512-vyb5k90ck+65Fgui+5vCja/mUfzKaK3kOPT4Z6aAJdHLH1eljEi1zKhXroCiCtpNLSWp8k4ulh1bdB5WS0hvqA==
@@ -153,19 +148,19 @@ browser-stdout@1.3.1:
   resolved "https://registry.yarnpkg.com/browser-stdout/-/browser-stdout-1.3.1.tgz#baa559ee14ced73452229bad7326467c61fabd60"
   integrity sha512-qhAVI1+Av2X7qelOfAIYwXONood6XlZE/fXaBSmW/T5SzLAmCgzi+eiWE7fUvbHaeNBQH13UftjpXxsfLkMpgw==
 
-"bs-chai@github:dsiu/bs-chai#rescript-v11":
+"bs-chai@github:dsiu/bs-chai#rescript-v12":
   version "1.0.1"
-  resolved "https://codeload.github.com/dsiu/bs-chai/tar.gz/e9a72d1503b6777b096150746bc5843ed569c994"
+  resolved "https://codeload.github.com/dsiu/bs-chai/tar.gz/a44bc3fa2561b31b7bd5f57e599965301f267f9b"
   dependencies:
     chai "^4.1.2"
     mocha "^6.2.0"
 
-"bs-jsverify@github:dsiu/bs-jsverify#rescript-v11":
+"bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version "0.10.0"
-  resolved "https://codeload.github.com/dsiu/bs-jsverify/tar.gz/cc261b393e5899ee418fc1631161faa4cc1b0034"
+  resolved "https://codeload.github.com/dsiu/bs-jsverify/tar.gz/7b94b834abfb2cf2994030f6273b19e8fa3e3d4e"
   dependencies:
-    "@rescript/core" "^0.6.0"
-    jsverify "^0.8.3"
+    "@rescript/core" "^1.4.0"
+    jsverify "^0.8.4"
 
 bs-stdlib-shims@^0.1.0:
   version "0.1.0"
@@ -898,7 +893,7 @@ js-yaml@4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-jsverify@^0.8.3:
+jsverify@^0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/jsverify/-/jsverify-0.8.4.tgz#b914ccc024103d946b503f18ee780ec43febeece"
   integrity sha512-nUG73Sfi8L4eOkc7pv9sflgAm43v+z6XMuePGVdRoBUxBLJiVcMcf3Xgc4h19eHHF3JwsaagOkUu825UnPBLJw==
@@ -1232,16 +1227,16 @@ require-main-filename@^2.0.0:
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
   integrity sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==
 
-"rescript-mocha@github:dsiu/rescript-mocha#rescript-v11":
+"rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version "0.9.0"
-  resolved "https://codeload.github.com/dsiu/rescript-mocha/tar.gz/ae3a161df4d2de77c180b452d15a604c8e30c623"
+  resolved "https://codeload.github.com/dsiu/rescript-mocha/tar.gz/efcda1f4e01b18a9250dd05644f3d4ae52af37be"
   dependencies:
     mocha "^9.2.2"
 
-rescript@^11.1.4:
-  version "11.1.4"
-  resolved "https://registry.yarnpkg.com/rescript/-/rescript-11.1.4.tgz#9a42ebc4fc5363707e39cef5b3188160b63bee42"
-  integrity sha512-0bGU0bocihjSC6MsE3TMjHjY0EUpchyrREquLS8VsZ3ohSMD+VHUEwimEfB3kpBI1vYkw3UFZ3WD8R28guz/Vw==
+rescript@^12.0.0-alpha.5:
+  version "12.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/rescript/-/rescript-12.0.0-alpha.5.tgz#c5205deb95e44d844823b8b528e442de9b25da94"
+  integrity sha512-s2GGg9fkoiDBiP0uuJ1RRG5NBq+SkGqxMEmt32q9tTJoueL7bfU/9Jj3UgSwFFNdehuns1taAOvP2DV4IE+R9A==
 
 safe-array-concat@^1.1.2:
   version "1.1.2"

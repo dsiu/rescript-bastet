@@ -4,7 +4,6 @@
   "refmt": 3,
   "namespace": true,
   "bsc-flags": [
-    "-bs-super-errors"
   ],
   "warnings": {
     "error": "+101+25+8+9+27",

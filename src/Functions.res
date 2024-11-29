@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 let (const, flip) = {

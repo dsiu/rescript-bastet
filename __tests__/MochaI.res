@@ -1,5 +1,12 @@
-@@uncurried
-@@uncurried.swap
+// Missing from RescriptCore
+let rec listIter = (~f, param) => {
+  switch param {
+  | list{} => ()
+  | list{a, ...l} =>
+    f(a)
+    listIter(~f, l)
+  }
+}
 
 module Test: Test.TEST
   with type test = unit => unit
@@ -26,7 +33,7 @@ module Test: Test.TEST
   let tuple = (a, b) => Obj.magic((a, b))
 
   let check = (check, ~name="", expected, actual) => {
-    check |> ignore
+    ignore(check)
     RescriptMocha.Assert.deepEqual(~message=name, expected, actual)
   }
 
@@ -37,9 +44,9 @@ module Test: Test.TEST
   }
 
   let suite: (string, list<test>) => suite<test> = (name, tests) => {
-    RescriptMocha.Mocha.describe(name, () => ListLabels.iter(~f=cb => cb(), tests))
+    RescriptMocha.Mocha.describe(name, () => listIter(~f=cb => cb(), tests))
     () => ()
   }
 }
 
-let run = suites => ListLabels.iter(~f=cb => cb(), suites)
+let run = suites => listIter(~f=cb => cb(), suites)

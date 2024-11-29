@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 module Quickcheck: Test.QUICKCHECK
   with type t = unit => unit
   and type arbitrary<'a> = BsJsverify.Verify.Arbitrary.arbitrary<'a> = {
@@ -13,22 +10,22 @@ module Quickcheck: Test.QUICKCHECK
   let default_name = ""
 
   let property = (~count=?, ~name=default_name, arbitrary, a) => {
-    count |> ignore
+    ignore(count)
     () => BsJsverify.Verify.Property.property1(name, arbitrary, a)
   }
 
   let property2 = (~count=?, ~name=default_name, arbitrary, a, b) => {
-    count |> ignore
+    ignore(count)
     () => BsJsverify.Verify.Property.property2(name, arbitrary, a, b)
   }
 
   let property3 = (~count=?, ~name=default_name, arbitrary, a, b, c) => {
-    count |> ignore
+    ignore(count)
     () => BsJsverify.Verify.Property.property3(name, arbitrary, a, b, c)
   }
 
   let property4 = (~count=?, ~name=default_name, arbitrary, a, b, c, d) => {
-    count |> ignore
+    ignore(count)
     () => BsJsverify.Verify.Property.property4(name, arbitrary, a, b, c, d)
   }
 }

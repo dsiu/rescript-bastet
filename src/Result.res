@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 @@ocaml.text(" Result is the equivalent of Either in Haskell for Ocaml ")
 
 open Interface

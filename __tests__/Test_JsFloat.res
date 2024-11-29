@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 
@@ -15,7 +12,7 @@ module ArbitraryFloat: Test.ARBITRARY with type t = float and type arbitrary<'a>
 module ApproximatelyEq = {
   type t = float
 
-  let approx = Js.Float.toPrecisionWithPrecision(~digits=4)
+  let approx = RescriptCore.Float.toPrecisionWithPrecision(_, ~digits=4)
 
   let eq = (a, b) => approx(a) == approx(b)
 }

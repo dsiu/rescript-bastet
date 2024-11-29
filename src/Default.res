@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 @@ocaml.text(" This module provides default implementations for interfaces ")
 
 let \"<." = Function.Infix.\"<."

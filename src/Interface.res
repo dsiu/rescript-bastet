@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 @@ocaml.text(" {e Note}:
     Any data structure implementing one of these interfaces must also satisfy the corresponding laws in
     the corresponding {!Verify} module. ")

@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 module type EQ_F = (E: EQ) => (EQ with type t = list<E.t>)
@@ -13,20 +10,20 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = list<'a> = {
   type t<'a> = list<'a>
 
-  let map: ('a => 'b, list<'a>) => list<'b> = (f, xs) => ListLabels.map(~f, xs)
+  let map: ('a => 'b, list<'a>) => list<'b> = (f, xs) => RescriptCore.List.map(xs, f)
 }
 
 module Alt: ALT with type t<'a> = list<'a> = {
   include Functor
 
-  let alt = (a, b) => ListLabels.append(a, b)
+  let alt = (a, b) => RescriptCore.List.concat(a, b)
 }
 
 module Apply: APPLY with type t<'a> = list<'a> = {
   include Functor
 
   let apply = (fn_array, a) =>
-    ListLabels.fold_left(~f=(acc, f) => Alt.alt(acc, map(f, a)), ~init=list{}, fn_array)
+    RescriptCore.List.reduce(fn_array, list{}, (acc, f) => Alt.alt(acc, map(f, a)))
 }
 
 module Applicative: APPLICATIVE with type t<'a> = list<'a> = {
@@ -38,7 +35,7 @@ module Applicative: APPLICATIVE with type t<'a> = list<'a> = {
 module Monad: MONAD with type t<'a> = list<'a> = {
   include Applicative
 
-  let flat_map = (x, f) => ListLabels.fold_left(~f=(acc, a) => Alt.alt(acc, f(a)), ~init=list{}, x)
+  let flat_map = (x, f) => RescriptCore.List.reduce(x, list{}, (acc, a) => Alt.alt(acc, f(a)))
 }
 
 module Plus: PLUS with type t<'a> = list<'a> = {
@@ -57,10 +54,10 @@ module Foldable: FOLDABLE with type t<'a> = list<'a> = {
   type t<'a> = list<'a>
 
   let fold_left: (('a, 'b) => 'a, 'a, list<'b>) => 'a = (f, init, xs) =>
-    ListLabels.fold_left(~f, ~init, xs)
+    RescriptCore.List.reduce(xs, init, (a, b) => f(a, b))
 
   and fold_right: (('a, 'b) => 'b, 'b, list<'a>) => 'b = (f, init, xs) =>
-    ListLabels.fold_right(~f, ~init, xs)
+    RescriptCore.List.reduceReverse(xs, init, (a, b) => f(b, a))
 
   module Fold_Map = (M: MONOID) => {
     module D = Default.Fold_Map(
@@ -127,12 +124,12 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
   let traverse = (f, xs: t<'a>) => {
     open I
 
-    ListLabels.fold_right(~f=(acc, x) => {
+    RescriptCore.List.reduceReverse(xs, A.pure(list{}), (x, acc) => {
       let ff = y => ys => list{y, ...ys}
       let ap = A.pure(ff)
       let ap1 = \"<*>"(ap, f(acc))
       \"<*>"(ap1, x)
-    }, ~init=A.pure(list{}), xs)
+    })
   }
 
   module D = Default.Sequence({
@@ -150,11 +147,9 @@ module Eq: EQ_F = (E: EQ) => {
   type t = list<E.t>
 
   let eq = (xs, ys) =>
-    ListLabels.length(xs) == ListLabels.length(ys) &&
-      ListLabels.fold_left(
-        ~f=(acc, (a, b)) => acc && E.eq(a, b),
-        ~init=true,
-        ListLabels.combine(xs, ys),
+    RescriptCore.List.length(xs) == RescriptCore.List.length(ys) &&
+      RescriptCore.List.reduce(RescriptCore.List.zip(xs, ys), true, (acc, (a, b)) =>
+        acc && E.eq(a, b)
       )
 }
 

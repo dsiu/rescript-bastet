@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 let \"<." = Function.Infix.\"<."
@@ -73,7 +70,7 @@ module Foldable: FOLDABLE with type t<'a> = Js.Dict.t<'a> = {
   let fold_left = fold_left
 
   and fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a = (f, init, a) =>
-    ArrayLabels.fold_right(~f, ~init, Js.Dict.values(a))
+    RescriptCore.Array.reduceRight(Js.Dict.values(a), init, (x, y) => f(y, x))
 
   module Fold_Map = (M: MONOID) => {
     module D = Default.Fold_Map(

@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 //let flip: (('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)

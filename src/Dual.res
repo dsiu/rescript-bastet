@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 @ocaml.doc(" A data structure representing the dual of a monoid ")

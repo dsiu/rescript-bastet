@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 @ocaml.doc(" Provides functors to verify that instances are lawful. ")

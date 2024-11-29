@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 @@ocaml.text(" Note: `int` is not a fully law abiding member of Additive.Semigroup,

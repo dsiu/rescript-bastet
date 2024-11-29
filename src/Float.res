@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 @@ocaml.text(" Note: `float` is not a fully law abiding member of Additive.Semigroup,
@@ -148,7 +145,7 @@ module Bounded: BOUNDED with type t = float = {
 module Show: SHOW with type t = float = {
   type t = float
 
-  let show = string_of_float
+  let show = RescriptCore.Float.toString(_)
 }
 
 module Semiring: SEMIRING with type t = float = {

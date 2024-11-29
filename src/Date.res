@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open Interface
 
 module Magma: MAGMA with type t = Js.Date.t = {

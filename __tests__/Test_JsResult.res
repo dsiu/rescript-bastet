@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 open RescriptMocha.Mocha
 open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End
@@ -278,7 +275,7 @@ describe("Result", () => {
     property1(
       "should satisfy composition",
       arb_result(arb_nat, arb_string),
-      V.composition(\"^"("!", ...), string_of_int, ...),
+      V.composition(\"^"("!", ...), string_of_int, ...)
     )
   })
   describe("Bifunctor", () => {
@@ -287,7 +284,7 @@ describe("Result", () => {
     property1(
       "should satisfy composition",
       arb_result(arb_string, arb_nat),
-      V.composition(\"^"("!", ...), \"*."(3.0, ...), \"^"("-", ...), float_of_int, ...),
+      V.composition(\"^"("!", ...), \"*."(3.0, ...), \"^"("-", ...), float_of_int, ...)
     )
   })
   describe("Apply", () => {
@@ -304,7 +301,7 @@ describe("Result", () => {
     property1(
       "should satisfy homomorphism",
       arb_result(arb_nat, arb_string),
-      V.homomorphism(x => Functors.ResultF.String.Functor.map(string_of_int, x), ...),
+      V.homomorphism(x => Functors.ResultF.String.Functor.map(string_of_int, x), ...)
     )
     property1("should satisfy interchange", arb_nat, V.interchange(Ok(string_of_int), ...))
   })
@@ -314,7 +311,7 @@ describe("Result", () => {
     property1(
       "should satisfy associativity",
       arb_result(arb_nat, arb_string),
-      V.associativity(\"<."(pure, string_of_int), \"<."(pure, \"^"("!", ...)), ...),
+      V.associativity(\"<."(pure, string_of_int), \"<."(pure, \"^"("!", ...)), ...)
     )
     property1("should satisfy identity", arb_nat, V.identity(\"<."(pure, string_of_int), ...))
   })
@@ -331,7 +328,7 @@ describe("Result", () => {
       "should satisfy distributivity",
       arb_result(arb_nat, arb_string),
       arb_result(arb_nat, arb_string),
-      V.distributivity(string_of_int, ...),
+      V.distributivity(string_of_int, ...)
     )
   })
   describe("Extend", () => {
@@ -343,7 +340,7 @@ describe("Result", () => {
         Result.result(f => Js.Float.toString(f), const(String.Monoid.empty, ...), ...),
         Result.result(float_of_int, const(Float.Additive.Monoid.empty, ...), ...),
         ...
-      ),
+      )
     )
     ()
   })

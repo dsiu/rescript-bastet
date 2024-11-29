@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 @@ocaml.text(" Option is the equivalent of Maybe in Haskell for Ocaml ")
 
 open Interface

@@ -1,6 +1,3 @@
-@@uncurried
-@@uncurried.swap
-
 @@ocaml.text(" * * * * * * * * * * * * * * *
  * Common instantiated functors *
  * * * * * * * * * * * * * * * *")
