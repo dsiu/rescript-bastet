@@ -308,13 +308,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bs-stdlib-shims@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "bs-stdlib-shims@npm:0.1.0"
-  checksum: 10c0/686a509c2007381ad57cef66933172197b4cdd4510a492235b35b61a1eedc6fa29d317f658425278a0c49551241c51d7cf379416d9366c7680f672dd757fd792
-  languageName: node
-  linkType: hard
-
 "cacache@npm:^18.0.0":
   version: 18.0.4
   resolution: "cacache@npm:18.0.4"
@@ -2254,8 +2247,7 @@ __metadata:
     "@rescript/core": "npm:^1.6.1"
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    bs-stdlib-shims: "npm:^0.1.0"
-    rescript: "npm:^12.0.0-alpha.5"
+    rescript: "npm:^12.0.0-alpha.7"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   languageName: unknown
   linkType: soft
@@ -2269,16 +2261,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0-alpha.5":
-  version: 12.0.0-alpha.5
-  resolution: "rescript@npm:12.0.0-alpha.5"
+"rescript@npm:^12.0.0-alpha.7":
+  version: 12.0.0-alpha.7
+  resolution: "rescript@npm:12.0.0-alpha.7"
   bin:
     bsc: cli/bsc
     bstracing: lib/bstracing
     rescript: cli/rescript
     rescript-tools: cli/rescript-tools
     rewatch: cli/rewatch
-  checksum: 10c0/49977ce3bf4f016e8f00fa5b769d0fff100b8a425fb2bd1a8e4cb3fc35dfd2dd7928e06e514ea53f0f44a8c1e61bf26901280719568deee96a88c964ba74bc5b
+  checksum: 10c0/5d53a194d62e9edeaaf592594d6929f8a3280bd1b7194c7e04bb5e5226dcb2aa537292d9714d1cfaf017b649e52df9c12984c657fd6c85592a8b257f372a52aa
   languageName: node
   linkType: hard
 
