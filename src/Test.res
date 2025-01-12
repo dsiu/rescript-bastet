@@ -410,7 +410,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy homomorphism",
             AA.make(Q.arbitrary_int),
-            V.homomorphism(x => A.map(string_of_int, x), ...)
+            V.homomorphism(x => A.map(string_of_int)(x), ...)
           ),
           Q.property(
             ~name="should satisfy interchange",
@@ -434,12 +434,12 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy associativity",
             AA.make_bound(Q.arbitrary_int),
-            V.associativity(\"<."(M.pure, string_of_int), \"<."(M.pure, \"^"("!", ...)), ...)
+            V.associativity(\"<."(M.pure)(string_of_int), \"<."(M.pure)(\"^"("!", ...)), ...)
           ),
           Q.property(
             ~name="should satisfy identity",
             Q.arbitrary_int,
-            V.identity(\"<."(M.pure, string_of_int), ...)
+            V.identity(\"<."(M.pure)(string_of_int), ...)
           ),
         },
       )
@@ -914,8 +914,8 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
             V.composition(
               float_of_int,
               int_of_float,
-              \"<."(\"*"(3, ...), int_of_float),
-              \"<."(\"*."(4.0, ...), float_of_int),
+              \"<."(\"*"(3, ...))(int_of_float),
+              \"<."(\"*."(4.0, ...))(float_of_int),
               ...
             )
           ),
@@ -1056,8 +1056,8 @@ module Array = (
           ~name="should satisfy associativity",
           AA.make_bound(Q.arbitrary_int),
           V.associativity(
-            \"<."(RescriptCore.Float.toString(_), fold'),
-            \"<."(float_of_int, fold),
+            \"<."(RescriptCore.Float.toString(_))(fold'),
+            \"<."(float_of_int)(fold),
             ...
           )
         ),
@@ -1210,8 +1210,8 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
         RescriptCore.List.reduceReverse(xs, A.pure(list{}), (x, acc) => {
           let ff = y => ys => list{y, ...ys}
           let ap = A.pure(ff)
-          let ap1 = \"<*>"(ap, acc)
-          \"<*>"(ap1, x)
+          let ap1 = \"<*>"(ap)(acc)
+          \"<*>"(ap1)(x)
         })
       }
 
@@ -1237,8 +1237,8 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
       "Default.Foldable",
       list{
         T.test("should do a left fold", () => {
-          T.check(T.int, fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
-          T.check(T.int, fold_left(\"-", 10, list{3, 2, 1}), 4)
+          T.check(T.int, fold_left(\"+")(0)(list{1, 2, 3, 4, 5}), 15)
+          T.check(T.int, fold_left(\"-")(10)(list{3, 2, 1}), 4)
         }),
       },
     )
@@ -1256,7 +1256,7 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
 
           T.check(
             T.option(T.list(T.int)),
-            traverse(positive_int, list{1, 2, 3}),
+            traverse(positive_int)(list{1, 2, 3}),
             Some(list{1, 2, 3}),
           )
         }),
@@ -1369,21 +1369,21 @@ module List = (
     "List.Foldable",
     list{
       T.test("should do a left fold", () => {
-        T.check(T.int, List.Foldable.fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
-        T.check(T.int, List.Foldable.fold_left(\"-", 10, list{3, 2, 1}), 4)
+        T.check(T.int, List.Foldable.fold_left(\"+")(0)(list{1, 2, 3, 4, 5}), 15)
+        T.check(T.int, List.Foldable.fold_left(\"-")(10)(list{3, 2, 1}), 4)
       }),
       T.test("should do a right fold", () =>
-        T.check(T.int, List.Foldable.fold_right(\"-", 10, list{3, 2, 1}), -8)
+        T.check(T.int, List.Foldable.fold_right(\"-")(10)(list{3, 2, 1}), -8)
       ),
       T.test("should do a map fold (int)", () => {
         let fold_map = Functors.ListF.Int.Additive.Fold_Map.fold_map
-        T.check(T.int, fold_map(Function.Category.id, list{1, 2, 3}), 6)
+        T.check(T.int, fold_map(Function.Category.id)(list{1, 2, 3}), 6)
       }),
       T.test("should do a map fold (list)", () => {
         let fold_map = Functors.ListF.List.Fold_Map_Plus.fold_map
         T.check(
           T.list(T.list(T.int)),
-          fold_map(List.Applicative.pure, list{list{1, 2, 3}, list{4, 5}}),
+          fold_map(List.Applicative.pure)(list{list{1, 2, 3}, list{4, 5}}),
           list{list{1, 2, 3}, list{4, 5}},
         )
       }),
@@ -1393,20 +1393,32 @@ module List = (
   let unfoldable = T.suite(
     "List.Unfoldable",
     list{
-      T.test("should do an unfold", () => T.check(T.list(T.int), List.Unfoldable.unfold(x =>
+      T.test("should do an unfold", () =>
+        T.check(
+          T.list(T.int),
+          List.Unfoldable.unfold(x =>
             if x > 5 {
               None
             } else {
               Some(x, x + 1)
             }
-          , 0), list{0, 1, 2, 3, 4, 5})),
-      T.test("should do an unfold", () => T.check(T.list(T.int), List.Unfoldable.unfold(x =>
+          )(0),
+          list{0, 1, 2, 3, 4, 5},
+        )
+      ),
+      T.test("should do an unfold", () =>
+        T.check(
+          T.list(T.int),
+          List.Unfoldable.unfold(x =>
             if x > 20 {
               None
             } else {
               Some(x, x + 5)
             }
-          , 0), list{0, 5, 10, 15, 20})),
+          )(0),
+          list{0, 5, 10, 15, 20},
+        )
+      ),
     },
   )
 
@@ -1424,10 +1436,10 @@ module List = (
 
           T.check(
             T.option(T.list(T.int)),
-            traverse(positive_int, list{1, 2, 3}),
+            traverse(positive_int)(list{1, 2, 3}),
             Some(list{1, 2, 3}),
           )
-          T.check(T.option(T.list(T.int)), traverse(positive_int, list{1, 2, -3}), None)
+          T.check(T.option(T.list(T.int)), traverse(positive_int)(list{1, 2, -3}), None)
         }),
         T.test("should sequence the list", () => {
           T.check(
@@ -1573,11 +1585,11 @@ module Option = (
     "Option.Foldable",
     list{
       T.test("should do a left fold", () =>
-        T.check(T.int, Option.Foldable.fold_left(\"+", 0, Some(1)), 1)
+        T.check(T.int, Option.Foldable.fold_left(\"+")(0)(Some(1)), 1)
       ),
       T.test("should do a right fold", () => {
-        T.check(T.int, Option.Foldable.fold_right(\"+", 0, Some(1)), 1)
-        T.check(T.int, Option.Foldable.fold_right(\"+", 0, None), 0)
+        T.check(T.int, Option.Foldable.fold_right(\"+")(0)(Some(1)), 1)
+        T.check(T.int, Option.Foldable.fold_right(\"+")(0)(None), 0)
       }),
       T.test("should do a map fold (int)", () => {
         let fold_map = {
@@ -1585,8 +1597,8 @@ module Option = (
           fold_map
         }
 
-        T.check(T.int, fold_map(\"*"(2, ...), Some(3)), 6)
-        T.check(T.int, fold_map(\"+"(1, ...), None), 0)
+        T.check(T.int, fold_map(\"*"(2, ...))(Some(3)), 6)
+        T.check(T.int, fold_map(\"+"(1, ...))(None), 0)
       }),
       T.test("should do a map fold (list)", () => {
         let fold_map = {
@@ -1594,7 +1606,7 @@ module Option = (
           fold_map
         }
 
-        T.check(T.list(T.int), fold_map(x => list{x}, Some(123)), list{123})
+        T.check(T.list(T.int), fold_map(x => list{x})(Some(123)), list{123})
       }),
     },
   )

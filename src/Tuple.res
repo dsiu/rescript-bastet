@@ -110,9 +110,9 @@ module Traversable: TRAVERSABLE_F = (T: TYPE, A: APPLICATIVE) => {
 
   include (Foldable(T): FOLDABLE with type t<'a> := t<'a>)
 
-  let traverse = (f, (x, y)) => A.map(z => (x, z), f(y))
+  let traverse = (f, (x, y)) => A.map(z => (x, z))(f(y))
 
-  and sequence = ((x, y)) => A.map(z => (x, z), y)
+  and sequence = ((x, y)) => A.map(z => (x, z))(y)
 }
 
 module Eq: EQ_F = (First: EQ, Second: EQ) => {
@@ -187,12 +187,12 @@ module Bitraversable: BITRAVERSABLE_F = (A: APPLICATIVE) => {
 
   let bitraverse = (f, g, (a, b)) => {
     open I
-    \"<*>"(A.map(a => b => (a, b), f(a)), g(b))
+    \"<*>"(A.map(a => b => (a, b))(f(a)))(g(b))
   }
 
   and bisequence = ((a, b)) => {
     open I
-    \"<*>"(A.map(a => b => (a, b), a), b)
+    \"<*>"(A.map(a => b => (a, b))(a))(b)
   }
 }
 

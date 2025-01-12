@@ -33,10 +33,9 @@ module Apply: APPLY_F = (T: TYPE) => {
 module Semigroupoid: SEMIGROUPOID with type t<'a, 'b> = 'a => 'b = {
   type t<'a, 'b> = 'a => 'b
 
-  let compose_x = (f, g) => x => f(g(x))
-  let compose = (f, g) => compose_x(f, g)
-
-  //  let compose = (. f, g) => x => f(g(x))
+  //  let compose_x = (f, g) => x => f(g(x))
+  //  let compose = (f, g) => compose_x(f, g)
+  let compose = f => g => x => f(g(x))
 }
 
 module Category: CATEGORY with type t<'a, 'b> = 'a => 'b = {
@@ -50,7 +49,8 @@ module Invariant: INVARIANT_F = (T: TYPE) => {
 
   type t<'b> = T.t => 'b
 
-  let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b> = (f, _, x) => F.map(f, x)
+  //  let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b> = (f, _, x) => F.map(f, x)
+  let imap = (f, _) => F.map(f)
 }
 
 module Profunctor: PROFUNCTOR with type t<'a, 'b> = 'a => 'b = {
@@ -60,7 +60,9 @@ module Profunctor: PROFUNCTOR with type t<'a, 'b> = 'a => 'b = {
 
   type t<'a, 'b> = 'a => 'b
 
-  let dimap = (a_to_b, c_to_d, b_to_c) => \">."(\">."(a_to_b, b_to_c), c_to_d)
+  // a_to_b >. b_to_c == compose(b_to_c, a_to_b)
+  //  let dimap = a_to_b => c_to_d => b_to_c => \">."(c_to_d)(\">."(b_to_c)(a_to_b))
+  let dimap = a_to_b => c_to_d => b_to_c => \">."(\">."(a_to_b)(b_to_c))(c_to_d)
 }
 
 module Contravariant: CONTRAVARIANT_F = (T: TYPE) => {

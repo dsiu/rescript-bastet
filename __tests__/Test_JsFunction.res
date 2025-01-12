@@ -75,7 +75,7 @@ describe("Function", () => {
         })
         module Apply_Util = Functions.Apply(Apply_Fn_Int)
         let fn = Apply_Util.lift2(
-          Function.Semigroupoid.compose,
+          (a, b) => Function.Semigroupoid.compose(a)(b),
           a => \"-"(a, ...),
           b => \"*"(b, ...),
         )
@@ -150,11 +150,11 @@ describe("Function", () => {
         )
 
         V.composition(
-          float_of_int,
-          f => Js.Float.toString(f),
-          \"*"(4, ...),
-          \"^"("!", ...),
-          \"*."(2.0, ...)
+          float_of_int(_), // a=>b int=>float
+          Js.Float.toString(_), // c=>d float=>string
+          \"*"(4, ...), // e=>a int=>int
+          \"^"("!", ...), // d=>f string=>string
+          \"*."(2.0, ...) // P.t<'b,'c> float=>float
         )
       },
     )

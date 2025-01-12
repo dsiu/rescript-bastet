@@ -50,7 +50,7 @@ module Apply: APPLY with type t<'a> = option<'a> = {
 
   let apply = (fn_opt, a) =>
     switch fn_opt {
-    | Some(f) => map(f, a)
+    | Some(f) => map(f)(a)
     | None => None
     }
 }
@@ -156,12 +156,12 @@ module Traversable = (A: APPLICATIVE) => {
   include (Foldable: FOLDABLE with type t<'a> := t<'a>)
 
   let traverse = (f, x) => {
-    let ma = x => A.map(a => Some(a), x)
-    maybe(~f=\"<."(ma, f), ~default=A.pure(None), x)
+    let ma = x => A.map(a => Some(a))(x)
+    maybe(~f=\"<."(ma)(f), ~default=A.pure(None), x)
   }
 
   and sequence = x => {
-    let ma = x => A.map(a => Some(a), x)
+    let ma = x => A.map(a => Some(a))(x)
     maybe(~f=ma, ~default=A.pure(None), x)
   }
 }

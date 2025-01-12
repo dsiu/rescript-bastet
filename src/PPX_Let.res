@@ -30,7 +30,7 @@ module Make = (M: MONAD) => {
 
     and bind = M.flat_map
 
-    and map = (a, ~f) => M.map(f, a)
+    and map = (a, ~f) => M.map(f)(a)
 
     and both = A.apply_both
 

@@ -23,7 +23,7 @@ module Apply: APPLY with type t<'a> = list<'a> = {
   include Functor
 
   let apply = (fn_array, a) =>
-    RescriptCore.List.reduce(fn_array, list{}, (acc, f) => Alt.alt(acc, map(f, a)))
+    RescriptCore.List.reduce(fn_array, list{}, (acc, f) => Alt.alt(acc, map(f)(a)))
 }
 
 module Applicative: APPLICATIVE with type t<'a> = list<'a> = {
@@ -127,8 +127,8 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
     RescriptCore.List.reduceReverse(xs, A.pure(list{}), (x, acc) => {
       let ff = y => ys => list{y, ...ys}
       let ap = A.pure(ff)
-      let ap1 = \"<*>"(ap, f(acc))
-      \"<*>"(ap1, x)
+      let ap1 = \"<*>"(ap)(f(acc))
+      \"<*>"(ap1)(x)
     })
   }
 
@@ -159,7 +159,7 @@ module Show: SHOW_F = (S: SHOW) => {
 
   type t = list<S.t>
 
-  let show = xs => "[" ++ (M.intercalate(~separator=", ", Functor.map(S.show, xs)) ++ "]")
+  let show = xs => "[" ++ (M.intercalate(~separator=", ", Functor.map(S.show)(xs)) ++ "]")
 }
 
 module Infix = {

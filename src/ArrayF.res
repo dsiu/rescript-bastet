@@ -239,7 +239,7 @@ module Make = (A: IMPL): ARRAY => {
   module Apply: APPLY with type t<'a> = array<'a> = {
     include Functor
 
-    let apply = (fn_array, a) => A.fold_left((acc, f) => Alt.alt(acc, map(f, a)), [], fn_array)
+    let apply = (fn_array, a) => A.fold_left((acc, f) => Alt.alt(acc, map(f)(a)), [], fn_array)
   }
 
   module Applicative: APPLICATIVE with type t<'a> = array<'a> = {
@@ -330,9 +330,9 @@ module Make = (A: IMPL): ARRAY => {
       RescriptCore.Array.reduceRight(xs, A.pure([]), (x, acc) => {
         let ff = x => y => Alt.alt([x], y)
         let ap = A.pure(ff)
-        let ap1 = \"<*>"(ap, f(acc))
+        let ap1 = \"<*>"(ap)(f(acc))
 
-        \"<*>"(ap1, x)
+        \"<*>"(ap1)(x)
       })
     }
 
@@ -379,14 +379,14 @@ module Make = (A: IMPL): ARRAY => {
 
     type t = array<S.t>
 
-    let show = xs => "[" ++ (M.intercalate(~separator=", ", Functor.map(S.show, xs)) ++ "]")
+    let show = xs => "[" ++ (M.intercalate(~separator=", ", Functor.map(S.show)(xs)) ++ "]")
   }
 
   module Invariant: INVARIANT with type t<'a> = array<'a> = {
     type t<'a> = array<'a>
 
     //    let imap = (. f, _) => Functor.map(f)
-    let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b> = (f, _, x) => Functor.map(f, x)
+    let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b> = (f, _, x) => Functor.map(f)(x)
   }
 
   module Extend: EXTEND with type t<'a> = array<'a> = {

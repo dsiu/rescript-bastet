@@ -108,14 +108,14 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
   let traverse = (f, x) => {
     open I
     switch x {
-    | Dual(x') => \"<$>"(x => Dual(x), f(x'))
+    | Dual(x') => \"<$>"(x => Dual(x))(f(x'))
     }
   }
 
   let sequence = x => {
     open I
     switch x {
-    | Dual(x') => \"<$>"(x => Dual(x), x')
+    | Dual(x') => \"<$>"(x => Dual(x))(x')
     }
   }
 }

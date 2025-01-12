@@ -110,13 +110,13 @@ module type ABELIAN_GROUP_ANY = {
 module type FUNCTOR = {
   type t<'a>
 
-  let map: ('a => 'b, t<'a>) => t<'b>
+  let map: ('a => 'b) => t<'a> => t<'b>
 }
 
 module type APPLY = {
   include FUNCTOR
 
-  let apply: (t<'a => 'b>, t<'a>) => t<'b>
+  let apply: t<'a => 'b> => t<'a> => t<'b>
 }
 
 module type APPLICATIVE = {
@@ -128,7 +128,7 @@ module type APPLICATIVE = {
 module type MONAD = {
   include APPLICATIVE
 
-  let flat_map: (t<'a>, 'a => t<'b>) => t<'b>
+  let flat_map: t<'a> => ('a => t<'b>) => t<'b>
 }
 
 module type ALT = {
@@ -152,30 +152,30 @@ module type ALTERNATIVE = {
 module type FOLDABLE = {
   type t<'a>
 
-  let fold_left: (('a, 'b) => 'a, 'a, t<'b>) => 'a
+  let fold_left: (('a, 'b) => 'a) => 'a => t<'b> => 'a
 
-  let fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a
+  let fold_right: (('b, 'a) => 'a) => 'a => t<'b> => 'a
 
   module Fold_Map: (M: MONOID) =>
   {
-    let fold_map: ('a => M.t, t<'a>) => M.t
+    let fold_map: ('a => M.t) => t<'a> => M.t
   }
 
   module Fold_Map_Any: (M: MONOID_ANY) =>
   {
-    let fold_map: ('a => M.t<'b>, t<'a>) => M.t<'b>
+    let fold_map: ('a => M.t<'b>) => t<'a> => M.t<'b>
   }
 
   module Fold_Map_Plus: (P: PLUS) =>
   {
-    let fold_map: ('a => P.t<'b>, t<'a>) => P.t<'b>
+    let fold_map: ('a => P.t<'b>) => t<'a> => P.t<'b>
   }
 }
 
 module type UNFOLDABLE = {
   type t<'a>
 
-  let unfold: ('a => option<('a, 'a)>, 'a) => t<'a>
+  let unfold: ('a => option<('a, 'a)>) => 'a => t<'a>
 }
 
 module type TRAVERSABLE = {
@@ -185,7 +185,7 @@ module type TRAVERSABLE = {
 
   type applicative_t<'a>
 
-  let traverse: ('a => applicative_t<'b>, t<'a>) => applicative_t<t<'b>>
+  let traverse: ('a => applicative_t<'b>) => t<'a> => applicative_t<t<'b>>
 
   let sequence: t<applicative_t<'a>> => applicative_t<t<'a>>
 }
@@ -195,7 +195,7 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) => (TRAVERSABLE with type applicati
 module type SEMIGROUPOID = {
   type t<'a, 'b>
 
-  let compose: (t<'b, 'c>, t<'a, 'b>) => t<'a, 'c>
+  let compose: t<'b, 'c> => t<'a, 'b> => t<'a, 'c>
 }
 
 module type CATEGORY = {
@@ -382,19 +382,19 @@ module type FIELD = {
 module type INVARIANT = {
   type t<'a>
 
-  let imap: ('a => 'b, 'b => 'a, t<'a>) => t<'b>
+  let imap: ('a => 'b) => ('b => 'a) => t<'a> => t<'b>
 }
 
 module type CONTRAVARIANT = {
   type t<'a>
 
-  let cmap: ('b => 'a, t<'a>) => t<'b>
+  let cmap: ('b => 'a) => t<'a> => t<'b>
 }
 
 module type PROFUNCTOR = {
   type t<'a, 'b>
 
-  let dimap: ('a => 'b, 'c => 'd, t<'b, 'c>) => t<'a, 'd>
+  let dimap: ('a => 'b) => ('c => 'd) => t<'b, 'c> => t<'a, 'd>
 }
 
 module type MONAD_ZERO = {
@@ -410,7 +410,7 @@ module type MONAD_PLUS = {
 module type EXTEND = {
   include FUNCTOR
 
-  let extend: (t<'a> => 'b, t<'a>) => t<'b>
+  let extend: (t<'a> => 'b) => t<'a> => t<'b>
 }
 
 module type COMONAD = {
@@ -422,41 +422,41 @@ module type COMONAD = {
 module type BIFUNCTOR = {
   type t<'a, 'b>
 
-  let bimap: ('a => 'b, 'c => 'd, t<'a, 'c>) => t<'b, 'd>
+  let bimap: ('a => 'b) => ('c => 'd) => t<'a, 'c> => t<'b, 'd>
 }
 
 module type BIAPPLY = {
   include BIFUNCTOR
 
-  let biapply: (t<'a => 'b, 'c => 'd>, t<'a, 'c>) => t<'b, 'd>
+  let biapply: t<'a => 'b, 'c => 'd> => t<'a, 'c> => t<'b, 'd>
 }
 
 module type BIAPPLICATIVE = {
   include BIAPPLY
 
-  let bipure: ('a, 'b) => t<'a, 'b>
+  let bipure: 'a => 'b => t<'a, 'b>
 }
 
 module type BIFOLDABLE = {
   type t<'a, 'b>
 
-  let bifold_left: (('c, 'a) => 'c, ('c, 'b) => 'c, 'c, t<'a, 'b>) => 'c
+  let bifold_left: (('c, 'a) => 'c) => (('c, 'b) => 'c) => 'c => t<'a, 'b> => 'c
 
-  let bifold_right: (('a, 'c) => 'c, ('b, 'c) => 'c, 'c, t<'a, 'b>) => 'c
+  let bifold_right: (('a, 'c) => 'c) => (('b, 'c) => 'c) => 'c => t<'a, 'b> => 'c
 
   module Fold_Map: (M: MONOID) =>
   {
-    let fold_map: ('a => M.t, 'b => M.t, t<'a, 'b>) => M.t
+    let fold_map: ('a => M.t) => ('b => M.t) => t<'a, 'b> => M.t
   }
 
   module Fold_Map_Any: (M: MONOID_ANY) =>
   {
-    let fold_map: ('a => M.t<'a>, 'b => M.t<'a>, t<'a, 'b>) => M.t<'a>
+    let fold_map: ('a => M.t<'a>) => ('b => M.t<'a>) => t<'a, 'b> => M.t<'a>
   }
 
   module Fold_Map_Plus: (P: PLUS) =>
   {
-    let fold_map: ('a => P.t<'a>, 'b => P.t<'a>, t<'a, 'b>) => P.t<'a>
+    let fold_map: ('a => P.t<'a>) => ('b => P.t<'a>) => t<'a, 'b> => P.t<'a>
   }
 }
 
@@ -467,12 +467,10 @@ module type BITRAVERSABLE = {
 
   type applicative_t<'a>
 
-  let bitraverse: (
-    'a => applicative_t<'c>,
-    'b => applicative_t<'d>,
-    t<'a, 'b>,
-  ) => applicative_t<t<'c, 'd>>
-
+  let bitraverse: ('a => applicative_t<'c>) => ('b => applicative_t<'d>) => t<
+    'a,
+    'b,
+  > => applicative_t<t<'c, 'd>>
   let bisequence: t<applicative_t<'a>, applicative_t<'b>> => applicative_t<t<'a, 'b>>
 }
 
@@ -482,5 +480,5 @@ module type BITRAVERSABLE_F = (A: APPLICATIVE) =>
 module type BICONTRAVARIANT = {
   type t<'a, 'b>
 
-  let bicmap: ('b => 'a, 'd => 'c, t<'a, 'c>) => t<'b, 'd>
+  let bicmap: ('b => 'a) => ('d => 'c) => t<'a, 'c> => t<'b, 'd>
 }

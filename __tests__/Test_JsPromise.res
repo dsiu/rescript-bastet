@@ -27,13 +27,12 @@ describe("Promise", () => {
     async_property1(
       "should satisfy identity",
       arb_nat,
-      \"<."(\"<."(o => Obj.magic(o, ...), V.identity), promise),
+      \"<."(\"<."(o => Obj.magic(o, ...))(V.identity))(promise),
     )
     async_property1(
       "should satisfy composition",
       arb_nat,
-      \"<."(
-        \"<."(o => Obj.magic(o, ...), V.composition(\"^"("!", ...), string_of_int, ...)),
+      \"<."(\"<."(o => Obj.magic(o, ...))(V.composition(\"^"("!", ...), string_of_int, ...)))(
         promise,
       ),
     )
@@ -44,16 +43,14 @@ describe("Promise", () => {
       "should satisfy associative composition",
       arb_nat,
       \"<."(
-        \"<."(
-          o => Obj.magic(o),
+        \"<."(o => Obj.magic(o))(
           V.associative_composition(
             Js.Promise.resolve(\"^"("!", ...)),
             Js.Promise.resolve(string_of_int),
             ...
-          ),
+          )
         ),
-        promise,
-      ),
+      )(promise),
     )
   })
   describe("Applicative", () => {
@@ -61,12 +58,12 @@ describe("Promise", () => {
     async_property1(
       "should satisfy identity",
       arb_nat,
-      \"<."(\"<."(o => Obj.magic(o, ...), V.identity), promise),
+      \"<."(\"<."(o => Obj.magic(o, ...))(V.identity))(promise),
     )
     async_property1(
       "should satisfy homomorphism",
       arb_nat,
-      \"<."(o => Obj.magic(o, ...), V.homomorphism(string_of_int, ...)),
+      \"<."(o => Obj.magic(o, ...))(V.homomorphism(string_of_int, ...)),
     )
   })
 })

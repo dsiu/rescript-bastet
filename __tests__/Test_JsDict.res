@@ -59,7 +59,7 @@ describe("Dict", () => {
         to_be(
           6,
           expect(
-            Dict.Foldable.fold_left(\"+", 0, Dict.unsafe_from_object({"a": 1, "b": 2, "c": 3})),
+            Dict.Foldable.fold_left(\"+")(0)(Dict.unsafe_from_object({"a": 1, "b": 2, "c": 3})),
           ),
           ...
         )
@@ -67,7 +67,7 @@ describe("Dict", () => {
         to_be(
           2,
           expect(
-            Dict.Foldable.fold_left(\"-", 10, Dict.unsafe_from_object({"a": 1, "b": 3, "c": 4})),
+            Dict.Foldable.fold_left(\"-")(10)(Dict.unsafe_from_object({"a": 1, "b": 3, "c": 4})),
           ),
           ...
         )

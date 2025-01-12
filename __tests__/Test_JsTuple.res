@@ -52,7 +52,7 @@ describe("Tuple", () => {
     property1(
       "should satisfy homomorphism",
       arb_tuple((arb_string, arb_nat)),
-      V.homomorphism(x => TupleF.String.Functor.map(string_of_int, x), ...)
+      V.homomorphism(x => TupleF.String.Functor.map(string_of_int)(x), ...)
     )
     property1(
       "should satisfy interchange",
@@ -66,9 +66,9 @@ describe("Tuple", () => {
     property1(
       "should satisfy associativity",
       arb_tuple((arb_string, arb_nat)),
-      V.associativity(\"<."(pure, string_of_int), \"<."(pure, \"^"("!", ...)), ...)
+      V.associativity(\"<."(pure)(string_of_int), \"<."(pure)(\"^"("!", ...)), ...)
     )
-    property1("should satisfy identity", arb_nat, V.identity(\"<."(pure, string_of_int), ...))
+    property1("should satisfy identity", arb_nat, V.identity(\"<."(pure)(string_of_int), ...))
   })
   describe("Foldable", () => {
     open TupleF.String.Foldable
@@ -76,16 +76,16 @@ describe("Tuple", () => {
     it(
       "should do a left fold",
       () => {
-        to_be(123, expect(fold_left(\"+", 0, (empty, 123))), ...)
-        to_be(-311, expect(fold_left(\"-", 10, (empty, 321))), ...)
+        to_be(123, expect(fold_left(\"+")(0)((empty, 123))), ...)
+        to_be(-311, expect(fold_left(\"-")(10)((empty, 321))), ...)
       },
     )
-    it("should do a right fold", () => to_be(311, expect(fold_right(\"-", 10, (empty, 321))), ...))
+    it("should do a right fold", () => to_be(311, expect(fold_right(\"-")(10)((empty, 321))), ...))
     it(
       "should do a map fold (int)",
       () => {
         module F = Fold_Map(Int.Additive.Monoid)
-        to_be(123, expect(F.fold_map(Function.Category.id, (empty, 123))), ...)
+        to_be(123, expect(F.fold_map(Function.Category.id)((empty, 123))), ...)
       },
     )
     it(
@@ -95,7 +95,7 @@ describe("Tuple", () => {
 
         to_be(
           list{list{1, 2, 3}},
-          expect(F.fold_map(List.Applicative.pure, (empty, list{1, 2, 3}))),
+          expect(F.fold_map(List.Applicative.pure)((empty, list{1, 2, 3}))),
           ...
         )
       },
@@ -112,8 +112,8 @@ describe("Tuple", () => {
       () => {
         let positive_int = x => x >= 0 ? list{x} : list{}
 
-        to_be(list{("foo", 123)}, expect(traverse(positive_int, ("foo", 123))), ...)
-        to_be(list{}, expect(traverse(positive_int, ("bar", -123))), ...)
+        to_be(list{("foo", 123)}, expect(traverse(positive_int)(("foo", 123))), ...)
+        to_be(list{}, expect(traverse(positive_int)(("bar", -123))), ...)
       },
     )
     it(

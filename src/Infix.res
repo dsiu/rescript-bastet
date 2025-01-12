@@ -11,7 +11,7 @@ module Magma_Any = (M: MAGMA_ANY) => {
 module Functor = (F: FUNCTOR) => {
   let \"<$>" = F.map
 
-  and \"<@>" = (f, x) => F.map(x, f)
+  and \"<@>" = (f, x) => F.map(x)(f)
 }
 
 module Apply = (A: APPLY) => {
@@ -25,11 +25,11 @@ module Monad = (M: MONAD) => {
 
   let \">>=" = M.flat_map
 
-  and \"=<<" = (ma, f) => M.flat_map(f, ma)
+  and \"=<<" = ma => f => M.flat_map(f)(ma)
 
-  let \">=>" = (f, g, a) => \">>="(f(a), g)
+  let \">=>" = (f, g, a) => \">>="(f(a))(g)
 
-  and \"<=<" = (f, g, a) => \"=<<"(f, g(a))
+  and \"<=<" = (f, g, a) => \"=<<"(f)(g(a))
 }
 
 module Alt = (A: ALT) => {
@@ -44,9 +44,9 @@ module Alternative = (A: ALTERNATIVE) => {
 }
 
 module Semigroupoid = (S: SEMIGROUPOID) => {
-  let \"<." = (f, g) => S.compose(f, g)
+  let \"<." = S.compose
 
-  and \">." = (g, f) => S.compose(f, g)
+  and \">." = g => f => S.compose(f)(g)
 }
 
 module Eq = (E: EQ) => {
@@ -83,7 +83,7 @@ module Euclidean_Ring = (E: EUCLIDEAN_RING) => {
 module Extend = (E: EXTEND) => {
   let \"<<=" = E.extend
 
-  and \"=>>" = (a, f) => E.extend(f, a)
+  and \"=>>" = (a, f) => E.extend(f)(a)
 }
 
 module Bifunctor = (B: BIFUNCTOR) => {

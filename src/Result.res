@@ -93,7 +93,7 @@ module Apply: APPLY_F = (T: TYPE) => {
 
   let apply = (f, a) =>
     switch (f, a) {
-    | (Ok(f'), a') => map(f', a')
+    | (Ok(f'), a') => map(f')(a')
     | (Error(f'), _) => Error(f')
     }
 }
@@ -402,13 +402,13 @@ module Traversable: TRAVERSABLE_F = (T: TYPE, A: APPLICATIVE) => {
 
   let traverse = (f, a) =>
     switch a {
-    | Ok(a') => A.map(E.pure, f(a'))
+    | Ok(a') => A.map(E.pure)(f(a'))
     | Error(a') => A.pure(Error(a'))
     }
 
   and sequence = a =>
     switch a {
-    | Ok(a') => A.map(E.pure, a')
+    | Ok(a') => A.map(E.pure)(a')
     | Error(a') => A.pure(Error(a'))
     }
 }
@@ -424,14 +424,14 @@ module Bitraversable: BITRAVERSABLE_F = (A: APPLICATIVE) => {
 
   let bitraverse = (f, g, a) =>
     switch a {
-    | Ok(a') => A.map(x => Ok(x), f(a'))
-    | Error(a') => A.map(x => Error(x), g(a'))
+    | Ok(a') => A.map(x => Ok(x))(f(a'))
+    | Error(a') => A.map(x => Error(x))(g(a'))
     }
 
   and bisequence = a =>
     switch a {
-    | Ok(a') => A.map(x => Ok(x), a')
-    | Error(a') => A.map(x => Error(x), a')
+    | Ok(a') => A.map(x => Ok(x))(a')
+    | Error(a') => A.map(x => Error(x))(a')
     }
 }
 
@@ -441,7 +441,7 @@ module Infix = {
 
 module Choose = (A: ALT) => {
   let choose: (A.t<'a>, A.t<'b>) => A.t<result<'a, 'b>> = (a, b) =>
-    A.alt(A.map(x => Ok(x), a), A.map(x => Error(x), b))
+    A.alt(A.map(x => Ok(x))(a), A.map(x => Error(x))(b))
 }
 
 module Unsafe = {

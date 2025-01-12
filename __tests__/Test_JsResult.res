@@ -133,7 +133,7 @@ module Toggle = {
   let arb_toggle: arbitrary<toggle> = smap(
     from_bool,
     to_bool,
-    ~newShow=\">."(\">."(to_bool, x => Js.Json.stringifyAny(x)), x =>
+    ~newShow=\">."(\">."(to_bool)(x => Js.Json.stringifyAny(x)))(x =>
       Js.Option.getWithDefault("", x)
     ),
     arb_bool,
@@ -301,7 +301,7 @@ describe("Result", () => {
     property1(
       "should satisfy homomorphism",
       arb_result(arb_nat, arb_string),
-      V.homomorphism(x => Functors.ResultF.String.Functor.map(string_of_int, x), ...)
+      V.homomorphism(x => Functors.ResultF.String.Functor.map(string_of_int)(x), ...)
     )
     property1("should satisfy interchange", arb_nat, V.interchange(Ok(string_of_int), ...))
   })
@@ -311,9 +311,9 @@ describe("Result", () => {
     property1(
       "should satisfy associativity",
       arb_result(arb_nat, arb_string),
-      V.associativity(\"<."(pure, string_of_int), \"<."(pure, \"^"("!", ...)), ...)
+      V.associativity(\"<."(pure)(string_of_int), \"<."(pure)(\"^"("!", ...)), ...)
     )
-    property1("should satisfy identity", arb_nat, V.identity(\"<."(pure, string_of_int), ...))
+    property1("should satisfy identity", arb_nat, V.identity(\"<."(pure)(string_of_int), ...))
   })
   describe("Alt", () => {
     module V = Verify.Alt(Functors.ResultF.String.Alt)

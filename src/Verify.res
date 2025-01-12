@@ -138,7 +138,7 @@ module Compare = {
   module Functor = (F: FUNCTOR, E: EQ1 with type t<'a> = F.t<'a>) => {
     let \"<." = Function.Infix.\"<."
 
-    let identity: F.t<'a> => bool = a => E.eq(F.map(Function.Category.id, a), a)
+    let identity: F.t<'a> => bool = a => E.eq(F.map(Function.Category.id)(a), a)
 
     let composition: ('b => 'c, 'a => 'b, F.t<'a>) => bool = (f, g, a) => {
       // Orig:
@@ -152,11 +152,11 @@ module Compare = {
       //      let compose_fmgm = \"<."(fm, gm)
 
       // workaround
-      let fm' = x => F.map(f, x)
-      let gm' = y => F.map(g, y)
-      let compose_fm'gm' = \"<."(fm', gm')
+      let fm' = x => F.map(f)(x)
+      let gm' = y => F.map(g)(y)
+      let compose_fm'gm' = \"<."(fm')(gm')
 
-      E.eq(F.map(\"<."(f, g), a), compose_fm'gm'(a))
+      E.eq(F.map(\"<."(f)(g))(a), compose_fm'gm'(a))
     }
   }
 
@@ -168,11 +168,11 @@ module Compare = {
       // orig:
       // E.eq(\"<*>"(\"<*>"(A.map(Function.Semigroupoid.compose, f), g), h), \"<*>"(f, \"<*>"(g, h)))
       //
-      let amc = A.map(a => Function.Semigroupoid.compose(a, _), f)
-      let amcg = \"<*>"(amc, g)
-      let amcgh = \"<*>"(amcg, h)
+      let amc = A.map(a => Function.Semigroupoid.compose(a)(_))(f)
+      let amcg = \"<*>"(amc)(g)
+      let amcgh = \"<*>"(amcg)(h)
 
-      let fgh' = \"<*>"(f, \"<*>"(g, h))
+      let fgh' = \"<*>"(f)(\"<*>"(g)(h))
       E.eq(amcgh, fgh')
     }
   }
@@ -182,17 +182,17 @@ module Compare = {
 
     let identity: A.t<'a> => bool = a => {
       open I
-      E.eq(\"<*>"(A.pure(Function.Category.id), a), a)
+      E.eq(\"<*>"(A.pure(Function.Category.id))(a), a)
     }
 
     let homomorphism: ('a => 'b, 'a) => bool = (f, x) => {
       open I
-      E.eq(\"<*>"(A.pure(f), A.pure(x)), A.pure(f(x)))
+      E.eq(\"<*>"(A.pure(f))(A.pure(x)), A.pure(f(x)))
     }
 
     let interchange: (A.t<'a => 'b>, 'a) => bool = (f, x) => {
       open I
-      E.eq(\"<*>"(f, A.pure(x)), \"<*>"(A.pure(f' => f'(x)), f))
+      E.eq(\"<*>"(f)(A.pure(x)), \"<*>"(A.pure(f' => f'(x)))(f))
     }
   }
 
@@ -201,12 +201,12 @@ module Compare = {
 
     let associativity: ('a => M.t<'b>, 'b => M.t<'c>, M.t<'a>) => bool = (f, g, x) => {
       open I
-      E.eq(\">>="(\">>="(x, f), g), \">>="(x, k => \">>="(f(k), g)))
+      E.eq(\">>="(\">>="(x)(f))(g), \">>="(x)(k => \">>="(f(k))(g)))
     }
 
     let identity: ('a => M.t<'b>, 'a) => bool = (f, x) => {
       open I
-      E.eq(\">>="(M.pure(x), f), f(x)) && E.eq(\">>="(M.pure(x), M.pure), M.pure(x))
+      E.eq(\">>="(M.pure(x))(f), f(x)) && E.eq(\">>="(M.pure(x))(M.pure), M.pure(x))
     }
   }
 
@@ -220,14 +220,14 @@ module Compare = {
 
     let distributivity: ('a => 'b, A.t<'a>, A.t<'a>) => bool = (f, a, b) => {
       open I
-      E.eq(A.map(f, \"<|>"(a, b)), \"<|>"(A.map(f, a), A.map(f, b)))
+      E.eq(A.map(f)(\"<|>"(a, b)), \"<|>"(A.map(f)(a), A.map(f)(b)))
     }
   }
 
   module Plus = (P: PLUS, E: EQ1 with type t<'a> = P.t<'a>) => {
     module I = Infix.Alt(P)
 
-    let annihalation: ('a => 'b) => bool = f => E.eq(P.map(f, P.empty), P.empty)
+    let annihalation: ('a => 'b) => bool = f => E.eq(P.map(f)(P.empty), P.empty)
 
     let identity: P.t<'a> => bool = a => {
       open I
@@ -240,12 +240,12 @@ module Compare = {
 
     let distributivity: (A.t<'a => 'b>, A.t<'a => 'b>, A.t<'a>) => bool = (f, g, x) => {
       open I
-      E.eq(\"<*>"(\"<|>"(f, g), x), \"<|>"(\"<*>"(f, x), \"<*>"(g, x)))
+      E.eq(\"<*>"(\"<|>"(f, g))(x), \"<|>"(\"<*>"(f)(x), \"<*>"(g)(x)))
     }
 
     let annihalation: A.t<'a => 'b> => bool = f => {
       open I
-      E.eq(\"<*>"(A.empty, f), A.empty)
+      E.eq(\"<*>"(A.empty)(f), A.empty)
     }
   }
 
@@ -254,7 +254,7 @@ module Compare = {
 
     let associativity: (S.t<'c, 'd>, S.t<'b, 'c>, S.t<'a, 'b>) => bool = (a, b, c) => {
       open I
-      E.eq(\"<."(\"<."(a, b), c), \"<."(a, \"<."(b, c)))
+      E.eq(\"<."(\"<."(a)(b))(c), \"<."(a)(\"<."(b)(c)))
     }
   }
 
@@ -263,7 +263,7 @@ module Compare = {
 
     let identity: C.t<'a, 'b> => bool = a => {
       open I
-      E.eq(\"<."(C.id, a), a) && E.eq(\"<."(a, C.id), a)
+      E.eq(\"<."(C.id)(a), a) && E.eq(\"<."(a)(C.id), a)
     }
   }
 
@@ -488,7 +488,7 @@ module Compare = {
 
     let \"<." = Function.Infix.\"<."
 
-    let identity: I.t<'a> => bool = a => E.eq(I.imap(id, id, a), a)
+    let identity: I.t<'a> => bool = a => E.eq(I.imap(id)(id)(a), a)
 
     let composition: ('a => 'b, 'b => 'a, 'b => 'a, 'a => 'b, I.t<'a>) => bool = (
       f1,
@@ -498,8 +498,8 @@ module Compare = {
       a,
     ) => {
       // ORIG:
-      let eqa = \"<."(x => I.imap(g1, g2, x), y => I.imap(f1, f2, y))(a)
-      let eqb = I.imap(\"<."(g1, f1), \"<."(f2, g2), a)
+      let eqa = \"<."(x => I.imap(g1)(g2)(x))(y => I.imap(f1)(f2)(y))(a)
+      let eqb = I.imap(\"<."(g1)(f1))(\"<."(f2)(g2))(a)
       E.eq(eqa, eqb)
     }
   }
@@ -509,10 +509,10 @@ module Compare = {
 
     let \"<." = Function.Infix.\"<."
 
-    let identity: C.t<'a> => bool = a => E.eq(C.cmap(id, a), a)
+    let identity: C.t<'a> => bool = a => E.eq(C.cmap(id)(a), a)
 
     let composition: ('c => 'b, 'b => 'a, C.t<'a>) => bool = (f, g, a) =>
-      E.eq(\"<."(C.cmap(f, ...), C.cmap(g, ...))(a), C.cmap(\"<."(g, f), a))
+      E.eq(\"<."(C.cmap(f, ...))(C.cmap(g, ...))(a), C.cmap(\"<."(g)(f))(a))
   }
 
   module Profunctor = (P: PROFUNCTOR, E: EQ2 with type t<'a, 'b> = P.t<'a, 'b>) => {
@@ -523,7 +523,7 @@ module Compare = {
       (\"<.", \">.")
     }
 
-    let identity: P.t<'a, 'b> => bool = a => E.eq(P.dimap(id, id, a), a)
+    let identity: P.t<'a, 'b> => bool = a => E.eq(P.dimap(id)(id)(a), a)
 
     let composition: ('a => 'b, 'c => 'd, 'e => 'a, 'd => 'f, P.t<'b, 'c>) => bool = (
       f1,
@@ -533,30 +533,30 @@ module Compare = {
       a,
     ) =>
       E.eq(
-        \"<."(P.dimap(f2, g2, ...), P.dimap(f1, g1, ...))(a),
-        P.dimap(\">."(f2, f1), \"<."(g2, g1), a),
+        \"<."(P.dimap(f2)(g2)(_))(P.dimap(f1)(g1)(_))(a),
+        P.dimap(\">."(f2)(f1))(\"<."(g2)(g1))(a),
       )
   }
 
   module Monad_Zero = (M: MONAD_ZERO, E: EQ1 with type t<'a> = M.t<'a>) => {
-    let annihalation: ('a => M.t<'b>) => bool = f => E.eq(M.flat_map(M.empty, f), M.empty)
+    let annihalation: ('a => M.t<'b>) => bool = f => E.eq(M.flat_map(M.empty)(f), M.empty)
   }
 
   module Monad_Plus = (M: MONAD_PLUS, E: EQ1 with type t<'a> = M.t<'a>) => {
     let distributivity: ('a => M.t<'b>, M.t<'a>, M.t<'a>) => bool = (f, a, b) =>
-      E.eq(M.flat_map(M.alt(a, b), f), M.alt(M.flat_map(a, f), M.flat_map(b, f)))
+      E.eq(M.flat_map(M.alt(a, b))(f), M.alt(M.flat_map(a)(f), M.flat_map(b)(f)))
   }
 
   module Extend = (X: EXTEND, E: EQ1 with type t<'a> = X.t<'a>) => {
     let \"<." = Function.Infix.\"<."
 
     let associativity: (E.t<'b> => 'c, E.t<'a> => 'b, E.t<'a>) => bool = (f, g, a) =>
-      E.eq(\"<."(X.extend(f, ...), X.extend(g, ...))(a), X.extend(\"<."(f, X.extend(g, ...)), a))
+      E.eq(\"<."(X.extend(f, ...))(X.extend(g, ...))(a), X.extend(\"<."(f)(X.extend(g, ...)))(a))
   }
 
   module Comonad = (C: COMONAD, E: EQ1 with type t<'a> = C.t<'a>) => {
     let identity: (C.t<'a> => 'a, C.t<'a>) => bool = (f, a) =>
-      E.eq(C.extend(C.extract, a), a) && E.eq(C.extract(C.extend(f, a)), f(a))
+      E.eq(C.extend(C.extract)(a), a) && E.eq(C.extract(C.extend(f)(a)), f(a))
   }
 
   module Bifunctor = (B: BIFUNCTOR, E: EQ2 with type t<'a, 'b> = B.t<'a, 'b>) => {
@@ -564,7 +564,7 @@ module Compare = {
 
     let \"<." = Function.Infix.\"<."
 
-    let identity: B.t<'a, 'b> => bool = a => E.eq(B.bimap(id, id, a), a)
+    let identity: B.t<'a, 'b> => bool = a => E.eq(B.bimap(id)(id)(a), a)
 
     let composition: ('b => 'e, 'd => 'f, 'a => 'b, 'c => 'd, B.t<'a, 'c>) => bool = (
       f1,
@@ -574,8 +574,8 @@ module Compare = {
       a,
     ) =>
       E.eq(
-        \"<."(B.bimap(f1, g1, ...), B.bimap(f2, g2, ...))(a),
-        B.bimap(\"<."(f1, f2), \"<."(g1, g2), a),
+        \"<."(B.bimap(f1)(g1)(_))(B.bimap(f2)(g2)(_))(a),
+        B.bimap(\"<."(f1)(f2))(\"<."(g1)(g2))(a),
       )
   }
 
@@ -584,7 +584,7 @@ module Compare = {
 
     let \"<." = Function.Infix.\"<."
 
-    let identity: B.t<'a, 'b> => bool = a => E.eq(B.bicmap(id, id, a), a)
+    let identity: B.t<'a, 'b> => bool = a => E.eq(B.bicmap(id)(id)(a), a)
 
     let composition: ('e => 'b, 'f => 'd, 'b => 'a, 'd => 'c, B.t<'a, 'c>) => bool = (
       f1,
@@ -594,8 +594,8 @@ module Compare = {
       a,
     ) =>
       E.eq(
-        \"<."(B.bicmap(f1, g1, ...), B.bicmap(f2, g2, ...))(a),
-        B.bicmap(\"<."(f2, f1), \"<."(g2, g1), a),
+        \"<."(B.bicmap(f1)(g1)(_))(B.bicmap(f2)(g2)(_))(a),
+        B.bicmap(\"<."(f2)(f1))(\"<."(g2)(g1))(a),
       )
   }
 }

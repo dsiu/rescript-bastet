@@ -49,7 +49,7 @@ module Apply: APPLY with type t<'a> = Js.Dict.t<'a> = {
   include Functor
 
   let apply = (fn_array, a) =>
-    fold_left((acc, f) => merge(acc, map(f, a)), Obj.magic(Js.Dict.empty()), fn_array)
+    fold_left((acc, f) => merge(acc, map(f)(a)), Obj.magic(Js.Dict.empty()), fn_array)
 }
 
 module Alt: ALT with type t<'a> = Js.Dict.t<'a> = {
@@ -127,8 +127,7 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
     open I
     fold_left_keys(
       (acc, k, v) =>
-        \"<*>"(
-          \"<$>"(a => b => Function.flip((v, dict) => insert(k, v, dict), a, b), acc),
+        \"<*>"(\"<$>"(a => b => Function.flip((v, dict) => insert(k, v, dict), a, b))(acc))(
           f(k, v),
         ),
       A.pure(Js.Dict.empty()),
