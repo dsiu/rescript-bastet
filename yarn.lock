@@ -297,10 +297,10 @@ __metadata:
 
 "bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version: 0.10.0
-  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=94e44fc177572307c028d6a09323d3f9d8c12f98"
+  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=ec24d249f35b84c2251af700dc23f0c49662a649"
   dependencies:
     jsverify: "npm:^0.8.4"
-  checksum: 10c0/0ca83362ecf71a09773f0f6c786064bf919fe96793f13c2e368e0b9fdd5e86ddc1f77769321caf4c7dd2b3491208ce94815891cbf5c74a09cb83a948a0fbd459
+  checksum: 10c0/cfd1b204d954040427ba2e7a628343c2d62d81bef764f4db1df1f948c1ddb5406fbe74c373861c7ddd4f812e77246a82e62016aa8fb12763b705e9cf5f6321a8
   languageName: node
   linkType: hard
 
