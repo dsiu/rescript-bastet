@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 module Magma: MAGMA with type t = string = {
   type t = string
@@ -41,11 +41,11 @@ module Ord: ORD with type t = string = {
 module Show: SHOW with type t = string = {
   type t = string
 
-  let show = Function.Category.id
+  let show = Bastet_Function.Category.id
 }
 
 module Infix = {
-  include Infix.Magma(Magma)
-  include Infix.Eq(Eq)
-  include Infix.Ord(Ord)
+  include Bastet_Infix.Magma(Magma)
+  include Bastet_Infix.Eq(Eq)
+  include Bastet_Infix.Ord(Ord)
 }

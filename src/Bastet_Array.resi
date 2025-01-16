@@ -2,30 +2,30 @@ let zip_with: (('a, 'b) => 'c, array<'a>, array<'b>) => array<'c>
 
 let zip: (array<'a>, array<'b>) => array<('a, 'b)>
 
-module type EQ_F = (E: Interface.EQ) =>
+module type EQ_F = (E: Bastet_Interface.EQ) =>
 {
   type t = array<E.t>
 
   let eq: (t, t) => bool
 }
 
-module type ORD_F = (O: Interface.ORD) =>
+module type ORD_F = (O: Bastet_Interface.ORD) =>
 {
   type t = array<O.t>
 
   let eq: (t, t) => bool
 
-  let compare: (t, t) => Interface.ordering
+  let compare: (t, t) => Bastet_Interface.ordering
 }
 
-module type SHOW_F = (S: Interface.SHOW) =>
+module type SHOW_F = (S: Bastet_Interface.SHOW) =>
 {
   type t = array<S.t>
 
   let show: t => string
 }
 
-module type TRAVERSABLE_F = (A: Interface.APPLICATIVE) =>
+module type TRAVERSABLE_F = (A: Bastet_Interface.APPLICATIVE) =>
 {
   type t<'a> = array<'a>
 
@@ -35,17 +35,17 @@ module type TRAVERSABLE_F = (A: Interface.APPLICATIVE) =>
 
   let fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a
 
-  module Fold_Map: (M: Interface.MONOID) =>
+  module Fold_Map: (M: Bastet_Interface.MONOID) =>
   {
     let fold_map: ('a => M.t, t<'a>) => M.t
   }
 
-  module Fold_Map_Any: (M: Interface.MONOID_ANY) =>
+  module Fold_Map_Any: (M: Bastet_Interface.MONOID_ANY) =>
   {
     let fold_map: ('a => M.t<'b>, t<'a>) => M.t<'b>
   }
 
-  module Fold_Map_Plus: (P: Interface.PLUS) =>
+  module Fold_Map_Plus: (P: Bastet_Interface.PLUS) =>
   {
     let fold_map: ('a => P.t<'b>, t<'a>) => P.t<'b>
   }
@@ -108,17 +108,17 @@ module Foldable: {
 
   let fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a
 
-  module Fold_Map: (M: Interface.MONOID) =>
+  module Fold_Map: (M: Bastet_Interface.MONOID) =>
   {
     let fold_map: ('a => M.t, t<'a>) => M.t
   }
 
-  module Fold_Map_Any: (M: Interface.MONOID_ANY) =>
+  module Fold_Map_Any: (M: Bastet_Interface.MONOID_ANY) =>
   {
     let fold_map: ('a => M.t<'b>, t<'a>) => M.t<'b>
   }
 
-  module Fold_Map_Plus: (P: Interface.PLUS) =>
+  module Fold_Map_Plus: (P: Bastet_Interface.PLUS) =>
   {
     let fold_map: ('a => P.t<'b>, t<'a>) => P.t<'b>
   }

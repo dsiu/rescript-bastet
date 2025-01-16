@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 @@ocaml.text(" Promives a Show instance using [Js.Float.toString]. You might not need to use this version
     depending on your use cases.

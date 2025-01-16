@@ -1,4 +1,7 @@
-open Interface
+open Bastet_Interface
+module Function = Bastet_Function
+module Default = Bastet_Default
+module Infix = Bastet_Infix
 
 let \"<." = Function.Infix.\"<."
 
@@ -70,7 +73,7 @@ module Foldable: FOLDABLE with type t<'a> = Js.Dict.t<'a> = {
   let fold_left = fold_left
 
   and fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a = (f, init, a) =>
-    RescriptCore.Array.reduceRight(Js.Dict.values(a), init, (x, y) => f(y, x))
+    Array.reduceRight(Js.Dict.values(a), init, (x, y) => f(y, x))
 
   module Fold_Map = (M: MONOID) => {
     module D = Default.Fold_Map(

@@ -2,7 +2,6 @@
   "name": "rescript-bastet",
   "version": "2.0.0",
   "refmt": 3,
-  "namespace": true,
   "bsc-flags": [
   ],
   "warnings": {
@@ -26,7 +25,6 @@
   },
   "suffix": ".mjs",
   "bs-dependencies": [
-    "@rescript/core"
   ],
   "bs-dev-dependencies": [
     "bs-jsverify",

@@ -1,4 +1,11 @@
 @@ocaml.text(" These helpers provide generative tests for implementations. ")
+module CoreList = List
+
+module Verify = Bastet_Verify
+module Interface = Bastet_Interface
+module Function = Bastet_Function
+module Functors = Bastet_Functors
+//module Int = Bastet_Int
 
 module type TEST = {
   type test
@@ -95,12 +102,12 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
 
   type arbitrary<'a>
 
-  let \"<." = Function.Infix.\"<."
+  let \"<." = Bastet_Function.Infix.\"<."
 
   module Compare = {
     module Medial_Magma = (
-      M: Interface.MEDIAL_MAGMA,
-      E: Interface.EQ with type t = M.t,
+      M: Bastet_Interface.MEDIAL_MAGMA,
+      E: Bastet_Interface.EQ with type t = M.t,
       A: ARBITRARY with type t := M.t and type arbitrary<'a> := Q.arbitrary<'a>,
     ) => {
       module V = Verify.Compare.Medial_Magma(M, E)
@@ -925,7 +932,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
 }
 
 module Array = (
-  Arr: ArrayF.ARRAY,
+  Arr: Bastet_ArrayF.ARRAY,
   T: TEST,
   Q: QUICKCHECK with type t = T.test,
   A: ARBITRARY with type t = array<int> and type arbitrary<'a> = Q.arbitrary<'a>,
@@ -981,7 +988,7 @@ module Array = (
         let fold_map = Functors.ArrayF.List.Fold_Map_Plus.fold_map
         T.check(
           T.list(T.list(T.int)),
-          fold_map(List.Applicative.pure, [list{1, 2, 3}, list{4, 5}]),
+          fold_map(Bastet_List.Applicative.pure, [list{1, 2, 3}, list{4, 5}]),
           list{list{1, 2, 3}, list{4, 5}},
         )
       }),
@@ -1032,7 +1039,7 @@ module Array = (
   }
 
   let show = {
-    module S = Arr.Show(Int.Show)
+    module S = Arr.Show(Bastet_Int.Show)
     T.suite(
       "Array.Show",
       list{
@@ -1055,11 +1062,7 @@ module Array = (
         Q.property(
           ~name="should satisfy associativity",
           AA.make_bound(Q.arbitrary_int),
-          V.associativity(
-            \"<."(RescriptCore.Float.toString(_), fold'),
-            \"<."(float_of_int, fold),
-            ...
-          )
+          V.associativity(\"<."(Float.toString(_), fold'), \"<."(float_of_int, fold), ...)
         ),
       },
     )
@@ -1085,17 +1088,8 @@ module Array = (
       Ord.suite,
       Invariant.suite,
     }
-    ->RescriptCore.List.map(suite => suite("Array"))
-    ->RescriptCore.List.concat(list{
-      zip_with,
-      zip,
-      foldable,
-      unfoldable,
-      traversable,
-      show,
-      extend,
-      alt_order,
-    })
+    ->List.map(suite => suite("Array"))
+    ->List.concat(list{zip_with, zip, foldable, unfoldable, traversable, show, extend, alt_order})
 }
 
 module Bool = (
@@ -1104,6 +1098,7 @@ module Bool = (
   A: ARBITRARY with type t = bool and type arbitrary<'a> = Q.arbitrary<'a>,
 ) => {
   module M = Make(T, Q)
+  module Bool = Bastet_Bool
 
   module Conjunctive = {
     module Medial_Magma = M.Medial_Magma(Bool.Conjunctive.Medial_Magma, A)
@@ -1137,17 +1132,17 @@ module Bool = (
   )
   module Boolean_Algebra = M.Boolean_Algebra(Bool.Boolean_Algebra, A)
 
-  let suites = RescriptCore.List.flat(list{
+  let suites = List.flat(list{
     list{
       Conjunctive.Medial_Magma.suite,
       Conjunctive.Semigroup.suite,
       Conjunctive.Monoid.suite,
-    }->RescriptCore.List.map(suite => suite("Bool.Conjunctive")),
+    }->List.map(suite => suite("Bool.Conjunctive")),
     list{
       Disjunctive.Medial_Magma.suite,
       Disjunctive.Semigroup.suite,
       Disjunctive.Monoid.suite,
-    }->RescriptCore.List.map(suite => suite("Bool.Disjunctive")),
+    }->List.map(suite => suite("Bool.Disjunctive")),
     list{
       Eq.suite,
       Ord.suite,
@@ -1162,28 +1157,28 @@ module Bool = (
       Heyting_Algebra.suite,
       Involutive_Heyting_Algebra.suite,
       Boolean_Algebra.suite,
-    }->RescriptCore.List.map(suite => suite("Bool")),
+    }->List.map(suite => suite("Bool")),
   })
 }
 
 module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
   module Foldable: Interface.FOLDABLE with type t<'a> = list<'a> = {
     type t<'a> = list<'a>
+    module Default = Bastet_Default
 
     module FM: Default.FOLD_MAP with type t<'a> = list<'a> = {
       type t<'a> = list<'a>
 
       module Fold_Map_Any = (M: Interface.MONOID_ANY) => {
-        let fold_map = (f, x) =>
-          RescriptCore.List.reduce(x, M.empty, (acc, x) => M.append(acc, f(x)))
+        let fold_map = (f, x) => List.reduce(x, M.empty, (acc, x) => M.append(acc, f(x)))
       }
 
       module Fold_Map_Plus = (P: Interface.PLUS) => {
-        let fold_map = (f, x) => RescriptCore.List.reduce(x, P.empty, (acc, x) => P.alt(acc, f(x)))
+        let fold_map = (f, x) => List.reduce(x, P.empty, (acc, x) => P.alt(acc, f(x)))
       }
     }
 
-    module Fold_Map = List.Foldable.Fold_Map
+    module Fold_Map = Bastet_List.Foldable.Fold_Map
     module Fold_Map_Any = FM.Fold_Map_Any
     module Fold_Map_Plus = FM.Fold_Map_Plus
     module F = Default.Fold(FM)
@@ -1199,15 +1194,17 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
 
       type applicative_t<'a> = A.t<'a>
 
-      include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
+      include (Bastet_List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
 
-      include (List.Foldable: Interface.FOLDABLE with type t<'a> := t<'a>)
+      include (Bastet_List.Foldable: Interface.FOLDABLE with type t<'a> := t<'a>)
+
+      module Infix = Bastet_Infix
 
       module I = Infix.Apply(A)
 
       let sequence = xs => {
         open I
-        RescriptCore.List.reduceReverse(xs, A.pure(list{}), (x, acc) => {
+        List.reduceReverse(xs, A.pure(list{}), (x, acc) => {
           let ff = y => ys => list{y, ...ys}
           let ap = A.pure(ff)
           let ap1 = \"<*>"(ap, acc)
@@ -1215,12 +1212,12 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
         })
       }
 
-      module D = Default.Traverse({
+      module D = Bastet_Default.Traverse({
         type t<'a> = list<'a>
 
         type applicative_t<'a> = A.t<'a>
 
-        include (List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
+        include (Bastet_List.Functor: Interface.FUNCTOR with type t<'a> := t<'a>)
 
         let sequence = sequence
       })
@@ -1244,7 +1241,7 @@ module Default = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
     )
   }
 
-  module Traverse = Traversable(Option.Applicative)
+  module Traverse = Traversable(Bastet_Option.Applicative)
 
   let traversable = {
     open Traverse
@@ -1274,6 +1271,8 @@ module Float = (
   A: ARBITRARY with type t = float and type arbitrary<'a> = Q.arbitrary<'a>,
 ) => {
   module M = Make(T, Q)
+
+  module Float = Bastet_Float
 
   module Additive = {
     module Medial_Magma = M.Compare.Medial_Magma(Float.Additive.Medial_Magma, E, A)
@@ -1313,7 +1312,7 @@ module Float = (
   module Euclidean_Ring = M.Compare.Euclidean_Ring(Float.Euclidean_Ring, E, A)
   module Field = M.Field(Float.Field, A)
 
-  let suites = RescriptCore.List.flat(list{
+  let suites = List.flat(list{
     list{
       Additive.Medial_Magma.suite,
       Additive.Semigroup.suite,
@@ -1322,19 +1321,18 @@ module Float = (
       Additive.Loop.suite,
       Additive.Group.suite,
       Additive.Abelian_Group.suite,
-    }->RescriptCore.List.map(suite => suite("Float.Additive")),
+    }->List.map(suite => suite("Float.Additive")),
     list{
       Multiplicative.Medial_Magma.suite,
       Multiplicative.Semigroup.suite,
       Multiplicative.Monoid.suite,
       Multiplicative.Quasigroup.suite,
       Multiplicative.Loop.suite,
-    }->RescriptCore.List.map(suite => suite("Float.Multiplicative")),
-    list{
-      Subtractive.Medial_Magma.suite,
-      Subtractive.Quasigroup.suite,
-    }->RescriptCore.List.map(suite => suite("Float.Subtractive")),
-    list{Divisive.Medial_Magma.suite, Divisive.Quasigroup.suite}->RescriptCore.List.map(suite =>
+    }->List.map(suite => suite("Float.Multiplicative")),
+    list{Subtractive.Medial_Magma.suite, Subtractive.Quasigroup.suite}->List.map(suite =>
+      suite("Float.Subtractive")
+    ),
+    list{Divisive.Medial_Magma.suite, Divisive.Quasigroup.suite}->List.map(suite =>
       suite("Float.Divisive")
     ),
     list{
@@ -1347,7 +1345,7 @@ module Float = (
       Division_Ring.suite,
       Euclidean_Ring.suite,
       Field.suite,
-    }->RescriptCore.List.map(suite => suite("Float")),
+    }->List.map(suite => suite("Float")),
   })
 }
 
@@ -1358,22 +1356,23 @@ module List = (
   AA: ARBITRARY_A with type t<'a> = list<'a> and type arbitrary<'a> = Q.arbitrary<'a>,
 ) => {
   module M = Make(T, Q)
-  module Functor = M.Functor(List.Functor, AA)
-  module Apply = M.Apply(List.Applicative, AA)
-  module Applicative = M.Applicative(List.Applicative, AA)
-  module Monad = M.Monad(List.Monad, AA)
-  module Alt = M.Alt(List.Alt, AA)
+
+  module Functor = M.Functor(Bastet_List.Functor, AA)
+  module Apply = M.Apply(Bastet_List.Applicative, AA)
+  module Applicative = M.Applicative(Bastet_List.Applicative, AA)
+  module Monad = M.Monad(Bastet_List.Monad, AA)
+  module Alt = M.Alt(Bastet_List.Alt, AA)
   module Eq = M.Eq(Functors.ListF.Int.Eq, A)
 
   let foldable = T.suite(
     "List.Foldable",
     list{
       T.test("should do a left fold", () => {
-        T.check(T.int, List.Foldable.fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
-        T.check(T.int, List.Foldable.fold_left(\"-", 10, list{3, 2, 1}), 4)
+        T.check(T.int, Bastet_List.Foldable.fold_left(\"+", 0, list{1, 2, 3, 4, 5}), 15)
+        T.check(T.int, Bastet_List.Foldable.fold_left(\"-", 10, list{3, 2, 1}), 4)
       }),
       T.test("should do a right fold", () =>
-        T.check(T.int, List.Foldable.fold_right(\"-", 10, list{3, 2, 1}), -8)
+        T.check(T.int, Bastet_List.Foldable.fold_right(\"-", 10, list{3, 2, 1}), -8)
       ),
       T.test("should do a map fold (int)", () => {
         let fold_map = Functors.ListF.Int.Additive.Fold_Map.fold_map
@@ -1383,7 +1382,7 @@ module List = (
         let fold_map = Functors.ListF.List.Fold_Map_Plus.fold_map
         T.check(
           T.list(T.list(T.int)),
-          fold_map(List.Applicative.pure, list{list{1, 2, 3}, list{4, 5}}),
+          fold_map(Bastet_List.Applicative.pure, list{list{1, 2, 3}, list{4, 5}}),
           list{list{1, 2, 3}, list{4, 5}},
         )
       }),
@@ -1393,14 +1392,14 @@ module List = (
   let unfoldable = T.suite(
     "List.Unfoldable",
     list{
-      T.test("should do an unfold", () => T.check(T.list(T.int), List.Unfoldable.unfold(x =>
+      T.test("should do an unfold", () => T.check(T.list(T.int), Bastet_List.Unfoldable.unfold(x =>
             if x > 5 {
               None
             } else {
               Some(x, x + 1)
             }
           , 0), list{0, 1, 2, 3, 4, 5})),
-      T.test("should do an unfold", () => T.check(T.list(T.int), List.Unfoldable.unfold(x =>
+      T.test("should do an unfold", () => T.check(T.list(T.int), Bastet_List.Unfoldable.unfold(x =>
             if x > 20 {
               None
             } else {
@@ -1442,7 +1441,8 @@ module List = (
   }
 
   let show = {
-    module S = List.Show(Int.Show)
+    module Int = Bastet_Int
+    module S = Bastet_List.Show(Int.Show)
     T.suite(
       "List.Show",
       list{
@@ -1457,15 +1457,15 @@ module List = (
     "List.Alt.alt",
     list{
       T.test("should order the lists correctly", () =>
-        T.check(T.list(T.int), List.Alt.alt(list{1, 2, 3}, list{4, 5}), list{1, 2, 3, 4, 5})
+        T.check(T.list(T.int), Bastet_List.Alt.alt(list{1, 2, 3}, list{4, 5}), list{1, 2, 3, 4, 5})
       ),
     },
   )
 
   let suites =
     list{Functor.suite, Apply.suite, Applicative.suite, Monad.suite, Alt.suite, Eq.suite}
-    ->RescriptCore.List.map(suite => suite("List"))
-    ->RescriptCore.List.concat(list{foldable, unfoldable, traversable, show, alt_order})
+    ->List.map(suite => suite("List"))
+    ->List.concat(list{foldable, unfoldable, traversable, show, alt_order})
 }
 
 module Int = (
@@ -1474,7 +1474,7 @@ module Int = (
   A: ARBITRARY with type t = int and type arbitrary<'a> = Q.arbitrary<'a>,
 ) => {
   module M = Make(T, Q)
-
+  module Int = Bastet_Int
   module Additive = {
     module Medial_Magma = M.Medial_Magma(Int.Additive.Medial_Magma, A)
     module Semigroup = M.Semigroup(Int.Additive.Semigroup, A)
@@ -1506,7 +1506,7 @@ module Int = (
   module Commutative_Ring = M.Commutative_Ring(Int.Commutative_Ring, A)
   module Euclidean_Ring = M.Euclidean_Ring(Int.Euclidean_Ring, A)
 
-  let suites = RescriptCore.List.flat(list{
+  let suites = CoreList.flat(list{
     list{
       Additive.Medial_Magma.suite,
       Additive.Semigroup.suite,
@@ -1515,18 +1515,17 @@ module Int = (
       Additive.Loop.suite,
       Additive.Group.suite,
       Additive.Abelian_Group.suite,
-    }->RescriptCore.List.map(suite => suite("Int.Additive")),
+    }->CoreList.map(suite => suite("Int.Additive")),
     list{
       Multiplicative.Medial_Magma.suite,
       Multiplicative.Semigroup.suite,
       Multiplicative.Monoid.suite,
       Multiplicative.Quasigroup.suite,
       Multiplicative.Loop.suite,
-    }->RescriptCore.List.map(suite => suite("Int.Multiplicative")),
-    list{
-      Subtractive.Medial_Magma.suite,
-      Subtractive.Quasigroup.suite,
-    }->RescriptCore.List.map(suite => suite("Int.Subtractive")),
+    }->CoreList.map(suite => suite("Int.Multiplicative")),
+    list{Subtractive.Medial_Magma.suite, Subtractive.Quasigroup.suite}->CoreList.map(suite =>
+      suite("Int.Subtractive")
+    ),
     list{
       Eq.suite,
       Ord.suite,
@@ -1535,7 +1534,7 @@ module Int = (
       Ring.suite,
       Commutative_Ring.suite,
       Euclidean_Ring.suite,
-    }->RescriptCore.List.map(suite => suite("Int")),
+    }->CoreList.map(suite => suite("Int")),
   })
 }
 
@@ -1546,6 +1545,7 @@ module Option = (
   AA: ARBITRARY_A with type t<'a> = option<'a> and type arbitrary<'a> = Q.arbitrary<'a>,
 ) => {
   module M = Make(T, Q)
+  module Option = Bastet_Option
   module Semigroup = M.Semigroup(Functors.OptionF.Int.Additive.Semigroup, A)
   module Monoid = M.Monoid(Functors.OptionF.Int.Additive.Monoid, A)
   module Functor = M.Functor(Option.Functor, AA)
@@ -1639,8 +1639,8 @@ module Option = (
       Eq.suite,
       Ord.suite,
     }
-    ->RescriptCore.List.map(suite => suite("Option"))
-    ->RescriptCore.List.concat(list{infix, foldable, traversable})
+    ->CoreList.map(suite => suite("Option"))
+    ->CoreList.concat(list{infix, foldable, traversable})
 }
 
 module String = (
@@ -1649,6 +1649,7 @@ module String = (
   A: ARBITRARY with type t = string and type arbitrary<'a> = Q.arbitrary<'a>,
 ) => {
   module M = Make(T, Q)
+  module String = Bastet_String
   module Semigroup = M.Semigroup(String.Semigroup, A)
   module Monoid = M.Monoid(String.Monoid, A)
   module Quasigroup = M.Quasigroup(String.Quasigroup, A)
@@ -1664,5 +1665,5 @@ module String = (
       Loop.suite,
       Eq.suite,
       Ord.suite,
-    }->RescriptCore.List.map(suite => suite("String"))
+    }->CoreList.map(suite => suite("String"))
 }

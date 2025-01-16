@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 //let flip: (('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
 let flip: (('a, 'b) => 'c, 'b, 'a) => 'c = (f, b, a) => f(a, b)
@@ -54,7 +54,7 @@ module Invariant: INVARIANT_F = (T: TYPE) => {
 }
 
 module Profunctor: PROFUNCTOR with type t<'a, 'b> = 'a => 'b = {
-  module I = Infix.Semigroupoid(Semigroupoid)
+  module I = Bastet_Infix.Semigroupoid(Semigroupoid)
 
   let \">." = I.\">."
 
@@ -78,5 +78,5 @@ module Bicontravariant: BICONTRAVARIANT_F = (T: TYPE) => {
 }
 
 module Infix = {
-  include Infix.Semigroupoid(Semigroupoid)
+  include Bastet_Infix.Semigroupoid(Semigroupoid)
 }

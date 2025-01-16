@@ -1,9 +1,12 @@
+open Bastet
+
 open RescriptMocha.Mocha
 open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End
 open BsJsverify.Verify.Arbitrary
 open BsJsverify.Verify.Property
-open Functors
+
+module TupleF = Bastet_Functors.TupleF
 
 let \"<." = Function.Infix.\"<."
 

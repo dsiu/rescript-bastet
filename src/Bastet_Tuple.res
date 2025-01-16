@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 let first = ((a, _)) => a
 
@@ -183,7 +183,7 @@ module Bitraversable: BITRAVERSABLE_F = (A: APPLICATIVE) => {
 
   include (Bifoldable: BIFOLDABLE with type t<'a, 'b> := t<'a, 'b>)
 
-  module I = Infix.Apply(A)
+  module I = Bastet_Infix.Apply(A)
 
   let bitraverse = (f, g, (a, b)) => {
     open I
@@ -197,5 +197,5 @@ module Bitraversable: BITRAVERSABLE_F = (A: APPLICATIVE) => {
 }
 
 module Infix = {
-  include Infix.Biapply(Biapply)
+  include Bastet_Infix.Biapply(Biapply)
 }

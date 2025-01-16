@@ -1,4 +1,6 @@
-open Interface
+open Bastet_Interface
+
+module Function = Bastet_Function
 
 let (const, flip) = {
   open Function
@@ -13,7 +15,7 @@ and id = {
 and \"<." = Function.Infix.\"<."
 
 module Monoid = (M: MONOID) => {
-  module I = Infix.Magma(M)
+  module I = Bastet_Infix.Magma(M)
 
   let power: (M.t, int) => M.t = (x, p) => {
     open I
@@ -46,7 +48,7 @@ module Functor = (F: FUNCTOR) => {
 }
 
 module Apply = (A: APPLY) => {
-  module I = Infix.Apply(A)
+  module I = Bastet_Infix.Apply(A)
   open I
 
   // todo: is this correct??? (the const call)
@@ -115,7 +117,7 @@ module Apply' = (A: APPLY, T: TYPE) => {
 }
 
 module Applicative = (A: APPLICATIVE) => {
-  module I = Infix.Apply(A)
+  module I = Bastet_Infix.Apply(A)
 
   let liftA1: ('a => 'b, A.t<'a>) => A.t<'b> = (f, fa) => {
     open I
@@ -128,7 +130,7 @@ module Applicative = (A: APPLICATIVE) => {
 }
 
 module Monad = (M: MONAD) => {
-  module I = Infix.Monad(M)
+  module I = Bastet_Infix.Monad(M)
   module A = Applicative(M)
 
   let flatten: M.t<M.t<'a>> => M.t<'a> = m => {
@@ -174,8 +176,10 @@ module Monad = (M: MONAD) => {
 
 module Foldable = (F: FOLDABLE) => {
   module Semigroup = (S: SEMIGROUP) => {
+    module Endo = Bastet_Endo
+
     module FM = F.Fold_Map_Any(Endo.Monoid)
-    module I = Infix.Magma(S)
+    module I = Bastet_Infix.Magma(S)
 
     let surround_map: (~delimiter: S.t, 'a => S.t, F.t<'a>) => S.t = (~delimiter, f, fa) => {
       open I
@@ -190,7 +194,7 @@ module Foldable = (F: FOLDABLE) => {
 
   module Monoid = (M: MONOID) => {
     module FM = F.Fold_Map(M)
-    module I = Infix.Magma(M)
+    module I = Bastet_Infix.Magma(M)
 
     type acc = {
       init: bool,
@@ -231,7 +235,7 @@ module Foldable = (F: FOLDABLE) => {
   }
 
   module Monad = (M: MONAD) => {
-    module I = Infix.Monad(M)
+    module I = Bastet_Infix.Monad(M)
 
     let fold_monad: (('a, 'b) => M.t<'a>, 'a, F.t<'b>) => M.t<'a> = (f, a, fa) => {
       open I
@@ -255,23 +259,25 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Functor: FUNCTOR with type t<'a> = state<Type.t, 'a> = {
         type t<'a> = state<Type.t, 'a>
 
-        let map_x = (f, k) => s =>
-          switch apply_state(k, s) {
-          | {accum: s1, value: a} => {accum: s1, value: f(a)}
-          }
+        let map_x = (f, k) =>
+          s =>
+            switch apply_state(k, s) {
+            | {accum: s1, value: a} => {accum: s1, value: f(a)}
+            }
         let map = (f, k) => map_x(f, k)
       }
 
       module Apply: APPLY with type t<'a> = state<Type.t, 'a> = {
         include Functor
 
-        let apply_x = (f, x) => s =>
-          switch apply_state(f, s) {
-          | {accum: s1, value: f'} =>
-            switch apply_state(x, s1) {
-            | {accum: s2, value: x'} => {accum: s2, value: f'(x')}
+        let apply_x = (f, x) =>
+          s =>
+            switch apply_state(f, s) {
+            | {accum: s1, value: f'} =>
+              switch apply_state(x, s1) {
+              | {accum: s2, value: x'} => {accum: s2, value: f'(x')}
+              }
             }
-          }
         let apply = (f, x) => apply_x(f, x)
       }
 
@@ -287,10 +293,11 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Functor: FUNCTOR with type t<'a> = state<Type.t, 'a> = {
         type t<'a> = state<Type.t, 'a>
 
-        let map_x = (f, k) => s =>
-          switch apply_state(k, s) {
-          | {accum: s1, value: a} => {accum: s1, value: f(a)}
-          }
+        let map_x = (f, k) =>
+          s =>
+            switch apply_state(k, s) {
+            | {accum: s1, value: a} => {accum: s1, value: f(a)}
+            }
 
         let map = (f, k) => map_x(f, k)
       }
@@ -298,13 +305,14 @@ module Traversable = (T: TRAVERSABLE_F) => {
       module Apply: APPLY with type t<'a> = state<Type.t, 'a> = {
         include Functor
 
-        let apply_x = (f, x) => s =>
-          switch apply_state(x, s) {
-          | {accum: s1, value: x'} =>
-            switch apply_state(f, s1) {
-            | {accum: s2, value: f'} => {accum: s2, value: f'(x')}
+        let apply_x = (f, x) =>
+          s =>
+            switch apply_state(x, s) {
+            | {accum: s1, value: x'} =>
+              switch apply_state(f, s1) {
+              | {accum: s2, value: f'} => {accum: s2, value: f'(x')}
+              }
             }
-          }
 
         let apply = (f, x) => apply_x(f, x)
       }
@@ -375,7 +383,7 @@ module Infix = {
   }
 
   module Monad = (M: MONAD) => {
-    module Functions = Infix.Monad(M)
+    module Functions = Bastet_Infix.Monad(M)
 
     let (\">=>", \"<=<") = {
       open Functions

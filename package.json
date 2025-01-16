@@ -21,9 +21,6 @@
   ],
   "author": "Risto Stevcev",
   "license": "BSD-3-Clause",
-  "dependencies": {
-    "@rescript/core": "^1.6.1"
-  },
   "devDependencies": {
     "bs-chai": "github:dsiu/bs-chai#rescript-v12",
     "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v12",

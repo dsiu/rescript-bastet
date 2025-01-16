@@ -1,9 +1,9 @@
 @@ocaml.text(" Result is the equivalent of Either in Haskell for Ocaml ")
 
-open Interface
+open Bastet_Interface
 
 let (flip, const) = {
-  open Function
+  open Bastet_Function
   (flip, const)
 }
 
@@ -436,7 +436,7 @@ module Bitraversable: BITRAVERSABLE_F = (A: APPLICATIVE) => {
 }
 
 module Infix = {
-  include Infix.Bifunctor(Bifunctor)
+  include Bastet_Infix.Bifunctor(Bifunctor)
 }
 
 module Choose = (A: ALT) => {
@@ -465,6 +465,7 @@ and is_error = a => result(const(false, _), const(true, _), a)
 and note: ('err, option<'a>) => result<'a, 'err> = (default, o) => {
   let okx = x => Ok(x)
   let errd = Error(default)
-  Option.maybe(~f=okx, ~default=errd, o)
+  Bastet_Option.maybe(~f=okx, ~default=errd, o)
 }
-and hush: result<'a, 'err> => option<'a> = e => result(Option.Applicative.pure, const(None, _), e)
+and hush: result<'a, 'err> => option<'a> = e =>
+  result(Bastet_Option.Applicative.pure, const(None, _), e)

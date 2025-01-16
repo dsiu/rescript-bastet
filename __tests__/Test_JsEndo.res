@@ -1,3 +1,5 @@
+open Bastet
+
 open RescriptMocha.Mocha
 
 let \"<." = Function.Infix.\"<."

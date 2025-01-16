@@ -1,4 +1,5 @@
-open Interface
+open Bastet_Interface
+module Function = Bastet_Function
 
 let id = Function.Category.id
 
@@ -24,5 +25,5 @@ module Monoid: MONOID_ANY with type t<'a> = endo<'a> = {
 }
 
 module Infix = {
-  include Infix.Magma_Any(Magma)
+  include Bastet_Infix.Magma_Any(Magma)
 }

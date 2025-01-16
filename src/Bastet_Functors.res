@@ -2,10 +2,23 @@
  * Common instantiated functors *
  * * * * * * * * * * * * * * * *")
 
-module OcamlAbstractInt = Int
-module OcamlAbstractBool = Bool
-module OcamlAbstractString = String
-module OcamlAbstractFloat = Float
+module OcamlAbstractInt = Bastet_Int
+module OcamlAbstractBool = Bastet_Bool
+module OcamlAbstractString = Bastet_String
+module OcamlAbstractFloat = Bastet_Float
+
+module Functions = Bastet_Functions
+module Function = Bastet_Function
+module Int = Bastet_Int
+module Float = Bastet_Float
+module Bool = Bastet_Bool
+module String = Bastet_String
+module Array = Bastet_Array
+module List = Bastet_List
+module Option = Bastet_Option
+module Infix = Bastet_Infix
+module Result = Bastet_Result
+module Tuple = Bastet_Tuple
 
 module ArrayF = {
   module Functions = {

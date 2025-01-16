@@ -1,6 +1,6 @@
 @@ocaml.text(" This is a helper module to integrate `bs-abstract` with `ppx_let` ")
 
-open Interface
+open Bastet_Interface
 
 @ocaml.doc(" The module structure that `ppx_let` expects to be in scope ")
 module type PPX_LET = {
@@ -21,7 +21,7 @@ module type PPX_LET = {
 
 @ocaml.doc(" Makes the `ppx_let` module from a monad ")
 module Make = (M: MONAD) => {
-  module A = Functions.Apply(M)
+  module A = Bastet_Functions.Apply(M)
 
   module Let_syntax: PPX_LET with type t<'a> = M.t<'a> = {
     type t<'a> = M.t<'a>

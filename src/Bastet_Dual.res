@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 @ocaml.doc(" A data structure representing the dual of a monoid ")
 type dual<'a> = Dual('a)
@@ -103,7 +103,7 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
 
   include (Foldable: FOLDABLE with type t<'a> := t<'a>)
 
-  module I = Infix.Functor(A)
+  module I = Bastet_Infix.Functor(A)
 
   let traverse = (f, x) => {
     open I
@@ -121,5 +121,5 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
 }
 
 module Infix = {
-  include Infix.Monad(Monad)
+  include Bastet_Infix.Monad(Monad)
 }

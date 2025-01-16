@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 @@ocaml.text(" Note: `int` is not a fully law abiding member of Additive.Semigroup,
     Multiplicative.Semigroup and Semiring, and any abstractions dependent on these,
@@ -160,14 +160,14 @@ module Euclidean_Ring: EUCLIDEAN_RING with type t = int = {
 
 module Infix = {
   module Additive = {
-    include Infix.Magma(Additive.Magma)
+    include Bastet_Infix.Magma(Additive.Magma)
   }
 
   module Multiplicative = {
-    include Infix.Magma(Multiplicative.Magma)
+    include Bastet_Infix.Magma(Multiplicative.Magma)
   }
 
-  include Infix.Eq(Eq)
-  include Infix.Ord(Ord)
-  include Infix.Euclidean_Ring(Euclidean_Ring)
+  include Bastet_Infix.Eq(Eq)
+  include Bastet_Infix.Ord(Ord)
+  include Bastet_Infix.Euclidean_Ring(Euclidean_Ring)
 }

@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 @@ocaml.text(" Note: `float` is not a fully law abiding member of Additive.Semigroup,
     Multiplicative.Semigroup, Semiring, Division_Ring, and Euclidean_Ring, and any
@@ -145,7 +145,7 @@ module Bounded: BOUNDED with type t = float = {
 module Show: SHOW with type t = float = {
   type t = float
 
-  let show = RescriptCore.Float.toString(_)
+  let show = Float.toString(_)
 }
 
 module Semiring: SEMIRING with type t = float = {
@@ -194,14 +194,14 @@ module Field: FIELD with type t = float = {
 
 module Infix = {
   module Additive = {
-    include Infix.Magma(Additive.Magma)
+    include Bastet_Infix.Magma(Additive.Magma)
   }
 
   module Multiplicative = {
-    include Infix.Magma(Multiplicative.Magma)
+    include Bastet_Infix.Magma(Multiplicative.Magma)
   }
 
-  include Infix.Eq(Eq)
-  include Infix.Ord(Ord)
-  include Infix.Euclidean_Ring(Euclidean_Ring)
+  include Bastet_Infix.Eq(Eq)
+  include Bastet_Infix.Ord(Ord)
+  include Bastet_Infix.Euclidean_Ring(Euclidean_Ring)
 }

@@ -1,3 +1,5 @@
+open Bastet
+
 // Missing from RescriptCore
 let rec listIter = (~f, param) => {
   switch param {

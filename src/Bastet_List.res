@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 module type EQ_F = (E: EQ) => (EQ with type t = list<E.t>)
 
@@ -10,20 +10,19 @@ module type TRAVERSABLE_F = (A: APPLICATIVE) =>
 module Functor: FUNCTOR with type t<'a> = list<'a> = {
   type t<'a> = list<'a>
 
-  let map: ('a => 'b, list<'a>) => list<'b> = (f, xs) => RescriptCore.List.map(xs, f)
+  let map: ('a => 'b, list<'a>) => list<'b> = (f, xs) => List.map(xs, f)
 }
 
 module Alt: ALT with type t<'a> = list<'a> = {
   include Functor
 
-  let alt = (a, b) => RescriptCore.List.concat(a, b)
+  let alt = (a, b) => List.concat(a, b)
 }
 
 module Apply: APPLY with type t<'a> = list<'a> = {
   include Functor
 
-  let apply = (fn_array, a) =>
-    RescriptCore.List.reduce(fn_array, list{}, (acc, f) => Alt.alt(acc, map(f, a)))
+  let apply = (fn_array, a) => List.reduce(fn_array, list{}, (acc, f) => Alt.alt(acc, map(f, a)))
 }
 
 module Applicative: APPLICATIVE with type t<'a> = list<'a> = {
@@ -35,7 +34,7 @@ module Applicative: APPLICATIVE with type t<'a> = list<'a> = {
 module Monad: MONAD with type t<'a> = list<'a> = {
   include Applicative
 
-  let flat_map = (x, f) => RescriptCore.List.reduce(x, list{}, (acc, a) => Alt.alt(acc, f(a)))
+  let flat_map = (x, f) => List.reduce(x, list{}, (acc, a) => Alt.alt(acc, f(a)))
 }
 
 module Plus: PLUS with type t<'a> = list<'a> = {
@@ -54,13 +53,13 @@ module Foldable: FOLDABLE with type t<'a> = list<'a> = {
   type t<'a> = list<'a>
 
   let fold_left: (('a, 'b) => 'a, 'a, list<'b>) => 'a = (f, init, xs) =>
-    RescriptCore.List.reduce(xs, init, (a, b) => f(a, b))
+    List.reduce(xs, init, (a, b) => f(a, b))
 
   and fold_right: (('a, 'b) => 'b, 'b, list<'a>) => 'b = (f, init, xs) =>
-    RescriptCore.List.reduceReverse(xs, init, (a, b) => f(b, a))
+    List.reduceReverse(xs, init, (a, b) => f(b, a))
 
   module Fold_Map = (M: MONOID) => {
-    module D = Default.Fold_Map(
+    module D = Bastet_Default.Fold_Map(
       M,
       {
         type t<'a> = list<'a>
@@ -74,7 +73,7 @@ module Foldable: FOLDABLE with type t<'a> = list<'a> = {
   }
 
   module Fold_Map_Any = (M: MONOID_ANY) => {
-    module D = Default.Fold_Map_Any(
+    module D = Bastet_Default.Fold_Map_Any(
       M,
       {
         type t<'a> = list<'a>
@@ -87,7 +86,7 @@ module Foldable: FOLDABLE with type t<'a> = list<'a> = {
   }
 
   module Fold_Map_Plus = (P: PLUS) => {
-    module D = Default.Fold_Map_Plus(
+    module D = Bastet_Default.Fold_Map_Plus(
       P,
       {
         type t<'a> = list<'a>
@@ -119,12 +118,12 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
 
   include (Foldable: FOLDABLE with type t<'a> := t<'a>)
 
-  module I = Infix.Apply(A)
+  module I = Bastet_Infix.Apply(A)
 
   let traverse = (f, xs: t<'a>) => {
     open I
 
-    RescriptCore.List.reduceReverse(xs, A.pure(list{}), (x, acc) => {
+    List.reduceReverse(xs, A.pure(list{}), (x, acc) => {
       let ff = y => ys => list{y, ...ys}
       let ap = A.pure(ff)
       let ap1 = \"<*>"(ap, f(acc))
@@ -132,7 +131,7 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
     })
   }
 
-  module D = Default.Sequence({
+  module D = Bastet_Default.Sequence({
     type t<'a> = list<'a>
 
     type applicative_t<'a> = A.t<'a>
@@ -147,15 +146,13 @@ module Eq: EQ_F = (E: EQ) => {
   type t = list<E.t>
 
   let eq = (xs, ys) =>
-    RescriptCore.List.length(xs) == RescriptCore.List.length(ys) &&
-      RescriptCore.List.reduce(RescriptCore.List.zip(xs, ys), true, (acc, (a, b)) =>
-        acc && E.eq(a, b)
-      )
+    List.length(xs) == List.length(ys) &&
+      List.reduce(List.zip(xs, ys), true, (acc, (a, b)) => acc && E.eq(a, b))
 }
 
 module Show: SHOW_F = (S: SHOW) => {
-  module F = Functions.Foldable(Foldable)
-  module M = F.Monoid(String.Monoid)
+  module F = Bastet_Functions.Foldable(Foldable)
+  module M = F.Monoid(Bastet_String.Monoid)
 
   type t = list<S.t>
 
@@ -163,6 +160,6 @@ module Show: SHOW_F = (S: SHOW) => {
 }
 
 module Infix = {
-  include Infix.Monad(Monad)
-  include Infix.Alternative(Alternative)
+  include Bastet_Infix.Monad(Monad)
+  include Bastet_Infix.Alternative(Alternative)
 }

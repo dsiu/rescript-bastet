@@ -1,3 +1,9 @@
+module Interface = Bastet_Interface
+module Function = Bastet_Function
+module Infix = Bastet_Infix
+module Dual = Bastet_Dual
+module Endo = Bastet_Endo
+
 @@ocaml.text(" This module provides default implementations for interfaces ")
 
 let \"<." = Function.Infix.\"<."

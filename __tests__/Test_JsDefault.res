@@ -1,3 +1,5 @@
+open Bastet
+
 open RescriptMocha.Mocha
 module TestDefault = Test.Default(MochaI.Test, JsVerifyI.Quickcheck)
 

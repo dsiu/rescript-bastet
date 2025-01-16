@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 module Magma: MAGMA with type t = Js.Date.t = {
   type t = Js.Date.t
@@ -31,7 +31,7 @@ module Ord: ORD with type t = Js.Date.t = {
 }
 
 module Infix = {
-  include Infix.Magma(Magma)
-  include Infix.Eq(Eq)
-  include Infix.Ord(Ord)
+  include Bastet_Infix.Magma(Magma)
+  include Bastet_Infix.Eq(Eq)
+  include Bastet_Infix.Ord(Ord)
 }

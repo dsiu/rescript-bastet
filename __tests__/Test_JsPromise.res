@@ -1,3 +1,5 @@
+open Bastet
+
 open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary
 open BsJsverify.Verify.Property
@@ -50,7 +52,7 @@ describe("Promise", () => {
             Js.Promise.resolve(\"^"("!", ...)),
             Js.Promise.resolve(string_of_int),
             ...
-          ),
+          )
         ),
         promise,
       ),

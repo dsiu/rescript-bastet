@@ -1,3 +1,5 @@
+open Bastet
+
 open RescriptMocha.Mocha
 open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End

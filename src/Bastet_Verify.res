@@ -1,4 +1,6 @@
-open Interface
+open Bastet_Interface
+module Infix = Bastet_Infix
+module Function = Bastet_Function
 
 @ocaml.doc(" Provides functors to verify that instances are lawful. ")
 module Compare = {

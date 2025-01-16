@@ -1,4 +1,9 @@
-open Interface
+open Bastet_Interface
+module Interface = Bastet_Interface
+module Default = Bastet_Default
+module Infix = Bastet_Infix
+module Functions = Bastet_Functions
+module String = Bastet_String
 
 module type IMPL = {
   let length: array<'a> => int
@@ -200,9 +205,9 @@ module Make = (A: IMPL): ARRAY => {
     and index = ref(0)
     and result = ref(None)
     for i in 0 to l - 1 {
-      let value = f(RescriptCore.Array.getUnsafe(xs, i), RescriptCore.Array.getUnsafe(ys, i))
+      let value = f(Array.getUnsafe(xs, i), Array.getUnsafe(ys, i))
       switch result.contents {
-      | Some(arr) => RescriptCore.Array.set(arr, index.contents, value)
+      | Some(arr) => arr[index.contents] = value
       | None => result := Some(A.make(l, value))
       }
       index := index.contents + 1
@@ -260,7 +265,7 @@ module Make = (A: IMPL): ARRAY => {
     let fold_left = A.fold_left
 
     and fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a = (f, init, xs) =>
-      RescriptCore.Array.reduceRight(xs, init, (x, y) => f(y, x))
+      Array.reduceRight(xs, init, (x, y) => f(y, x))
 
     module Fold_Map = (M: MONOID) => {
       module D = Default.Fold_Map(
@@ -327,7 +332,7 @@ module Make = (A: IMPL): ARRAY => {
 
     let traverse = (f, xs: array<'a>) => {
       open I
-      RescriptCore.Array.reduceRight(xs, A.pure([]), (x, acc) => {
+      Array.reduceRight(xs, A.pure([]), (x, acc) => {
         let ff = x => y => Alt.alt([x], y)
         let ap = A.pure(ff)
         let ap1 = \"<*>"(ap, f(acc))
@@ -362,8 +367,7 @@ module Make = (A: IMPL): ARRAY => {
       | _ if A.length(xs) == A.length(ys) =>
         let index = ref(0)
         A.fold_left((acc, e) => {
-          let result =
-            acc != #equal_to ? acc : O.compare(e, RescriptCore.Array.getUnsafe(ys, index.contents))
+          let result = acc != #equal_to ? acc : O.compare(e, Array.getUnsafe(ys, index.contents))
 
           index := index.contents + 1
           result

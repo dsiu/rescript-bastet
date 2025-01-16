@@ -1,6 +1,6 @@
-open Interface
+open Bastet_Interface
 
-let \"<." = Function.Infix.\"<."
+let \"<." = Bastet_Function.Infix.\"<."
 
 @@ocaml.text(" Note: Promises are not actually Monads because you can't have `'a Js.Promise.t Js.Promise.t`
     Even though it's a valid bucklescript signature. Promises auto-flatten in this case.

@@ -57,15 +57,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rescript/core@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "@rescript/core@npm:1.6.1"
-  peerDependencies:
-    rescript: ">=11.1.0"
-  checksum: 10c0/04e7fc14dc050de0a9da8eb0642fb0800bc80c8978ef79aada1823bc2080b47a4d40c1168c63b53642009935342a4feb833fc190a71aa45e83af5d896269b95d
-  languageName: node
-  linkType: hard
-
 "@ungap/promise-all-settled@npm:1.1.2":
   version: 1.1.2
   resolution: "@ungap/promise-all-settled@npm:1.1.2"
@@ -2275,7 +2266,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "rescript-bastet@workspace:."
   dependencies:
-    "@rescript/core": "npm:^1.6.1"
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
     rescript: "npm:^12.0.0-alpha.7"

@@ -1,8 +1,8 @@
 @@ocaml.text(" Option is the equivalent of Maybe in Haskell for Ocaml ")
 
-open Interface
+open Bastet_Interface
 
-let \"<." = Function.Infix.\"<."
+let \"<." = Bastet_Function.Infix.\"<."
 
 let maybe: (~f: 'a => 'b, ~default: 'b, option<'a>) => 'b = (~f, ~default, opt) =>
   switch opt {
@@ -200,8 +200,8 @@ module Show: SHOW_F = (S: SHOW) => {
 }
 
 module Infix = {
-  include Infix.Monad(Monad)
-  include Infix.Alternative(Alternative)
+  include Bastet_Infix.Monad(Monad)
+  include Bastet_Infix.Alternative(Alternative)
 
   let \"|?" = getWithDefault
 }

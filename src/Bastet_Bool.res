@@ -1,4 +1,4 @@
-open Interface
+open Bastet_Interface
 
 module Conjunctive = {
   module Magma: MAGMA with type t = bool = {
@@ -130,16 +130,16 @@ module Show: SHOW with type t = bool = {
 
 module Infix = {
   module Conjunctive = {
-    include Infix.Magma(Conjunctive.Magma)
+    include Bastet_Infix.Magma(Conjunctive.Magma)
   }
 
   module Disjunctive = {
-    include Infix.Magma(Disjunctive.Magma)
+    include Bastet_Infix.Magma(Disjunctive.Magma)
   }
 
-  include Infix.Eq(Eq)
-  include Infix.Ord(Ord)
-  include Infix.Join_Semilattice(Join_Semilattice)
-  include Infix.Meet_Semilattice(Meet_Semilattice)
-  include Infix.Heyting_Algebra(Heyting_Algebra)
+  include Bastet_Infix.Eq(Eq)
+  include Bastet_Infix.Ord(Ord)
+  include Bastet_Infix.Join_Semilattice(Join_Semilattice)
+  include Bastet_Infix.Meet_Semilattice(Meet_Semilattice)
+  include Bastet_Infix.Heyting_Algebra(Heyting_Algebra)
 }
