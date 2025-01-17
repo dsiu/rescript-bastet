@@ -11,8 +11,8 @@
     "build": "rescript build -with-deps",
     "watch": "rescript build -w",
     "mocha": "mocha",
-    "test": "mocha __tests__/Test_*.mjs",
-    "watch-test": "mocha -w __tests__/Test_*.mjs"
+    "test": "mocha __tests__/Test_*.res.mjs",
+    "watch-test": "mocha -w __tests__/Test_*.res.mjs"
   },
   "homepage": "https://github.com/Risto-Stevcev/bastet",
   "bugs": "https://github.com/Risto-Stevcev/bastet/issues",
