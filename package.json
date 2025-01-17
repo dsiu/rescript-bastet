@@ -24,8 +24,6 @@
   "peerDependencies": {
     "rescript": "^12.0.0-alpha.7"
   },
-  "dependencies": {
-  },
   "devDependencies": {
     "bs-chai": "github:dsiu/bs-chai#rescript-v12",
     "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v12",
