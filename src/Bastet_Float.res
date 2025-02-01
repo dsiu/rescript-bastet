@@ -125,7 +125,7 @@ module Divisive = {
 module Eq: EQ with type t = float = {
   type t = float
 
-  let eq = \"="
+  let eq = \"=="
 }
 
 module Ord: ORD with type t = float = {

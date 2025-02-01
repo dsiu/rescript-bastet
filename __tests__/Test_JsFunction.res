@@ -46,7 +46,7 @@ describe("Function", () => {
           },
         )
 
-        V.composition(\"^"("!", ...), string_of_int, \"+"(1, ...))
+        V.composition(\"++"("!", ...), string_of_int, \"+"(1, ...))
       },
     )
   })
@@ -99,7 +99,7 @@ describe("Function", () => {
           },
         )
 
-        V.associativity(\"="("123!", ...), \"^"("!", ...), string_of_int)
+        V.associativity(\"=="("123!", ...), \"++"("!", ...), string_of_int)
       },
     )
   )
@@ -155,8 +155,8 @@ describe("Function", () => {
           float_of_int,
           f => Js.Float.toString(f),
           \"*"(4, ...),
-          \"^"("!", ...),
-          \"*."(2.0, ...)
+          \"++"("!", ...),
+          \"*."(2.0, ...),
         )
       },
     )
@@ -195,7 +195,7 @@ describe("Function", () => {
           },
         )
 
-        V.composition(\"+"(1, ...), string_of_int, \"^"("!", ...))
+        V.composition(\"+"(1, ...), string_of_int, \"++"("!", ...))
       },
     )
   })

@@ -22,12 +22,12 @@
   "author": "Risto Stevcev",
   "license": "BSD-3-Clause",
   "peerDependencies": {
-    "rescript": "^12.0.0-alpha.7"
+    "rescript": "^12.0.0-alpha.8"
   },
   "devDependencies": {
     "bs-chai": "github:dsiu/bs-chai#rescript-v12",
     "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v12",
-    "rescript": "^12.0.0-alpha.7",
+    "rescript": "^12.0.0-alpha.8",
     "rescript-mocha": "github:dsiu/rescript-mocha#rescript-v12"
   },
   "packageManager": "yarn@4.6.0"

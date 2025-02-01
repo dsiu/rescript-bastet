@@ -609,7 +609,7 @@ module Medial_Magma = (M: MEDIAL_MAGMA) => {
     {
       type t = M.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -620,7 +620,7 @@ module Semigroup = (S: SEMIGROUP) => {
     {
       type t = S.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -631,7 +631,7 @@ module Semigroup_Any = (S: SEMIGROUP_ANY) => {
     {
       type t<'a> = S.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -642,7 +642,7 @@ module Monoid = (M: MONOID) => {
     {
       type t = M.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -653,7 +653,7 @@ module Monoid_Any = (M: MONOID_ANY) => {
     {
       type t<'a> = M.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -664,7 +664,7 @@ module Quasigroup = (Q: QUASIGROUP) => {
     {
       type t = Q.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -675,7 +675,7 @@ module Quasigroup_Any = (Q: QUASIGROUP_ANY) => {
     {
       type t<'a> = Q.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -686,7 +686,7 @@ module Medial_Quasigroup = (Q: MEDIAL_QUASIGROUP) => {
     {
       type t = Q.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -697,7 +697,7 @@ module Loop = (L: LOOP) => {
     {
       type t = L.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -708,7 +708,7 @@ module Loop_Any = (L: LOOP_ANY) => {
     {
       type t<'a> = L.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -719,7 +719,7 @@ module Group = (G: GROUP) => {
     {
       type t = G.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -730,7 +730,7 @@ module Group_Any = (G: GROUP_ANY) => {
     {
       type t<'a> = G.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -741,7 +741,7 @@ module Abelian_Group = (A: ABELIAN_GROUP) => {
     {
       type t = A.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -752,7 +752,7 @@ module Abelian_Group_Any = (A: ABELIAN_GROUP_ANY) => {
     {
       type t<'a> = A.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -763,7 +763,7 @@ module Functor = (F: FUNCTOR) => {
     {
       type t<'a> = F.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -774,7 +774,7 @@ module Apply = (A: APPLY) => {
     {
       type t<'a> = A.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -785,7 +785,7 @@ module Applicative = (A: APPLICATIVE) => {
     {
       type t<'a> = A.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -796,7 +796,7 @@ module Monad = (M: MONAD) => {
     {
       type t<'a> = M.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -807,7 +807,7 @@ module Alt = (A: ALT) => {
     {
       type t<'a> = A.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -818,7 +818,7 @@ module Plus = (P: PLUS) => {
     {
       type t<'a> = P.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -829,7 +829,7 @@ module Alternative = (A: ALTERNATIVE) => {
     {
       type t<'a> = A.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -840,7 +840,7 @@ module Semigroupoid = (S: SEMIGROUPOID) => {
     {
       type t<'a, 'b> = S.t<'a, 'b>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -851,7 +851,7 @@ module Category = (C: CATEGORY) => {
     {
       type t<'a, 'b> = C.t<'a, 'b>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -874,7 +874,7 @@ module Join_Semilattice = (J: JOIN_SEMILATTICE) => {
     {
       type t = J.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -885,7 +885,7 @@ module Meet_Semilattice = (M: MEET_SEMILATTICE) => {
     {
       type t = M.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -896,7 +896,7 @@ module Bounded_Join_Semilattice = (J: BOUNDED_JOIN_SEMILATTICE) => {
     {
       type t = J.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -907,7 +907,7 @@ module Bounded_Meet_Semilattice = (M: BOUNDED_MEET_SEMILATTICE) => {
     {
       type t = M.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -918,7 +918,7 @@ module Lattice = (L: LATTICE) => {
     {
       type t = L.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -929,7 +929,7 @@ module Bounded_Lattice = (L: BOUNDED_LATTICE) => {
     {
       type t = L.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -940,7 +940,7 @@ module Distributive_Lattice = (L: DISTRIBUTIVE_LATTICE) => {
     {
       type t = L.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -951,7 +951,7 @@ module Bounded_Distributive_Lattice = (L: BOUNDED_DISTRIBUTIVE_LATTICE) => {
     {
       type t = L.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -962,7 +962,7 @@ module Heyting_Algebra = (H: HEYTING_ALGEBRA) => {
     {
       type t = H.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -973,7 +973,7 @@ module Involutive_Heyting_Algebra = (H: INVOLUTIVE_HEYTING_ALGEBRA) => {
     {
       type t = H.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -984,7 +984,7 @@ module Boolean_Algebra = (B: BOOLEAN_ALGEBRA) => {
     {
       type t = B.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -995,7 +995,7 @@ module Semiring = (S: SEMIRING) => {
     {
       type t = S.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1006,7 +1006,7 @@ module Ring = (R: RING) => {
     {
       type t = R.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1017,7 +1017,7 @@ module Commutative_Ring = (R: COMMUTATIVE_RING) => {
     {
       type t = R.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1028,7 +1028,7 @@ module Division_Ring = (R: DIVISION_RING) => {
     {
       type t = R.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1039,7 +1039,7 @@ module Euclidean_Ring = (R: EUCLIDEAN_RING) => {
     {
       type t = R.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1050,7 +1050,7 @@ module Field = (F: FIELD) => {
     {
       type t = F.t
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1061,7 +1061,7 @@ module Invariant = (I: INVARIANT) => {
     {
       type t<'a> = I.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1072,7 +1072,7 @@ module Contravariant = (C: CONTRAVARIANT) => {
     {
       type t<'a> = C.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1083,7 +1083,7 @@ module Profunctor = (P: PROFUNCTOR) => {
     {
       type t<'a, 'b> = P.t<'a, 'b>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1094,7 +1094,7 @@ module Monad_Zero = (M: MONAD_ZERO) => {
     {
       type t<'a> = M.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1105,7 +1105,7 @@ module Monad_Plus = (M: MONAD_PLUS) => {
     {
       type t<'a> = M.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1116,7 +1116,7 @@ module Extend = (E: EXTEND) => {
     {
       type t<'a> = E.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1127,7 +1127,7 @@ module Comonad = (C: COMONAD) => {
     {
       type t<'a> = C.t<'a>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1138,7 +1138,7 @@ module Bifunctor = (B: BIFUNCTOR) => {
     {
       type t<'a, 'b> = B.t<'a, 'b>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }
@@ -1149,7 +1149,7 @@ module Bicontravariant = (B: BICONTRAVARIANT) => {
     {
       type t<'a, 'b> = B.t<'a, 'b>
 
-      let eq = \"="
+      let eq = \"=="
     },
   )
 }

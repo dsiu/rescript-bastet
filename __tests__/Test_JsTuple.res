@@ -33,7 +33,7 @@ describe("Tuple", () => {
     property1(
       "should satisfy composition",
       arb_tuple((arb_string, arb_nat)),
-      a => V.composition(\"^"("!", ...), string_of_int, a),
+      a => V.composition(\"++"("!", ...), string_of_int, a),
     )
   })
   describe("Apply", () => {
@@ -43,7 +43,7 @@ describe("Tuple", () => {
       arb_tuple((arb_string, arb_nat)),
       n =>
         V.associative_composition(
-          (String.Monoid.empty, \"^"("!", ...)),
+          (String.Monoid.empty, \"++"("!", ...)),
           (String.Monoid.empty, string_of_int),
           n,
         ),
@@ -55,12 +55,12 @@ describe("Tuple", () => {
     property1(
       "should satisfy homomorphism",
       arb_tuple((arb_string, arb_nat)),
-      V.homomorphism(x => TupleF.String.Functor.map(string_of_int, x), ...)
+      V.homomorphism(x => TupleF.String.Functor.map(string_of_int, x), ...),
     )
     property1(
       "should satisfy interchange",
       arb_nat,
-      V.interchange((String.Monoid.empty, string_of_int), ...)
+      V.interchange((String.Monoid.empty, string_of_int), ...),
     )
   })
   describe("Monad", () => {
@@ -69,7 +69,7 @@ describe("Tuple", () => {
     property1(
       "should satisfy associativity",
       arb_tuple((arb_string, arb_nat)),
-      V.associativity(\"<."(pure, string_of_int), \"<."(pure, \"^"("!", ...)), ...)
+      V.associativity(\"<."(pure, string_of_int), \"<."(pure, \"++"("!", ...)), ...),
     )
     property1("should satisfy identity", arb_nat, V.identity(\"<."(pure, string_of_int), ...))
   })
@@ -151,7 +151,7 @@ describe("Tuple", () => {
     property1(
       "should satisfy composition",
       arb_tuple((arb_string, arb_nat)),
-      V.composition(\"^"("!", ...), \"*."(3.0, ...), \"^"("-", ...), float_of_int, ...)
+      V.composition(\"++"("!", ...), \"*."(3.0, ...), \"++"("-", ...), float_of_int, ...),
     )
   })
 })

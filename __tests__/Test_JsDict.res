@@ -17,7 +17,7 @@ describe("Dict", () => {
     property1(
       "should satisfy composition",
       arb_dict(arb_nat),
-      a => V.composition(\"^"("!", ...), string_of_int, a),
+      a => V.composition(\"++"("!", ...), string_of_int, a),
     )
   })
   describe("Apply", () => {
@@ -27,7 +27,7 @@ describe("Dict", () => {
       arb_dict(arb_nat),
       n =>
         V.associative_composition(
-          Js.Dict.fromList(list{("g", \"^"("!", ...))}),
+          Js.Dict.fromList(list{("g", \"++"("!", ...))}),
           Js.Dict.fromList(list{("f", string_of_int)}),
           n,
         ),
@@ -46,7 +46,7 @@ describe("Dict", () => {
       "should satisfy distributivity",
       arb_dict(arb_nat),
       arb_dict(arb_nat),
-      V.distributivity(string_of_int, ...)
+      V.distributivity(string_of_int, ...),
     )
   })
   describe("Plus", () => {

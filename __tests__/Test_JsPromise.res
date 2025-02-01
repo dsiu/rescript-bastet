@@ -35,7 +35,7 @@ describe("Promise", () => {
       "should satisfy composition",
       arb_nat,
       \"<."(
-        \"<."(o => Obj.magic(o, ...), V.composition(\"^"("!", ...), string_of_int, ...)),
+        \"<."(o => Obj.magic(o, ...), V.composition(\"++"("!", ...), string_of_int, ...)),
         promise,
       ),
     )
@@ -49,10 +49,10 @@ describe("Promise", () => {
         \"<."(
           o => Obj.magic(o),
           V.associative_composition(
-            Js.Promise.resolve(\"^"("!", ...)),
+            Js.Promise.resolve(\"++"("!", ...)),
             Js.Promise.resolve(string_of_int),
             ...
-          )
+          ),
         ),
         promise,
       ),

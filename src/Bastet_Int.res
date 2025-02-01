@@ -103,7 +103,7 @@ module Divisive = {
 module Eq: EQ with type t = int = {
   type t = int
 
-  let eq = \"="
+  let eq = \"=="
 }
 
 module Ord: ORD with type t = int = {

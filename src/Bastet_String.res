@@ -3,7 +3,7 @@ open Bastet_Interface
 module Magma: MAGMA with type t = string = {
   type t = string
 
-  let append = \"^"
+  let append = \"++"
 }
 
 module Semigroup: SEMIGROUP with type t = string = {
@@ -29,7 +29,7 @@ module Loop: LOOP with type t = string = {
 module Eq: EQ with type t = string = {
   type t = string
 
-  let eq = \"="
+  let eq = \"=="
 }
 
 module Ord: ORD with type t = string = {
