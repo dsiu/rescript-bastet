@@ -182,17 +182,18 @@ __metadata:
   linkType: hard
 
 "array.prototype.reduce@npm:^1.0.6":
-  version: 1.0.7
-  resolution: "array.prototype.reduce@npm:1.0.7"
+  version: 1.0.8
+  resolution: "array.prototype.reduce@npm:1.0.8"
   dependencies:
-    call-bind: "npm:^1.0.7"
+    call-bind: "npm:^1.0.8"
+    call-bound: "npm:^1.0.4"
     define-properties: "npm:^1.2.1"
-    es-abstract: "npm:^1.23.2"
+    es-abstract: "npm:^1.23.9"
     es-array-method-boxes-properly: "npm:^1.0.0"
     es-errors: "npm:^1.3.0"
-    es-object-atoms: "npm:^1.0.0"
-    is-string: "npm:^1.0.7"
-  checksum: 10c0/97aac907d7b15088d5b991bad79de96f95ea0d47a701a034e2dc816e0aabaed2fb401d7fe65ab6fda05eafa58319aa2d1bac404f515e162b81b3b61a51224db2
+    es-object-atoms: "npm:^1.1.1"
+    is-string: "npm:^1.1.1"
+  checksum: 10c0/0a4635f468e9161f51c4a87f80057b8b3c27b0ccc3e40ad7ea77cd1e147f1119f46977b0452f3fa325f543126200f2caf8c1390bd5303edf90d9c1dcd7d5a8a0
   languageName: node
   linkType: hard
 
@@ -285,20 +286,20 @@ __metadata:
 
 "bs-chai@github:dsiu/bs-chai#rescript-v12":
   version: 1.0.1
-  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=9db84be507dfc7f1fa2040d28b8a6a8aa6f1daa0"
+  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=47a39d5ee48fdaa30063f0b3fae065d415abd3f4"
   dependencies:
     chai: "npm:^4.1.2"
     mocha: "npm:^6.2.0"
-  checksum: 10c0/b5e8f572421f3ba1599c460487c10661a71d324a25e76e08ed1c7e4e4f369d8f6efe6b44bceb5f900dd30dd635cf05ff4a6c1b023ef817cfdd47972291d7f1bf
+  checksum: 10c0/bba81ca21ec059863c21e6b39d133df90610b8592af493beca56bcc02941286e21286b35232b050a562cf57fe1ac37b3dbc9d45de49eb93ae618f90ea4114886
   languageName: node
   linkType: hard
 
 "bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version: 0.10.0
-  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=3d876bb681d05b7f13db0817e142be4d64d6042b"
+  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=512e76294a083abc6cf904a80a2f7524d9ae29b9"
   dependencies:
     jsverify: "npm:^0.8.4"
-  checksum: 10c0/20b4fe82fa262777e6fc6c5abb215b4825ad105465d303a33554364b4dd84d9497fc94398f50a01a5ae0486aaa51e5259e43c03d39751e1a69677c5ec1381f5a
+  checksum: 10c0/fefb22585d44e4d5c261e81d23a1f262c1606a894d1c3da58f089a00349980be8458fbfdea4b3fb27b7ee415bc63b49314c552e845909d6fc69a85fbccdf2ab9
   languageName: node
   linkType: hard
 
@@ -344,13 +345,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"call-bound@npm:^1.0.2, call-bound@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "call-bound@npm:1.0.3"
+"call-bound@npm:^1.0.2, call-bound@npm:^1.0.3, call-bound@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "call-bound@npm:1.0.4"
   dependencies:
-    call-bind-apply-helpers: "npm:^1.0.1"
-    get-intrinsic: "npm:^1.2.6"
-  checksum: 10c0/45257b8e7621067304b30dbd638e856cac913d31e8e00a80d6cf172911acd057846572d0b256b45e652d515db6601e2974a1b1a040e91b4fc36fb3dd86fa69cf
+    call-bind-apply-helpers: "npm:^1.0.2"
+    get-intrinsic: "npm:^1.3.0"
+  checksum: 10c0/f4796a6a0941e71c766aea672f63b72bc61234c4f4964dc6d7606e3664c307e7d77845328a8f3359ce39ddb377fed67318f9ee203dea1d47e46165dcf2917644
   languageName: node
   linkType: hard
 
@@ -896,7 +897,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"for-each@npm:^0.3.3":
+"for-each@npm:^0.3.3, for-each@npm:^0.3.5":
   version: 0.3.5
   resolution: "for-each@npm:0.3.5"
   dependencies:
@@ -992,7 +993,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-intrinsic@npm:^1.2.4, get-intrinsic@npm:^1.2.5, get-intrinsic@npm:^1.2.6, get-intrinsic@npm:^1.2.7":
+"get-intrinsic@npm:^1.2.4, get-intrinsic@npm:^1.2.5, get-intrinsic@npm:^1.2.6, get-intrinsic@npm:^1.2.7, get-intrinsic@npm:^1.3.0":
   version: 1.3.0
   resolution: "get-intrinsic@npm:1.3.0"
   dependencies:
@@ -1466,7 +1467,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-string@npm:^1.0.7, is-string@npm:^1.1.1":
+"is-string@npm:^1.1.1":
   version: 1.1.1
   resolution: "is-string@npm:1.1.1"
   dependencies:
@@ -2276,32 +2277,32 @@ __metadata:
   dependencies:
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    rescript: "npm:^12.0.0-alpha.9"
+    rescript: "npm:^12.0.0-alpha.10"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0-alpha.9
+    rescript: ^12.0.0-alpha.10
   languageName: unknown
   linkType: soft
 
 "rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version: 0.9.0
-  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=948c6e385d5503778050aecf92fc07326a490504"
+  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=094530ac7d7b5104e65fe1a6600e66e9d700b221"
   dependencies:
     mocha: "npm:^9.2.2"
-  checksum: 10c0/0e8826f0a0dd7a14a6c38574eb3b518f1a0571d87b96ac4d09c93c1c3ff4244ca9fe365c24de60fe1e9e798a23eb4b925f907495286ecaded139248becfbb891
+  checksum: 10c0/3048a8bdae3f65b8f678dc0dc2852a53261f00a0adeae5b01e2244d8bd928708f098446ecb1efe3ad3250aadee1a272a96e49566be4332bc9492a5fb4fed4494
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0-alpha.9":
-  version: 12.0.0-alpha.9
-  resolution: "rescript@npm:12.0.0-alpha.9"
+"rescript@npm:^12.0.0-alpha.10":
+  version: 12.0.0-alpha.10
+  resolution: "rescript@npm:12.0.0-alpha.10"
   bin:
     bsc: cli/bsc
     bstracing: lib/bstracing
     rescript: cli/rescript
     rescript-tools: cli/rescript-tools
     rewatch: cli/rewatch
-  checksum: 10c0/62bd2f0b0debbaf1cc549011ccafd34e6c1436efddbc029a9f01c5d3e3bcc27dc24fbb5f8a1646f0a71f7bcd89c1ca34190a86593bf02922cd1c5e9eac316120
+  checksum: 10c0/42b75c8d4e5ed595384ce1b186d1101a7378e76e3fd1697d43f020e243b0d36b166ead5e6acc880cd50a6bf876c69c56512d077ca4fc386e7d8c39ec692cfe27
   languageName: node
   linkType: hard
 
@@ -2912,16 +2913,17 @@ __metadata:
   linkType: hard
 
 "which-typed-array@npm:^1.1.16, which-typed-array@npm:^1.1.18":
-  version: 1.1.18
-  resolution: "which-typed-array@npm:1.1.18"
+  version: 1.1.19
+  resolution: "which-typed-array@npm:1.1.19"
   dependencies:
     available-typed-arrays: "npm:^1.0.7"
     call-bind: "npm:^1.0.8"
-    call-bound: "npm:^1.0.3"
-    for-each: "npm:^0.3.3"
+    call-bound: "npm:^1.0.4"
+    for-each: "npm:^0.3.5"
+    get-proto: "npm:^1.0.1"
     gopd: "npm:^1.2.0"
     has-tostringtag: "npm:^1.0.2"
-  checksum: 10c0/0412f4a91880ca1a2a63056187c2e3de6b129b2b5b6c17bc3729f0f7041047ae48fb7424813e51506addb2c97320003ee18b8c57469d2cde37983ef62126143c
+  checksum: 10c0/702b5dc878addafe6c6300c3d0af5983b175c75fcb4f2a72dfc3dd38d93cf9e89581e4b29c854b16ea37e50a7d7fca5ae42ece5c273d8060dcd603b2404bbb3f
   languageName: node
   linkType: hard
 
