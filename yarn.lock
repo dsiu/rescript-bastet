@@ -286,20 +286,20 @@ __metadata:
 
 "bs-chai@github:dsiu/bs-chai#rescript-v12":
   version: 1.0.1
-  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=47a39d5ee48fdaa30063f0b3fae065d415abd3f4"
+  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=29123e628f156686697596d3f7a1c8345a34792b"
   dependencies:
     chai: "npm:^4.1.2"
     mocha: "npm:^6.2.0"
-  checksum: 10c0/bba81ca21ec059863c21e6b39d133df90610b8592af493beca56bcc02941286e21286b35232b050a562cf57fe1ac37b3dbc9d45de49eb93ae618f90ea4114886
+  checksum: 10c0/24ef82f4e43fad60e00f1a0757436666730ab9b553a3de42a3a30c8bb520de74e1f2f59aac56a0cfcfeea4792577ff16a28bee1ded77592c82168c3d58b34b98
   languageName: node
   linkType: hard
 
 "bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version: 0.10.0
-  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=512e76294a083abc6cf904a80a2f7524d9ae29b9"
+  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=cc7b393bb3dee0e34d939f1c3d7579cb74f832f4"
   dependencies:
     jsverify: "npm:^0.8.4"
-  checksum: 10c0/fefb22585d44e4d5c261e81d23a1f262c1606a894d1c3da58f089a00349980be8458fbfdea4b3fb27b7ee415bc63b49314c552e845909d6fc69a85fbccdf2ab9
+  checksum: 10c0/6f3848564f734663df0f5024d2b315ac7529608db84af9043e6024a5301b24ab535c03d97bf12915689e5ec5ebdb31e3b2d4a85126ef6c9043ca3443281e9df6
   languageName: node
   linkType: hard
 
@@ -849,6 +849,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fdir@npm:^6.4.3":
+  version: 6.4.3
+  resolution: "fdir@npm:6.4.3"
+  peerDependencies:
+    picomatch: ^3 || ^4
+  peerDependenciesMeta:
+    picomatch:
+      optional: true
+  checksum: 10c0/d13c10120e9625adf21d8d80481586200759928c19405a816b77dd28eaeb80e7c59c5def3e2941508045eb06d34eb47fad865ccc8bf98e6ab988bb0ed160fb6f
+  languageName: node
+  linkType: hard
+
 "fill-range@npm:^7.1.1":
   version: 7.1.1
   resolution: "fill-range@npm:7.1.1"
@@ -1069,7 +1081,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.3.7":
+"glob@npm:^10.2.2":
   version: 10.4.5
   resolution: "glob@npm:10.4.5"
   dependencies:
@@ -1811,12 +1823,11 @@ __metadata:
   linkType: hard
 
 "minizlib@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "minizlib@npm:3.0.1"
+  version: 3.0.2
+  resolution: "minizlib@npm:3.0.2"
   dependencies:
-    minipass: "npm:^7.0.4"
-    rimraf: "npm:^5.0.5"
-  checksum: 10c0/82f8bf70da8af656909a8ee299d7ed3b3372636749d29e105f97f20e88971be31f5ed7642f2e898f00283b68b701cc01307401cdc209b0efc5dd3818220e5093
+    minipass: "npm:^7.1.2"
+  checksum: 10c0/9f3bd35e41d40d02469cb30470c55ccc21cae0db40e08d1d0b1dff01cc8cc89a6f78e9c5d2b7c844e485ec0a8abc2238111213fdc5b2038e6d1012eacf316f78
   languageName: node
   linkType: hard
 
@@ -1957,22 +1968,22 @@ __metadata:
   linkType: hard
 
 "node-gyp@npm:latest":
-  version: 11.1.0
-  resolution: "node-gyp@npm:11.1.0"
+  version: 11.2.0
+  resolution: "node-gyp@npm:11.2.0"
   dependencies:
     env-paths: "npm:^2.2.0"
     exponential-backoff: "npm:^3.1.1"
-    glob: "npm:^10.3.10"
     graceful-fs: "npm:^4.2.6"
     make-fetch-happen: "npm:^14.0.3"
     nopt: "npm:^8.0.0"
     proc-log: "npm:^5.0.0"
     semver: "npm:^7.3.5"
     tar: "npm:^7.4.3"
+    tinyglobby: "npm:^0.2.12"
     which: "npm:^5.0.0"
   bin:
     node-gyp: bin/node-gyp.js
-  checksum: 10c0/c38977ce502f1ea41ba2b8721bd5b49bc3d5b3f813eabfac8414082faf0620ccb5211e15c4daecc23ed9f5e3e9cc4da00e575a0bcfc2a95a069294f2afa1e0cd
+  checksum: 10c0/bd8d8c76b06be761239b0c8680f655f6a6e90b48e44d43415b11c16f7e8c15be346fba0cbf71588c7cdfb52c419d928a7d3db353afc1d952d19756237d8f10b9
   languageName: node
   linkType: hard
 
@@ -2178,6 +2189,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picomatch@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "picomatch@npm:4.0.2"
+  checksum: 10c0/7c51f3ad2bb42c776f49ebf964c644958158be30d0a510efd5a395e8d49cb5acfed5b82c0c5b365523ce18e6ab85013c9ebe574f60305892ec3fa8eee8304ccc
+  languageName: node
+  linkType: hard
+
 "possible-typed-array-names@npm:^1.0.0":
   version: 1.1.0
   resolution: "possible-typed-array-names@npm:1.1.0"
@@ -2277,32 +2295,32 @@ __metadata:
   dependencies:
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    rescript: "npm:^12.0.0-alpha.10"
+    rescript: "npm:^12.0.0-alpha.11"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0-alpha.10
+    rescript: ^12.0.0-alpha.11
   languageName: unknown
   linkType: soft
 
 "rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version: 0.9.0
-  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=094530ac7d7b5104e65fe1a6600e66e9d700b221"
+  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=9b57df40f4116578c7ab7c94323d535fd6f7d69c"
   dependencies:
     mocha: "npm:^9.2.2"
-  checksum: 10c0/3048a8bdae3f65b8f678dc0dc2852a53261f00a0adeae5b01e2244d8bd928708f098446ecb1efe3ad3250aadee1a272a96e49566be4332bc9492a5fb4fed4494
+  checksum: 10c0/15be212cb90cf2b9b33dcd5264a1c33338f197028ef76afd1fb958c63392a683de5a5fd2635818aefca95e4fbc92c3df605b33548ceed920a5823d9701ffc705
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0-alpha.10":
-  version: 12.0.0-alpha.10
-  resolution: "rescript@npm:12.0.0-alpha.10"
+"rescript@npm:^12.0.0-alpha.11":
+  version: 12.0.0-alpha.11
+  resolution: "rescript@npm:12.0.0-alpha.11"
   bin:
-    bsc: cli/bsc
-    bstracing: lib/bstracing
-    rescript: cli/rescript
-    rescript-tools: cli/rescript-tools
-    rewatch: cli/rewatch
-  checksum: 10c0/42b75c8d4e5ed595384ce1b186d1101a7378e76e3fd1697d43f020e243b0d36b166ead5e6acc880cd50a6bf876c69c56512d077ca4fc386e7d8c39ec692cfe27
+    bsc: cli/bsc.js
+    bstracing: lib/bstracing.js
+    rescript: cli/rescript.js
+    rescript-tools: cli/rescript-tools.js
+    rewatch: cli/rewatch.js
+  checksum: 10c0/013a2185bcce2c7322a23868fa9798f064c2dde260ac9bc699cc017abaed9f8bb3cced92bccdf015d6301d53f93b23797842e59f6535d757d35afd606bf5fa4f
   languageName: node
   linkType: hard
 
@@ -2310,17 +2328,6 @@ __metadata:
   version: 0.12.0
   resolution: "retry@npm:0.12.0"
   checksum: 10c0/59933e8501727ba13ad73ef4a04d5280b3717fd650408460c987392efe9d7be2040778ed8ebe933c5cbd63da3dcc37919c141ef8af0a54a6e4fca5a2af177bfe
-  languageName: node
-  linkType: hard
-
-"rimraf@npm:^5.0.5":
-  version: 5.0.10
-  resolution: "rimraf@npm:5.0.10"
-  dependencies:
-    glob: "npm:^10.3.7"
-  bin:
-    rimraf: dist/esm/bin.mjs
-  checksum: 10c0/7da4fd0e15118ee05b918359462cfa1e7fe4b1228c7765195a45b55576e8c15b95db513b8466ec89129666f4af45ad978a3057a02139afba1a63512a2d9644cc
   languageName: node
   linkType: hard
 
@@ -2743,6 +2750,16 @@ __metadata:
     mkdirp: "npm:^3.0.1"
     yallist: "npm:^5.0.0"
   checksum: 10c0/d4679609bb2a9b48eeaf84632b6d844128d2412b95b6de07d53d8ee8baf4ca0857c9331dfa510390a0727b550fd543d4d1a10995ad86cdf078423fbb8d99831d
+  languageName: node
+  linkType: hard
+
+"tinyglobby@npm:^0.2.12":
+  version: 0.2.12
+  resolution: "tinyglobby@npm:0.2.12"
+  dependencies:
+    fdir: "npm:^6.4.3"
+    picomatch: "npm:^4.0.2"
+  checksum: 10c0/7c9be4fd3625630e262dcb19015302aad3b4ba7fc620f269313e688f2161ea8724d6cb4444baab5ef2826eb6bed72647b169a33ec8eea37501832a2526ff540f
   languageName: node
   linkType: hard
 
