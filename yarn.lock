@@ -65,9 +65,9 @@ __metadata:
   linkType: hard
 
 "abbrev@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "abbrev@npm:3.0.0"
-  checksum: 10c0/049704186396f571650eb7b22ed3627b77a5aedf98bb83caf2eac81ca2a3e25e795394b0464cfb2d6076df3db6a5312139eac5b6a126ca296ac53c5008069c28
+  version: 3.0.1
+  resolution: "abbrev@npm:3.0.1"
+  checksum: 10c0/21ba8f574ea57a3106d6d35623f2c4a9111d9ee3e9a5be47baed46ec2457d2eac46e07a5c4a60186f88cb98abbe3e24f2d4cca70bc2b12f1692523e2209a9ccf
   languageName: node
   linkType: hard
 
@@ -286,20 +286,20 @@ __metadata:
 
 "bs-chai@github:dsiu/bs-chai#rescript-v12":
   version: 1.0.1
-  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=29123e628f156686697596d3f7a1c8345a34792b"
+  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=a84e09d5b348a7662e3addb1c3d2613768291aa9"
   dependencies:
     chai: "npm:^4.1.2"
     mocha: "npm:^6.2.0"
-  checksum: 10c0/24ef82f4e43fad60e00f1a0757436666730ab9b553a3de42a3a30c8bb520de74e1f2f59aac56a0cfcfeea4792577ff16a28bee1ded77592c82168c3d58b34b98
+  checksum: 10c0/6c7b4b4183a9a78c331f552becdcde803a8a5661b67c40ec1cc2660ae42e0ccdbf9c356a6b9adf847977c6b73ace2b2049aa59a4662ac5bc337dae564d4c8d7a
   languageName: node
   linkType: hard
 
 "bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version: 0.10.0
-  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=cc7b393bb3dee0e34d939f1c3d7579cb74f832f4"
+  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=94296e65f5a0a8c52bfc25b0defc2acb31b72146"
   dependencies:
     jsverify: "npm:^0.8.4"
-  checksum: 10c0/6f3848564f734663df0f5024d2b315ac7529608db84af9043e6024a5301b24ab535c03d97bf12915689e5ec5ebdb31e3b2d4a85126ef6c9043ca3443281e9df6
+  checksum: 10c0/a94c0953f940d81f50e07ed1832158cc325623654e5c0e74cc1ded48fc7812f3aac6b07836c05fcf7f9f73858af598b8fd46b46546773a2db50356bfc886eb80
   languageName: node
   linkType: hard
 
@@ -2295,7 +2295,7 @@ __metadata:
   dependencies:
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    rescript: "npm:^12.0.0-alpha.11"
+    rescript: "npm:^12.0.0-alpha.12"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
     rescript: ^12.0.0-alpha.12
@@ -2304,23 +2304,23 @@ __metadata:
 
 "rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version: 0.9.0
-  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=9b57df40f4116578c7ab7c94323d535fd6f7d69c"
+  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=d0994ced713e3f22167c508680e36fb2177a06bb"
   dependencies:
     mocha: "npm:^9.2.2"
-  checksum: 10c0/15be212cb90cf2b9b33dcd5264a1c33338f197028ef76afd1fb958c63392a683de5a5fd2635818aefca95e4fbc92c3df605b33548ceed920a5823d9701ffc705
+  checksum: 10c0/21051cafe83c613998ce6e628e3ac7975272b3d52f4cd01356dcb2273572b51891fee6141081627661ecec875ec351f756ac44976d91a9c77cda459c094e6ac3
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0-alpha.11":
-  version: 12.0.0-alpha.11
-  resolution: "rescript@npm:12.0.0-alpha.11"
+"rescript@npm:^12.0.0-alpha.12":
+  version: 12.0.0-alpha.12
+  resolution: "rescript@npm:12.0.0-alpha.12"
   bin:
     bsc: cli/bsc.js
     bstracing: lib/bstracing.js
     rescript: cli/rescript.js
     rescript-tools: cli/rescript-tools.js
     rewatch: cli/rewatch.js
-  checksum: 10c0/013a2185bcce2c7322a23868fa9798f064c2dde260ac9bc699cc017abaed9f8bb3cced92bccdf015d6301d53f93b23797842e59f6535d757d35afd606bf5fa4f
+  checksum: 10c0/494a23c413905981fffc6230ad1b1019ed5fb1701a21f3eeb1526fb8cc78c511f82ac4edf151bbb881bef1a854895edd2085522ce51e11b359833ae743b7d9d8
   languageName: node
   linkType: hard
 
