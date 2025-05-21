@@ -2298,7 +2298,7 @@ __metadata:
     rescript: "npm:^12.0.0-alpha.12"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0-alpha.12
+    rescript: ^12.0.0-alpha.13
   languageName: unknown
   linkType: soft
 
