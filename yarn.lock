@@ -2340,10 +2340,10 @@ __metadata:
   dependencies:
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    rescript: "npm:^12.0.0-alpha.12"
+    rescript: "npm:^12.0.0-alpha.14"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0-alpha.13
+    rescript: ^12.0.0-alpha.14
   languageName: unknown
   linkType: soft
 
@@ -2356,7 +2356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0-alpha.12":
+"rescript@npm:^12.0.0-alpha.14":
   version: 12.0.0-alpha.14
   resolution: "rescript@npm:12.0.0-alpha.14"
   dependencies:
