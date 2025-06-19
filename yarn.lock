@@ -57,37 +57,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rescript/darwin-arm64@npm:12.0.0-alpha.13":
-  version: 12.0.0-alpha.13
-  resolution: "@rescript/darwin-arm64@npm:12.0.0-alpha.13"
+"@rescript/darwin-arm64@npm:12.0.0-alpha.14":
+  version: 12.0.0-alpha.14
+  resolution: "@rescript/darwin-arm64@npm:12.0.0-alpha.14"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/darwin-x64@npm:12.0.0-alpha.13":
-  version: 12.0.0-alpha.13
-  resolution: "@rescript/darwin-x64@npm:12.0.0-alpha.13"
+"@rescript/darwin-x64@npm:12.0.0-alpha.14":
+  version: 12.0.0-alpha.14
+  resolution: "@rescript/darwin-x64@npm:12.0.0-alpha.14"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/linux-arm64@npm:12.0.0-alpha.13":
-  version: 12.0.0-alpha.13
-  resolution: "@rescript/linux-arm64@npm:12.0.0-alpha.13"
+"@rescript/linux-arm64@npm:12.0.0-alpha.14":
+  version: 12.0.0-alpha.14
+  resolution: "@rescript/linux-arm64@npm:12.0.0-alpha.14"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/linux-x64@npm:12.0.0-alpha.13":
-  version: 12.0.0-alpha.13
-  resolution: "@rescript/linux-x64@npm:12.0.0-alpha.13"
+"@rescript/linux-x64@npm:12.0.0-alpha.14":
+  version: 12.0.0-alpha.14
+  resolution: "@rescript/linux-x64@npm:12.0.0-alpha.14"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/win32-x64@npm:12.0.0-alpha.13":
-  version: 12.0.0-alpha.13
-  resolution: "@rescript/win32-x64@npm:12.0.0-alpha.13"
+"@rescript/win32-x64@npm:12.0.0-alpha.14":
+  version: 12.0.0-alpha.14
+  resolution: "@rescript/win32-x64@npm:12.0.0-alpha.14"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -285,21 +285,21 @@ __metadata:
   linkType: hard
 
 "brace-expansion@npm:^1.1.7":
-  version: 1.1.11
-  resolution: "brace-expansion@npm:1.1.11"
+  version: 1.1.12
+  resolution: "brace-expansion@npm:1.1.12"
   dependencies:
     balanced-match: "npm:^1.0.0"
     concat-map: "npm:0.0.1"
-  checksum: 10c0/695a56cd058096a7cb71fb09d9d6a7070113c7be516699ed361317aca2ec169f618e28b8af352e02ab4233fb54eb0168460a40dc320bab0034b36ab59aaad668
+  checksum: 10c0/975fecac2bb7758c062c20d0b3b6288c7cc895219ee25f0a64a9de662dbac981ff0b6e89909c3897c1f84fa353113a721923afdec5f8b2350255b097f12b1f73
   languageName: node
   linkType: hard
 
 "brace-expansion@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "brace-expansion@npm:2.0.1"
+  version: 2.0.2
+  resolution: "brace-expansion@npm:2.0.2"
   dependencies:
     balanced-match: "npm:^1.0.0"
-  checksum: 10c0/b358f2fe060e2d7a87aa015979ecea07f3c37d4018f8d6deb5bd4c229ad3a0384fe6029bb76cd8be63c81e516ee52d1a0673edbe2023d53a5191732ae3c3e49f
+  checksum: 10c0/6d117a4c793488af86b83172deb6af143e94c17bc53b0b3cec259733923b4ca84679d506ac261f4ba3c7ed37c46018e2ff442f9ce453af8643ecd64f4a54e6cf
   languageName: node
   linkType: hard
 
@@ -321,20 +321,20 @@ __metadata:
 
 "bs-chai@github:dsiu/bs-chai#rescript-v12":
   version: 1.0.1
-  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=7bd741d5f223a5aa2c746e7d2a4fa9b4e4541f0e"
+  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=c8b9fa84f023c9bb825df46152b6abcd65bcf6a6"
   dependencies:
     chai: "npm:^4.1.2"
     mocha: "npm:^6.2.0"
-  checksum: 10c0/434202f4e87372a77ed6fbc40470f149b08295f01abbaa35093d2611b016ea0736a5be3398c15291cdaf492029270d4ee6bc43eb031e1953f5ff5b8fd2eb7839
+  checksum: 10c0/c9547a24dd6d8a573c3cb0ac6f1c6b02a7444881edc14a9e8f2ee7e2cd1662b4c2a58e8c68b66b64e9986d915a6ebb7fac30ef8e4984aec26ea9aedcd0eedf28
   languageName: node
   linkType: hard
 
 "bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version: 0.10.0
-  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=6b29ce24c7e119579a16ee47953238b4228aac53"
+  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=340e19fedc0ea827af8a35af0b39f014a33ea55b"
   dependencies:
     jsverify: "npm:^0.8.4"
-  checksum: 10c0/b5a9976c0ac48ada0abc6a6ab4b7e64c759aa308cb9a12a92290afd588e226cdf0c6166805a3895b3da5c12ac151b896bbf2ba9fce21f8f2037762e90b69199a
+  checksum: 10c0/413a9b04417e33a9c0b9faa2d550ed4b9bfcb498e5b16e9024dcf452e1e10fb755a2dba044b773a7ceef685b4d5c0d3321079c59f566b935bc5c484a4e3b4e03
   languageName: node
   linkType: hard
 
@@ -735,25 +735,25 @@ __metadata:
   linkType: hard
 
 "es-abstract@npm:^1.23.2, es-abstract@npm:^1.23.5, es-abstract@npm:^1.23.9":
-  version: 1.23.9
-  resolution: "es-abstract@npm:1.23.9"
+  version: 1.24.0
+  resolution: "es-abstract@npm:1.24.0"
   dependencies:
     array-buffer-byte-length: "npm:^1.0.2"
     arraybuffer.prototype.slice: "npm:^1.0.4"
     available-typed-arrays: "npm:^1.0.7"
     call-bind: "npm:^1.0.8"
-    call-bound: "npm:^1.0.3"
+    call-bound: "npm:^1.0.4"
     data-view-buffer: "npm:^1.0.2"
     data-view-byte-length: "npm:^1.0.2"
     data-view-byte-offset: "npm:^1.0.1"
     es-define-property: "npm:^1.0.1"
     es-errors: "npm:^1.3.0"
-    es-object-atoms: "npm:^1.0.0"
+    es-object-atoms: "npm:^1.1.1"
     es-set-tostringtag: "npm:^2.1.0"
     es-to-primitive: "npm:^1.3.0"
     function.prototype.name: "npm:^1.1.8"
-    get-intrinsic: "npm:^1.2.7"
-    get-proto: "npm:^1.0.0"
+    get-intrinsic: "npm:^1.3.0"
+    get-proto: "npm:^1.0.1"
     get-symbol-description: "npm:^1.1.0"
     globalthis: "npm:^1.0.4"
     gopd: "npm:^1.2.0"
@@ -765,21 +765,24 @@ __metadata:
     is-array-buffer: "npm:^3.0.5"
     is-callable: "npm:^1.2.7"
     is-data-view: "npm:^1.0.2"
+    is-negative-zero: "npm:^2.0.3"
     is-regex: "npm:^1.2.1"
+    is-set: "npm:^2.0.3"
     is-shared-array-buffer: "npm:^1.0.4"
     is-string: "npm:^1.1.1"
     is-typed-array: "npm:^1.1.15"
-    is-weakref: "npm:^1.1.0"
+    is-weakref: "npm:^1.1.1"
     math-intrinsics: "npm:^1.1.0"
-    object-inspect: "npm:^1.13.3"
+    object-inspect: "npm:^1.13.4"
     object-keys: "npm:^1.1.1"
     object.assign: "npm:^4.1.7"
     own-keys: "npm:^1.0.1"
-    regexp.prototype.flags: "npm:^1.5.3"
+    regexp.prototype.flags: "npm:^1.5.4"
     safe-array-concat: "npm:^1.1.3"
     safe-push-apply: "npm:^1.0.0"
     safe-regex-test: "npm:^1.1.0"
     set-proto: "npm:^1.0.0"
+    stop-iteration-iterator: "npm:^1.1.0"
     string.prototype.trim: "npm:^1.2.10"
     string.prototype.trimend: "npm:^1.0.9"
     string.prototype.trimstart: "npm:^1.0.8"
@@ -788,8 +791,8 @@ __metadata:
     typed-array-byte-offset: "npm:^1.0.4"
     typed-array-length: "npm:^1.0.7"
     unbox-primitive: "npm:^1.1.0"
-    which-typed-array: "npm:^1.1.18"
-  checksum: 10c0/1de229c9e08fe13c17fe5abaec8221545dfcd57e51f64909599a6ae896df84b8fd2f7d16c60cb00d7bf495b9298ca3581aded19939d4b7276854a4b066f8422b
+    which-typed-array: "npm:^1.1.19"
+  checksum: 10c0/b256e897be32df5d382786ce8cce29a1dd8c97efbab77a26609bd70f2ed29fbcfc7a31758cb07488d532e7ccccdfca76c1118f2afe5a424cdc05ca007867c318
   languageName: node
   linkType: hard
 
@@ -885,14 +888,14 @@ __metadata:
   linkType: hard
 
 "fdir@npm:^6.4.4":
-  version: 6.4.4
-  resolution: "fdir@npm:6.4.4"
+  version: 6.4.6
+  resolution: "fdir@npm:6.4.6"
   peerDependencies:
     picomatch: ^3 || ^4
   peerDependenciesMeta:
     picomatch:
       optional: true
-  checksum: 10c0/6ccc33be16945ee7bc841e1b4178c0b4cf18d3804894cb482aa514651c962a162f96da7ffc6ebfaf0df311689fb70091b04dd6caffe28d56b9ebdc0e7ccadfdd
+  checksum: 10c0/45b559cff889934ebb8bc498351e5acba40750ada7e7d6bde197768d2fa67c149be8ae7f8ff34d03f4e1eb20f2764116e56440aaa2f6689e9a4aa7ef06acafe9
   languageName: node
   linkType: hard
 
@@ -1462,6 +1465,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-negative-zero@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "is-negative-zero@npm:2.0.3"
+  checksum: 10c0/bcdcf6b8b9714063ffcfa9929c575ac69bfdabb8f4574ff557dfc086df2836cf07e3906f5bbc4f2a5c12f8f3ba56af640c843cdfc74da8caed86c7c7d66fd08e
+  languageName: node
+  linkType: hard
+
 "is-number-object@npm:^1.1.1":
   version: 1.1.1
   resolution: "is-number-object@npm:1.1.1"
@@ -1558,7 +1568,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-weakref@npm:^1.0.2, is-weakref@npm:^1.1.0":
+"is-weakref@npm:^1.0.2, is-weakref@npm:^1.1.1":
   version: 1.1.1
   resolution: "is-weakref@npm:1.1.1"
   dependencies:
@@ -2040,7 +2050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-inspect@npm:^1.13.3":
+"object-inspect@npm:^1.13.3, object-inspect@npm:^1.13.4":
   version: 1.13.4
   resolution: "object-inspect@npm:1.13.4"
   checksum: 10c0/d7f8711e803b96ea3191c745d6f8056ce1f2496e530e6a19a0e92d89b0fa3c76d910c31f0aa270432db6bd3b2f85500a376a83aaba849a8d518c8845b3211692
@@ -2296,7 +2306,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regexp.prototype.flags@npm:^1.5.3":
+"regexp.prototype.flags@npm:^1.5.4":
   version: 1.5.4
   resolution: "regexp.prototype.flags@npm:1.5.4"
   dependencies:
@@ -2339,22 +2349,22 @@ __metadata:
 
 "rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version: 0.9.0
-  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=463d450b4eceed539072f410ba0cd31893baafa1"
+  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=d20139cdd69cb91a13c2a7af529cc3b5f8eb3ec6"
   dependencies:
     mocha: "npm:^9.2.2"
-  checksum: 10c0/84bb6e8951cd17bf07df5d65dbe70c712d0b7a34af4f33f5b3d167795e970531459937ad6029cbf5efd0b59e93978af06c4ea3db9e53a9d2920b58142beb9227
+  checksum: 10c0/2504efbbe1d6dc2b492055bba18b5b55f976b73d07492e4022dcbb14ce61309ae3335be20e5304acc1ba7811909bd82b6c33fe3666a46085eeae2b94cb7d16d3
   languageName: node
   linkType: hard
 
 "rescript@npm:^12.0.0-alpha.12":
-  version: 12.0.0-alpha.13
-  resolution: "rescript@npm:12.0.0-alpha.13"
+  version: 12.0.0-alpha.14
+  resolution: "rescript@npm:12.0.0-alpha.14"
   dependencies:
-    "@rescript/darwin-arm64": "npm:12.0.0-alpha.13"
-    "@rescript/darwin-x64": "npm:12.0.0-alpha.13"
-    "@rescript/linux-arm64": "npm:12.0.0-alpha.13"
-    "@rescript/linux-x64": "npm:12.0.0-alpha.13"
-    "@rescript/win32-x64": "npm:12.0.0-alpha.13"
+    "@rescript/darwin-arm64": "npm:12.0.0-alpha.14"
+    "@rescript/darwin-x64": "npm:12.0.0-alpha.14"
+    "@rescript/linux-arm64": "npm:12.0.0-alpha.14"
+    "@rescript/linux-x64": "npm:12.0.0-alpha.14"
+    "@rescript/win32-x64": "npm:12.0.0-alpha.14"
   dependenciesMeta:
     "@rescript/darwin-arm64":
       optional: true
@@ -2372,7 +2382,7 @@ __metadata:
     rescript: cli/rescript.js
     rescript-tools: cli/rescript-tools.js
     rewatch: cli/rewatch.js
-  checksum: 10c0/97ad8615b1a1cbace61e050b65a10bbe280c77b4fe693b99aee7d3c6bb0b2ebd284db16a7aec3d65179267dc610a9737fdf74197f6322b1281113fd588fe1b32
+  checksum: 10c0/dfb4bfd0399f70bf402da6dd94d848c0e7d2c499b5e2a827e975fa3dffbbbd0957ce727d21b1f13d6c52e86b71caa94ea05ae9ad7a41b0f1a53995b0e71e8466
   languageName: node
   linkType: hard
 
@@ -2592,12 +2602,12 @@ __metadata:
   linkType: hard
 
 "socks@npm:^2.8.3":
-  version: 2.8.4
-  resolution: "socks@npm:2.8.4"
+  version: 2.8.5
+  resolution: "socks@npm:2.8.5"
   dependencies:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
-  checksum: 10c0/00c3271e233ccf1fb83a3dd2060b94cc37817e0f797a93c560b9a7a86c4a0ec2961fb31263bdd24a3c28945e24868b5f063cd98744171d9e942c513454b50ae5
+  checksum: 10c0/e427d0eb0451cfd04e20b9156ea8c0e9b5e38a8d70f21e55c30fbe4214eda37cfc25d782c63f9adc5fbdad6d062a0f127ef2cefc9a44b6fee2b9ea5d1ed10827
   languageName: node
   linkType: hard
 
@@ -2621,6 +2631,16 @@ __metadata:
   dependencies:
     minipass: "npm:^7.0.3"
   checksum: 10c0/caddd5f544b2006e88fa6b0124d8d7b28208b83c72d7672d5ade44d794525d23b540f3396108c4eb9280dcb7c01f0bef50682f5b4b2c34291f7c5e211fd1417d
+  languageName: node
+  linkType: hard
+
+"stop-iteration-iterator@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "stop-iteration-iterator@npm:1.1.0"
+  dependencies:
+    es-errors: "npm:^1.3.0"
+    internal-slot: "npm:^1.1.0"
+  checksum: 10c0/de4e45706bb4c0354a4b1122a2b8cc45a639e86206807ce0baf390ee9218d3ef181923fa4d2b67443367c491aa255c5fbaa64bb74648e3c5b48299928af86c09
   languageName: node
   linkType: hard
 
@@ -2806,12 +2826,12 @@ __metadata:
   linkType: hard
 
 "tinyglobby@npm:^0.2.12":
-  version: 0.2.13
-  resolution: "tinyglobby@npm:0.2.13"
+  version: 0.2.14
+  resolution: "tinyglobby@npm:0.2.14"
   dependencies:
     fdir: "npm:^6.4.4"
     picomatch: "npm:^4.0.2"
-  checksum: 10c0/ef07dfaa7b26936601d3f6d999f7928a4d1c6234c5eb36896bb88681947c0d459b7ebe797022400e555fe4b894db06e922b95d0ce60cb05fd827a0a66326b18c
+  checksum: 10c0/f789ed6c924287a9b7d3612056ed0cda67306cd2c80c249fd280cf1504742b12583a2089b61f4abbd24605f390809017240e250241f09938054c9b363e51c0a6
   languageName: node
   linkType: hard
 
@@ -2981,7 +3001,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"which-typed-array@npm:^1.1.16, which-typed-array@npm:^1.1.18":
+"which-typed-array@npm:^1.1.16, which-typed-array@npm:^1.1.19":
   version: 1.1.19
   resolution: "which-typed-array@npm:1.1.19"
   dependencies:
