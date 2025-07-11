@@ -25,11 +25,11 @@
   },
   "suffix": ".res.mjs",
   "bs-dependencies": [
+    "rescript-mocha",
+    "bs-chai",
+    "bs-jsverify"
   ],
   "bs-dev-dependencies": [
-    "bs-jsverify",
-    "rescript-mocha",
-    "bs-chai"
   ],
   "ppx-flags": [
   ]
