@@ -57,37 +57,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rescript/darwin-arm64@npm:12.0.0-alpha.15":
-  version: 12.0.0-alpha.15
-  resolution: "@rescript/darwin-arm64@npm:12.0.0-alpha.15"
+"@rescript/darwin-arm64@npm:12.0.0-beta.2":
+  version: 12.0.0-beta.2
+  resolution: "@rescript/darwin-arm64@npm:12.0.0-beta.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/darwin-x64@npm:12.0.0-alpha.15":
-  version: 12.0.0-alpha.15
-  resolution: "@rescript/darwin-x64@npm:12.0.0-alpha.15"
+"@rescript/darwin-x64@npm:12.0.0-beta.2":
+  version: 12.0.0-beta.2
+  resolution: "@rescript/darwin-x64@npm:12.0.0-beta.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/linux-arm64@npm:12.0.0-alpha.15":
-  version: 12.0.0-alpha.15
-  resolution: "@rescript/linux-arm64@npm:12.0.0-alpha.15"
+"@rescript/linux-arm64@npm:12.0.0-beta.2":
+  version: 12.0.0-beta.2
+  resolution: "@rescript/linux-arm64@npm:12.0.0-beta.2"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/linux-x64@npm:12.0.0-alpha.15":
-  version: 12.0.0-alpha.15
-  resolution: "@rescript/linux-x64@npm:12.0.0-alpha.15"
+"@rescript/linux-x64@npm:12.0.0-beta.2":
+  version: 12.0.0-beta.2
+  resolution: "@rescript/linux-x64@npm:12.0.0-beta.2"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/win32-x64@npm:12.0.0-alpha.15":
-  version: 12.0.0-alpha.15
-  resolution: "@rescript/win32-x64@npm:12.0.0-alpha.15"
+"@rescript/win32-x64@npm:12.0.0-beta.2":
+  version: 12.0.0-beta.2
+  resolution: "@rescript/win32-x64@npm:12.0.0-beta.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -321,20 +321,20 @@ __metadata:
 
 "bs-chai@github:dsiu/bs-chai#rescript-v12":
   version: 1.0.1
-  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=02165dac3f6728b8e8fc4dea4bf9207d1177c102"
+  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=5943219039d3dd64e34dfde087434ae5ff2cfe6a"
   dependencies:
     chai: "npm:^4.1.2"
     mocha: "npm:^6.2.0"
-  checksum: 10c0/6ef6668984c6c08bb7810e63209428eb59de6ca3f90a16cc9c5e7748c7a571c3dc814021d0b83124055d71e1d9325d812c4b97b98587d1f87c414780fcf5482e
+  checksum: 10c0/f497b688eb9a0feb41a61999621509caab746350898f0b22f7078a76fd5e84d952c795d3023e366fea9f4d585cc11bffc31966679dda0e286141f06becf46986
   languageName: node
   linkType: hard
 
 "bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version: 0.10.0
-  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=47ba416a3f19750bb16606f0b988d6dfd489d535"
+  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=9fe03cf6cbe993590f85cac2a2c8f75764123412"
   dependencies:
     jsverify: "npm:^0.8.4"
-  checksum: 10c0/7a6a6e1704a8129a8f2eb5649d154fb1d15e97a7af7d4340f31ad25f9dbf51fdc751f804a7c8fa7bc405b9464906023ceed81f4f381a82e9e50288d9442d387d
+  checksum: 10c0/1d7a29916e401b5b98db45dbef642b96d3fccdb4eb05eb68364ab1117f657f8354d86bb6a372d6d08e6545adcf15cd6910c23a2f71a9bdbfc06e04cee2a84c40
   languageName: node
   linkType: hard
 
@@ -2235,9 +2235,9 @@ __metadata:
   linkType: hard
 
 "picomatch@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "picomatch@npm:4.0.2"
-  checksum: 10c0/7c51f3ad2bb42c776f49ebf964c644958158be30d0a510efd5a395e8d49cb5acfed5b82c0c5b365523ce18e6ab85013c9ebe574f60305892ec3fa8eee8304ccc
+  version: 4.0.3
+  resolution: "picomatch@npm:4.0.3"
+  checksum: 10c0/9582c951e95eebee5434f59e426cddd228a7b97a0161a375aed4be244bd3fe8e3a31b846808ea14ef2c8a2527a6eeab7b3946a67d5979e81694654f939473ae2
   languageName: node
   linkType: hard
 
@@ -2340,31 +2340,31 @@ __metadata:
   dependencies:
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    rescript: "npm:^12.0.0-alpha.14"
+    rescript: "npm:^12.0.0-beta.2"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0-alpha.15
+    rescript: ^12.0.0-beta.2
   languageName: unknown
   linkType: soft
 
 "rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version: 0.9.0
-  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=8c0eeeb193bffc5b3168937c1d84484f63353a69"
+  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=c6c7bceb67e67df25f3aa7437b7ed2167019484a"
   dependencies:
     mocha: "npm:^9.2.2"
-  checksum: 10c0/c5051586cfb0cb68cf6d17b1941dc00fc28212660a15b3ae912e3db48b55e03eb39d43982bf504c84b42ed76ee028906b36e7aa098a52f5d95643b7e3173c83e
+  checksum: 10c0/729119701e34f7b95ecadf1af6392dffe23882eebe571f26d6494949afe9c6a1e547cd2da497e056190a68d1cfa2c20d2f1f4a2bc9810e63e914a832da8ae0b6
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0-alpha.14":
-  version: 12.0.0-alpha.15
-  resolution: "rescript@npm:12.0.0-alpha.15"
+"rescript@npm:^12.0.0-beta.2":
+  version: 12.0.0-beta.2
+  resolution: "rescript@npm:12.0.0-beta.2"
   dependencies:
-    "@rescript/darwin-arm64": "npm:12.0.0-alpha.15"
-    "@rescript/darwin-x64": "npm:12.0.0-alpha.15"
-    "@rescript/linux-arm64": "npm:12.0.0-alpha.15"
-    "@rescript/linux-x64": "npm:12.0.0-alpha.15"
-    "@rescript/win32-x64": "npm:12.0.0-alpha.15"
+    "@rescript/darwin-arm64": "npm:12.0.0-beta.2"
+    "@rescript/darwin-x64": "npm:12.0.0-beta.2"
+    "@rescript/linux-arm64": "npm:12.0.0-beta.2"
+    "@rescript/linux-x64": "npm:12.0.0-beta.2"
+    "@rescript/win32-x64": "npm:12.0.0-beta.2"
   dependenciesMeta:
     "@rescript/darwin-arm64":
       optional: true
@@ -2382,7 +2382,7 @@ __metadata:
     rescript: cli/rescript.js
     rescript-legacy: cli/rescript-legacy.js
     rescript-tools: cli/rescript-tools.js
-  checksum: 10c0/dbb5f05e5b28d211809a6aca386da37c25542d03f9ca57927a72bb456a392c1fc0383e9c70035d6b32dcbc62ba5ad8d54b831cf88bd95d674d0174fcc6380da7
+  checksum: 10c0/21497cbad7b824dd29bfb2e433fb84641a1e672eff75ea47892d0e86ca6117e856fe458c7dbe0abf658780a41765996568783e40836688154a5f6a2d2765c160
   languageName: node
   linkType: hard
 
