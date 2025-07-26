@@ -2,7 +2,7 @@
   "name": "rescript-bastet",
   "version": "2.0.0",
   "refmt": 3,
-  "bsc-flags": [
+  "compiler-flags": [
   ],
   "warnings": {
     "error": "+101+25+8+9+27",
@@ -24,7 +24,7 @@
     "in-source": true
   },
   "suffix": ".res.mjs",
-  "bs-dev-dependencies": [
+  "dev-dependencies": [
     "rescript-mocha",
     "bs-chai",
     "bs-jsverify"
