@@ -57,37 +57,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rescript/darwin-arm64@npm:12.0.0-beta.3":
-  version: 12.0.0-beta.3
-  resolution: "@rescript/darwin-arm64@npm:12.0.0-beta.3"
+"@rescript/darwin-arm64@npm:12.0.0-beta.4":
+  version: 12.0.0-beta.4
+  resolution: "@rescript/darwin-arm64@npm:12.0.0-beta.4"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/darwin-x64@npm:12.0.0-beta.3":
-  version: 12.0.0-beta.3
-  resolution: "@rescript/darwin-x64@npm:12.0.0-beta.3"
+"@rescript/darwin-x64@npm:12.0.0-beta.4":
+  version: 12.0.0-beta.4
+  resolution: "@rescript/darwin-x64@npm:12.0.0-beta.4"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/linux-arm64@npm:12.0.0-beta.3":
-  version: 12.0.0-beta.3
-  resolution: "@rescript/linux-arm64@npm:12.0.0-beta.3"
+"@rescript/linux-arm64@npm:12.0.0-beta.4":
+  version: 12.0.0-beta.4
+  resolution: "@rescript/linux-arm64@npm:12.0.0-beta.4"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/linux-x64@npm:12.0.0-beta.3":
-  version: 12.0.0-beta.3
-  resolution: "@rescript/linux-x64@npm:12.0.0-beta.3"
+"@rescript/linux-x64@npm:12.0.0-beta.4":
+  version: 12.0.0-beta.4
+  resolution: "@rescript/linux-x64@npm:12.0.0-beta.4"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/win32-x64@npm:12.0.0-beta.3":
-  version: 12.0.0-beta.3
-  resolution: "@rescript/win32-x64@npm:12.0.0-beta.3"
+"@rescript/win32-x64@npm:12.0.0-beta.4":
+  version: 12.0.0-beta.4
+  resolution: "@rescript/win32-x64@npm:12.0.0-beta.4"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -321,20 +321,20 @@ __metadata:
 
 "bs-chai@github:dsiu/bs-chai#rescript-v12":
   version: 1.0.1
-  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=325c8f0ae4561df2d8ccb4a99330b49a603c702b"
+  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=8a4590c98fbb00a9c9ee855ddb6fbd912b1d584f"
   dependencies:
     chai: "npm:^4.1.2"
     mocha: "npm:^6.2.0"
-  checksum: 10c0/815e57b2a29891b9663565b08e8537e93b78dd0e5468083ecac18fa0d9d811901c5a58f33263ac4ba108b3becb6ef5e68cc2711f23e2da561d5e8b15953c7dbe
+  checksum: 10c0/70300aee9492127ada3471fa3f0385b2c9fb8f616b1b5940edb3b8c80ef1a809b153eec42944d6edca252ea30aba92f8bf80ad3bd85462d985597b56ddc8c632
   languageName: node
   linkType: hard
 
 "bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version: 0.10.0
-  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=c08bca29828a989a766b7322de7279a538c953f2"
+  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=e1d74b006ca35808c4f48011778a6ee32dc9a5cf"
   dependencies:
     jsverify: "npm:^0.8.4"
-  checksum: 10c0/678a330eb761280ada29766f586715663975bdbe9a890f9df1cbb287c6c1c9a4bc37550ce7bb4ff35e9fdc146d56af4b27504e4c9e72488d0ca85b57376e6d88
+  checksum: 10c0/7fda6a71713f20d86241e4a783c1c5218a29ae8458f298ae3a14912f7e545e723a5f0ee6b27fabdd70bfe63e29533385c0d9efd87fd7e4b4ed86a45f7194cea0
   languageName: node
   linkType: hard
 
@@ -2013,8 +2013,8 @@ __metadata:
   linkType: hard
 
 "node-gyp@npm:latest":
-  version: 11.2.0
-  resolution: "node-gyp@npm:11.2.0"
+  version: 11.3.0
+  resolution: "node-gyp@npm:11.3.0"
   dependencies:
     env-paths: "npm:^2.2.0"
     exponential-backoff: "npm:^3.1.1"
@@ -2028,7 +2028,7 @@ __metadata:
     which: "npm:^5.0.0"
   bin:
     node-gyp: bin/node-gyp.js
-  checksum: 10c0/bd8d8c76b06be761239b0c8680f655f6a6e90b48e44d43415b11c16f7e8c15be346fba0cbf71588c7cdfb52c419d928a7d3db353afc1d952d19756237d8f10b9
+  checksum: 10c0/5f4ad5a729386f7b50096efd4934b06c071dbfbc7d7d541a66d6959a7dccd62f53ff3dc95fffb60bf99d8da1270e23769f82246fcaa6c5645a70c967ae9a3398
   languageName: node
   linkType: hard
 
@@ -2340,31 +2340,31 @@ __metadata:
   dependencies:
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    rescript: "npm:^12.0.0-beta.3"
+    rescript: "npm:^12.0.0-beta.4"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0-beta.3
+    rescript: ^12.0.0-beta.4
   languageName: unknown
   linkType: soft
 
 "rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version: 0.9.0
-  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=8b9b5e34720955ec689c85dc5564902de4a623fd"
+  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=405f4ffefaf7fd103e703c21ccf4bfca4741bc2e"
   dependencies:
     mocha: "npm:^9.2.2"
-  checksum: 10c0/b55e2be3fd4b64392a9a6c15dac9dc3c9405fe5af48bda8bf622de2d19f36bd7ac7220db5647c3634aadbc45d6f71b081e3a37b034dee03cde6fec49f28c5f83
+  checksum: 10c0/15d2a6cf54dbecddd90537308873e77ebcf3b663cdd72c46d4d09018ef05868e9de65e015134b6531faa8b7425f7c2ee201fd62736c0f6ec7c0b8ceb780b90c5
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0-beta.3":
-  version: 12.0.0-beta.3
-  resolution: "rescript@npm:12.0.0-beta.3"
+"rescript@npm:^12.0.0-beta.4":
+  version: 12.0.0-beta.4
+  resolution: "rescript@npm:12.0.0-beta.4"
   dependencies:
-    "@rescript/darwin-arm64": "npm:12.0.0-beta.3"
-    "@rescript/darwin-x64": "npm:12.0.0-beta.3"
-    "@rescript/linux-arm64": "npm:12.0.0-beta.3"
-    "@rescript/linux-x64": "npm:12.0.0-beta.3"
-    "@rescript/win32-x64": "npm:12.0.0-beta.3"
+    "@rescript/darwin-arm64": "npm:12.0.0-beta.4"
+    "@rescript/darwin-x64": "npm:12.0.0-beta.4"
+    "@rescript/linux-arm64": "npm:12.0.0-beta.4"
+    "@rescript/linux-x64": "npm:12.0.0-beta.4"
+    "@rescript/win32-x64": "npm:12.0.0-beta.4"
   dependenciesMeta:
     "@rescript/darwin-arm64":
       optional: true
@@ -2382,7 +2382,7 @@ __metadata:
     rescript: cli/rescript.js
     rescript-legacy: cli/rescript-legacy.js
     rescript-tools: cli/rescript-tools.js
-  checksum: 10c0/da264d99199f600dcaf78d8907b70200333dc1cc3a45a52f2fa2c72e2f5f393a8dedd01ebbcf46de94cbbe59a997a4685d6e20648739cd2234560cfb94cd7832
+  checksum: 10c0/8a1e15766122e844a2b2fc59e967673492c86ae1cd1802f325f49729a87132c16aca8edbea2c6cdf93b5bf56b6a96787f2c14e19fdfab5ab62379b7ee89451cf
   languageName: node
   linkType: hard
 
