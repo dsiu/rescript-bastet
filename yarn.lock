@@ -2340,7 +2340,7 @@ __metadata:
     rescript: "npm:^12.0.0-beta.10"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0-beta.9
+    rescript: ^12.0.0-beta.10
   languageName: unknown
   linkType: soft
 
