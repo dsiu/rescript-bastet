@@ -57,44 +57,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rescript/darwin-arm64@npm:12.0.0-beta.10":
-  version: 12.0.0-beta.10
-  resolution: "@rescript/darwin-arm64@npm:12.0.0-beta.10"
+"@rescript/darwin-arm64@npm:12.0.0-beta.11":
+  version: 12.0.0-beta.11
+  resolution: "@rescript/darwin-arm64@npm:12.0.0-beta.11"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/darwin-x64@npm:12.0.0-beta.10":
-  version: 12.0.0-beta.10
-  resolution: "@rescript/darwin-x64@npm:12.0.0-beta.10"
+"@rescript/darwin-x64@npm:12.0.0-beta.11":
+  version: 12.0.0-beta.11
+  resolution: "@rescript/darwin-x64@npm:12.0.0-beta.11"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/linux-arm64@npm:12.0.0-beta.10":
-  version: 12.0.0-beta.10
-  resolution: "@rescript/linux-arm64@npm:12.0.0-beta.10"
+"@rescript/linux-arm64@npm:12.0.0-beta.11":
+  version: 12.0.0-beta.11
+  resolution: "@rescript/linux-arm64@npm:12.0.0-beta.11"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/linux-x64@npm:12.0.0-beta.10":
-  version: 12.0.0-beta.10
-  resolution: "@rescript/linux-x64@npm:12.0.0-beta.10"
+"@rescript/linux-x64@npm:12.0.0-beta.11":
+  version: 12.0.0-beta.11
+  resolution: "@rescript/linux-x64@npm:12.0.0-beta.11"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/runtime@npm:12.0.0-beta.10":
-  version: 12.0.0-beta.10
-  resolution: "@rescript/runtime@npm:12.0.0-beta.10"
-  checksum: 10c0/33831c1823663d9a8fbf9e78e14ac4b533daca1e7ae65d247f613ebb336a8fb1fbe36815261b5da9ae5f91c3995c6c009396701760adb11c19ddc5d993f31b55
+"@rescript/runtime@npm:12.0.0-beta.11":
+  version: 12.0.0-beta.11
+  resolution: "@rescript/runtime@npm:12.0.0-beta.11"
+  checksum: 10c0/c5862e59b369d454887e04a6df5ae3ce448bb7a4fcf987d0a74ae5e2744fa7fb516b355ab9ae4193fbd2c1c66eef7cb8addd493f49f929ccdafd619250fb0ad5
   languageName: node
   linkType: hard
 
-"@rescript/win32-x64@npm:12.0.0-beta.10":
-  version: 12.0.0-beta.10
-  resolution: "@rescript/win32-x64@npm:12.0.0-beta.10"
+"@rescript/win32-x64@npm:12.0.0-beta.11":
+  version: 12.0.0-beta.11
+  resolution: "@rescript/win32-x64@npm:12.0.0-beta.11"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -156,9 +156,9 @@ __metadata:
   linkType: hard
 
 "ansi-regex@npm:^6.0.1":
-  version: 6.2.0
-  resolution: "ansi-regex@npm:6.2.0"
-  checksum: 10c0/20a2e55ae9816074a60e6729dbe3daad664cd967fc82acc08b02f5677db84baa688babf940d71f50acbbb184c02459453789705e079f4d521166ae66451de551
+  version: 6.2.2
+  resolution: "ansi-regex@npm:6.2.2"
+  checksum: 10c0/05d4acb1d2f59ab2cf4b794339c7b168890d44dda4bf0ce01152a8da0213aca207802f930442ce8cd22d7a92f44907664aac6508904e75e038fa944d2601b30f
   languageName: node
   linkType: hard
 
@@ -181,9 +181,9 @@ __metadata:
   linkType: hard
 
 "ansi-styles@npm:^6.1.0":
-  version: 6.2.1
-  resolution: "ansi-styles@npm:6.2.1"
-  checksum: 10c0/5d1ec38c123984bcedd996eac680d548f31828bd679a66db2bdf11844634dde55fec3efa9c6bb1d89056a5e79c1ac540c4c784d592ea1d25028a92227d2f2d5c
+  version: 6.2.3
+  resolution: "ansi-styles@npm:6.2.3"
+  checksum: 10c0/23b8a4ce14e18fb854693b95351e286b771d23d8844057ed2e7d083cd3e708376c3323707ec6a24365f7d7eda3ca00327fe04092e29e551499ec4c8b7bfac868
   languageName: node
   linkType: hard
 
@@ -328,20 +328,20 @@ __metadata:
 
 "bs-chai@github:dsiu/bs-chai#rescript-v12":
   version: 1.0.1
-  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=14af4432af2f513f453b19b0dfd9635a198def6e"
+  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=46bc98dc5ddc39a7f9b1e1b237583ebeec9eb91c"
   dependencies:
     chai: "npm:^4.1.2"
     mocha: "npm:^6.2.0"
-  checksum: 10c0/53f152b8c1ecaad3b607f902a3d088e5ccb1a73e3680a957041359ca26fd4296b13852b633ac5867396c7a070494b191fdd58bd663d5175449de384360256960
+  checksum: 10c0/54238698a35b3727a1832841a5720f3eedc94044d9cd160b658cd94072f56911e5bd026bf503840304be51cc725f6c7e3296f7de8be72150749cbb73e9b2a269
   languageName: node
   linkType: hard
 
 "bs-jsverify@github:dsiu/bs-jsverify#rescript-v12":
   version: 0.10.0
-  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=cce59a1fa2c27f53b9249a0bd09c97d5e9976ead"
+  resolution: "bs-jsverify@https://github.com/dsiu/bs-jsverify.git#commit=7501674c94d805db5f9c9b92a9ec0c3e1cf403af"
   dependencies:
     jsverify: "npm:^0.8.4"
-  checksum: 10c0/77703b7d6d7b47c9c2d540b687d163df36916cd62ce90a76f9e72ba6e8b335f267c969f2531d1241778d585402db0a6d677638568315649bed614a467dc96b97
+  checksum: 10c0/c9a1ba2b0a1a449add11a1e2247bfdf23c1e24570c5b1bb4952377c4e70218f86ad2e00b0cde60f864c01ea49bd45f6267c4e19945a7bb712734845db1d92bfc
   languageName: node
   linkType: hard
 
@@ -2337,32 +2337,32 @@ __metadata:
   dependencies:
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    rescript: "npm:^12.0.0-beta.10"
+    rescript: "npm:^12.0.0-beta.11"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0-beta.10
+    rescript: ^12.0.0-beta.11
   languageName: unknown
   linkType: soft
 
 "rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version: 0.9.0
-  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=9d2eee6e4199099de17c92a4892166e5780fbb40"
+  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=c1fa16636d2e0275477e2f0d8223eb9bc5d77c60"
   dependencies:
     mocha: "npm:^9.2.2"
-  checksum: 10c0/ba2bd7975484b676ae7048395ddb3fcde4ed8a5586a407d8b78a71a68ea00c4bb1d02eca8d64be6a497ac33a121e406cd3bdacd2ed10cefe12c289057738da4e
+  checksum: 10c0/a4d9ed488829fe7c0668b79255d077261f450f77cc1426078b638964bf101bc6c73163f7d7c6f6dac00fbf5db2fc5fde4b0d31ab068e6f7603f5ba37d7483ffe
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0-beta.10":
-  version: 12.0.0-beta.10
-  resolution: "rescript@npm:12.0.0-beta.10"
+"rescript@npm:^12.0.0-beta.11":
+  version: 12.0.0-beta.11
+  resolution: "rescript@npm:12.0.0-beta.11"
   dependencies:
-    "@rescript/darwin-arm64": "npm:12.0.0-beta.10"
-    "@rescript/darwin-x64": "npm:12.0.0-beta.10"
-    "@rescript/linux-arm64": "npm:12.0.0-beta.10"
-    "@rescript/linux-x64": "npm:12.0.0-beta.10"
-    "@rescript/runtime": "npm:12.0.0-beta.10"
-    "@rescript/win32-x64": "npm:12.0.0-beta.10"
+    "@rescript/darwin-arm64": "npm:12.0.0-beta.11"
+    "@rescript/darwin-x64": "npm:12.0.0-beta.11"
+    "@rescript/linux-arm64": "npm:12.0.0-beta.11"
+    "@rescript/linux-x64": "npm:12.0.0-beta.11"
+    "@rescript/runtime": "npm:12.0.0-beta.11"
+    "@rescript/win32-x64": "npm:12.0.0-beta.11"
   dependenciesMeta:
     "@rescript/darwin-arm64":
       optional: true
@@ -2380,7 +2380,7 @@ __metadata:
     rescript: cli/rescript.js
     rescript-legacy: cli/rescript-legacy.js
     rescript-tools: cli/rescript-tools.js
-  checksum: 10c0/0559421d6b1c0694faa7d3b74b014da8d8ce567ae08f0e4f3e4901b8038c918041d5b57680e31cf49dee50001209961780f8d8615f9af789a4e5106a88918bd8
+  checksum: 10c0/95cd8131082535ec773465ce8721e7340adb08aab6ea4b744b46671b92de5475b6104eaaa66ea9d669bca71eb652dd07df3cd3e4b1763023c3a382339a2098e6
   languageName: node
   linkType: hard
 
@@ -2744,11 +2744,11 @@ __metadata:
   linkType: hard
 
 "strip-ansi@npm:^7.0.1":
-  version: 7.1.0
-  resolution: "strip-ansi@npm:7.1.0"
+  version: 7.1.2
+  resolution: "strip-ansi@npm:7.1.2"
   dependencies:
     ansi-regex: "npm:^6.0.1"
-  checksum: 10c0/a198c3762e8832505328cbf9e8c8381de14a4fa50a4f9b2160138158ea88c0f5549fb50cb13c651c3088f47e63a108b34622ec18c0499b6c8c3a5ddf6b305ac4
+  checksum: 10c0/0d6d7a023de33368fd042aab0bf48f4f4077abdfd60e5393e73c7c411e85e1b3a83507c11af2e656188511475776215df9ca589b4da2295c9455cc399ce1858b
   languageName: node
   linkType: hard
 
