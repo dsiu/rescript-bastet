@@ -1,3 +1,6 @@
+// prevent Bastet shadowing Promise
+module Stdlib_Promise = Promise
+
 open Bastet
 
 open RescriptMocha.Mocha
@@ -14,15 +17,15 @@ let \"<." = {
     Even though it's a valid bucklescript signature ")
 
 module ComparePromise = {
-  type t<'a> = Js.Promise.t<'a>
+  type t<'a> = promise<'a>
 
   let eq = (a, b) =>
-    Obj.magic(Js.Promise.then_(a' => Js.Promise.then_(b' => Js.Promise.resolve(a' == b'), b), a))
+    Obj.magic(Stdlib_Promise.then(a, a' => Stdlib_Promise.then(b, b' => Stdlib_Promise.resolve(a' == b'))))
 }
 
 describe("Promise", () => {
   let promise = a =>
-    Js.Promise.make((~resolve, ~reject as _) => ignore(Js.Global.setTimeout(() => resolve(a), 10)))
+    Stdlib_Promise.make((resolve, _) => ignore(setTimeout(() => resolve(a), 10)))
 
   describe("Functor", () => {
     module V = Verify.Compare.Functor(Promise.Functor, ComparePromise)
@@ -49,8 +52,8 @@ describe("Promise", () => {
         \"<."(
           o => Obj.magic(o),
           V.associative_composition(
-            Js.Promise.resolve(\"++"("!", ...)),
-            Js.Promise.resolve(string_of_int),
+            Stdlib_Promise.resolve(\"++"("!", ...)),
+            Stdlib_Promise.resolve(string_of_int),
             ...
           ),
         ),

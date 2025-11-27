@@ -26,60 +26,60 @@ var merge = function(a, b) {
 };
 `)
 
-@val external fold_left: (('a, 'b) => 'a, 'a, Js.Dict.t<'b>) => 'a = "fold_left"
+@val external fold_left: (('a, 'b) => 'a, 'a, dict<'b>) => 'a = "fold_left"
 
-@val external fold_left_keys: (('a, string, 'b) => 'a, 'a, Js.Dict.t<'b>) => 'a = "fold_left_keys"
+@val external fold_left_keys: (('a, string, 'b) => 'a, 'a, dict<'b>) => 'a = "fold_left_keys"
 
-@val external merge: (Js.Dict.t<'a>, Js.Dict.t<'a>) => Js.Dict.t<'a> = "merge"
+@val external merge: (dict<'a>, dict<'a>) => dict<'a> = "merge"
 
-external unsafe_from_object: 'a => Js.Dict.t<'b> = "%identity"
+external unsafe_from_object: 'a => dict<'b> = "%identity"
 
-let insert: (string, 'a, Js.Dict.t<'a>) => Js.Dict.t<'a> = (key, value, dict) => {
-  Js.Dict.set(dict, key, value)
+let insert: (string, 'a, dict<'a>) => dict<'a> = (key, value, dict) => {
+  Dict.set(dict, key, value)
   dict
 }
 
 module type TRAVERSABLE_F = (A: APPLICATIVE) =>
-(TRAVERSABLE with type t<'a> = Js.Dict.t<'a> and type applicative_t<'a> = A.t<'a>)
+(TRAVERSABLE with type t<'a> = dict<'a> and type applicative_t<'a> = A.t<'a>)
 
-module Functor: FUNCTOR with type t<'a> = Js.Dict.t<'a> = {
-  type t<'a> = Js.Dict.t<'a>
+module Functor: FUNCTOR with type t<'a> = dict<'a> = {
+  type t<'a> = dict<'a>
 
-  let map = (f, a) => Js.Dict.map(x => f(x), a)
+  let map = (f, a) => Dict.mapValues(a, x => f(x))
 }
 
-module Apply: APPLY with type t<'a> = Js.Dict.t<'a> = {
+module Apply: APPLY with type t<'a> = dict<'a> = {
   include Functor
 
   let apply = (fn_array, a) =>
-    fold_left((acc, f) => merge(acc, map(f, a)), Obj.magic(Js.Dict.empty()), fn_array)
+    fold_left((acc, f) => merge(acc, map(f, a)), Obj.magic(Dict.make()), fn_array)
 }
 
-module Alt: ALT with type t<'a> = Js.Dict.t<'a> = {
+module Alt: ALT with type t<'a> = dict<'a> = {
   include Functor
 
   let alt = merge
 }
 
-module Plus: PLUS with type t<'a> = Js.Dict.t<'a> = {
+module Plus: PLUS with type t<'a> = dict<'a> = {
   include Alt
 
-  let empty = Obj.magic(Js.Dict.empty())
+  let empty = Obj.magic(Dict.make())
 }
 
-module Foldable: FOLDABLE with type t<'a> = Js.Dict.t<'a> = {
-  type t<'a> = Js.Dict.t<'a>
+module Foldable: FOLDABLE with type t<'a> = dict<'a> = {
+  type t<'a> = dict<'a>
 
   let fold_left = fold_left
 
   and fold_right: (('b, 'a) => 'a, 'a, t<'b>) => 'a = (f, init, a) =>
-    Array.reduceRight(Js.Dict.values(a), init, (x, y) => f(y, x))
+    Array.reduceRight(Dict.valuesToArray(a), init, (x, y) => f(y, x))
 
   module Fold_Map = (M: MONOID) => {
     module D = Default.Fold_Map(
       M,
       {
-        type t<'a> = Js.Dict.t<'a>
+        type t<'a> = dict<'a>
 
         let (fold_left, fold_right) = (fold_left, fold_right)
       },
@@ -92,7 +92,7 @@ module Foldable: FOLDABLE with type t<'a> = Js.Dict.t<'a> = {
     module D = Default.Fold_Map_Any(
       M,
       {
-        type t<'a> = Js.Dict.t<'a>
+        type t<'a> = dict<'a>
 
         let (fold_left, fold_right) = (fold_left, fold_right)
       },
@@ -105,7 +105,7 @@ module Foldable: FOLDABLE with type t<'a> = Js.Dict.t<'a> = {
     module D = Default.Fold_Map_Plus(
       P,
       {
-        type t<'a> = Js.Dict.t<'a>
+        type t<'a> = dict<'a>
 
         let (fold_left, fold_right) = (fold_left, fold_right)
       },
@@ -116,7 +116,7 @@ module Foldable: FOLDABLE with type t<'a> = Js.Dict.t<'a> = {
 }
 
 module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
-  type rec t<'a> = Js.Dict.t<'a>
+  type rec t<'a> = dict<'a>
 
   and applicative_t<'a> = A.t<'a>
 
@@ -134,7 +134,7 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
           \"<$>"(a => b => Function.flip((v, dict) => insert(k, v, dict), a, b), acc),
           f(k, v),
         ),
-      A.pure(Js.Dict.empty()),
+      A.pure(Dict.make()),
       a,
     )
   }
@@ -143,7 +143,7 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
   let traverse = Obj.magic((f, ta) => traverse_with_index((_, a) => f(a), ta))
 
   module D = Default.Sequence({
-    type rec t<'a> = Js.Dict.t<'a>
+    type rec t<'a> = dict<'a>
 
     and applicative_t<'a> = A.t<'a>
 

@@ -14,7 +14,7 @@ module ArbitraryFloat: Bastet_Test.ARBITRARY
 module ApproximatelyEq = {
   type t = float
 
-  let approx = Float.toPrecisionWithPrecision(_, ~digits=4)
+  let approx = Float.toPrecision(_, ~digits=4)
 
   let eq = (a, b) => approx(a) == approx(b)
 }

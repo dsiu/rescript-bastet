@@ -6,7 +6,7 @@ open Bastet_Interface
     floating point precision issues ")
 
 let approximately_equal: (~tolerance: float, float, float) => bool = (~tolerance, a, b) =>
-  abs_float(a -. b) <= tolerance
+  Math.abs(a -. b) <= tolerance
 
 module Additive = {
   module Magma: MAGMA with type t = float = {
@@ -137,9 +137,9 @@ module Ord: ORD with type t = float = {
 module Bounded: BOUNDED with type t = float = {
   include Ord
 
-  let top = max_float
+  let top = Float.Constants.maxValue
 
-  and bottom = min_float
+  and bottom = Float.Constants.minValue
 }
 
 module Show: SHOW with type t = float = {

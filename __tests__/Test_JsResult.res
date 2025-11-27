@@ -1,3 +1,6 @@
+// prevent Bastet shadowing Option and Float
+module Stdlib_Option = Option
+module Stdlib_Float = Float
 open Bastet
 
 open RescriptMocha.Mocha
@@ -135,9 +138,8 @@ module Toggle = {
   let arb_toggle: arbitrary<toggle> = smap(
     from_bool,
     to_bool,
-    ~newShow=\">."(\">."(to_bool, x => Js.Json.stringifyAny(x)), x =>
-      Js.Option.getWithDefault("", x)
-    ),
+    ~newShow=\">."(\">."(to_bool, x => JSON.stringifyAny(x)), x =>
+      Stdlib_Option.getOr(x, "")),
     arb_bool,
   )
 
@@ -339,7 +341,7 @@ describe("Result", () => {
       "should satisfy associativity",
       arb_result(arb_nat, arb_bool),
       V.associativity(
-        Result.result(f => Js.Float.toString(f), const(String.Monoid.empty, ...), ...),
+        Result.result(f => Stdlib_Float.toString(f), const(String.Monoid.empty, ...), ...),
         Result.result(float_of_int, const(Float.Additive.Monoid.empty, ...), ...),
         ...
       ),

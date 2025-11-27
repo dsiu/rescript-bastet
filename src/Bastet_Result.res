@@ -448,13 +448,13 @@ module Unsafe = {
   let from_ok = a =>
     switch a {
     | Ok(a') => a'
-    | _ => raise(Invalid_argument("You passed in an `Error` value to `from_ok`"))
+    | _ => throw(Invalid_argument("You passed in an `Error` value to `from_ok`"))
     }
 
   and from_error = a =>
     switch a {
     | Error(a') => a'
-    | _ => raise(Invalid_argument("You passed in an `Ok` value to `from_error`"))
+    | _ => throw(Invalid_argument("You passed in an `Ok` value to `from_error`"))
     }
 }
 

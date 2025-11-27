@@ -1,3 +1,6 @@
+// prevent Bastet shadowing Float
+module Stdlib_Float = Float
+
 open Bastet
 
 open RescriptMocha.Mocha
@@ -153,7 +156,7 @@ describe("Function", () => {
 
         V.composition(
           float_of_int,
-          f => Js.Float.toString(f),
+          f => Stdlib_Float.toString(f),
           \"*"(4, ...),
           \"++"("!", ...),
           \"*."(2.0, ...),

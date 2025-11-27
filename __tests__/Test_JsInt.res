@@ -10,8 +10,8 @@ module ArbitraryInt: Test.ARBITRARY with type t = int and type arbitrary<'a> = a
 
   /* These bounds ensure that there are no arithmetic overflows */
   let make = arb_int(
-    Js.Math.pow_int(~base=Int.Bounded.bottom, ~exp=1 / 4),
-    Js.Math.pow_int(~base=Int.Bounded.top, ~exp=1 / 4),
+    Math.Int.pow(Int.Bounded.bottom, ~exp=1 / 4),
+    Math.Int.pow(Int.Bounded.top, ~exp=1 / 4),
   )
 }
 

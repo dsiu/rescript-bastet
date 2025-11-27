@@ -6,22 +6,22 @@ let \"<." = Bastet_Function.Infix.\"<."
     Even though it's a valid bucklescript signature. Promises auto-flatten in this case.
     See the unit tests. ")
 
-module Functor: FUNCTOR with type t<'a> = Js.Promise.t<'a> = {
-  type t<'a> = Js.Promise.t<'a>
+module Functor: FUNCTOR with type t<'a> = promise<'a> = {
+  type t<'a> = promise<'a>
 
   //  let map = (f, a) => Js.Promise.then_(\"<."(Js.Promise.resolve, f), a)
-  let map = (f, a) => Js.Promise.then_(x => Js.Promise.resolve(f(x)), a)
+  let map = (f, a) => Promise.then(a, x => Promise.resolve(f(x)))
 }
 
-module Apply: APPLY with type t<'a> = Js.Promise.t<'a> = {
+module Apply: APPLY with type t<'a> = promise<'a> = {
   include Functor
 
   let apply = (f, a) =>
-    Js.Promise.then_(f' => Js.Promise.then_(a' => Js.Promise.resolve(f'(a')), a), f)
+    Promise.then(f, f' => Promise.then(a, a' => Promise.resolve(f'(a'))))
 }
 
-module Applicative: APPLICATIVE with type t<'a> = Js.Promise.t<'a> = {
+module Applicative: APPLICATIVE with type t<'a> = promise<'a> = {
   include Apply
 
-  let pure = p => Js.Promise.resolve(p)
+  let pure = p => Promise.resolve(p)
 }

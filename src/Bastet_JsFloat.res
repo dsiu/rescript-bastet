@@ -7,5 +7,5 @@ open Bastet_Interface
 module Show: SHOW with type t = float = {
   type t = float
 
-  let show = x => Js.Float.toString(x)
+  let show = x => Float.toString(x)
 }
