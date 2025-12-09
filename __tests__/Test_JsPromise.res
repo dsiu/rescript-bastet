@@ -13,7 +13,7 @@ let \"<." = {
 }
 
 @@ocaml.text(" Note: Promises are not actually Monads because you can't have
-    Js.Promise.t(Js.Promise.t('a))
+    Promise.t(Promise.t('a))
     Even though it's a valid bucklescript signature ")
 
 module ComparePromise = {

@@ -1,6 +1,8 @@
-// prevent Bastet shadowing Option and Float
+// prevent Bastet shadowing Option, Float, Result
 module Stdlib_Option = Option
 module Stdlib_Float = Float
+module Stdlib_Result = Result
+
 open Bastet
 
 open RescriptMocha.Mocha
@@ -8,7 +10,6 @@ open BsChai.Expect.Expect
 open BsChai.Expect.Combos.End
 open BsJsverify.Verify.Arbitrary
 open BsJsverify.Verify.Property
-open Belt.Result
 
 type arbitrary<'a> = BsJsverify.Verify.Arbitrary.arbitrary<'a>
 
@@ -214,7 +215,7 @@ module Toggle = {
   })
 }
 
-let arb_result: (arbitrary<'a>, arbitrary<'b>) => arbitrary<Belt.Result.t<'a, 'b>> = (
+let arb_result: (arbitrary<'a>, arbitrary<'b>) => arbitrary<Stdlib_Result.t<'a, 'b>> = (
   arb_ok,
   arb_error,
 ) =>
@@ -231,8 +232,8 @@ let arb_result: (arbitrary<'a>, arbitrary<'b>) => arbitrary<Belt.Result.t<'a, 'b
       },
     ~newShow=a =>
       switch a {
-      | Ok(a') => "Ok(" ++ (Js.Option.getWithDefault("", Js.Json.stringifyAny(a')) ++ ")")
-      | Error(a') => "Error(" ++ (Js.Option.getWithDefault("", Js.Json.stringifyAny(a')) ++ ")")
+      | Ok(a') => "Ok(" ++ (Stdlib_Option.getOr(JSON.stringifyAny(a'), "") ++ ")")
+      | Error(a') => "Error(" ++ (Stdlib_Option.getOr(JSON.stringifyAny(a'), "") ++ ")")
       },
     arb_either(arb_error, arb_ok),
   )
@@ -539,8 +540,8 @@ describe("Result", () => {
     )
   })
   describe("Result_Utilities", () => {
-    let errResult: Belt.Result.t<int, string> = Belt.Result.Error("ERROR")
-    let okResult: Belt.Result.t<int, string> = Belt.Result.Ok(4)
+    let errResult: Stdlib_Result.t<int, string> = Stdlib_Result.Error("ERROR")
+    let okResult: Stdlib_Result.t<int, string> = Stdlib_Result.Ok(4)
     let someFloat = Some(5.0)
     describe(
       "Hush",
@@ -557,11 +558,11 @@ describe("Result", () => {
       () => {
         it(
           "should convert None to Error result",
-          () => to_be(Belt.Result.Error("ERROR"), expect(Result.note("ERROR", None))),
+          () => to_be(Stdlib_Result.Error("ERROR"), expect(Result.note("ERROR", None))),
         )
         it(
           "should convert Some to Ok result",
-          () => to_be(Belt.Result.Ok(5.0), expect(Result.note("ERROR", someFloat))),
+          () => to_be(Stdlib_Result.Ok(5.0), expect(Result.note("ERROR", someFloat))),
         )
       },
     )

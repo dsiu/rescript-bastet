@@ -1,3 +1,7 @@
+// prevent Bastet shadowing Option, Float, Result
+module Stdlib_List = List
+module Stdlib_Dict = Dict
+
 open Bastet
 
 open RescriptMocha.Mocha
@@ -27,8 +31,8 @@ describe("Dict", () => {
       arb_dict(arb_nat),
       n =>
         V.associative_composition(
-          Js.Dict.fromList(list{("g", \"++"("!", ...))}),
-          Js.Dict.fromList(list{("f", string_of_int)}),
+          Stdlib_Dict.fromArray(Stdlib_List.toArray(list{("g", \"++"("!", ...))})),
+          Stdlib_Dict.fromArray(Stdlib_List.toArray(list{("f", string_of_int)})),
           n,
         ),
     )
