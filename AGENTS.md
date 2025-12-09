@@ -5,7 +5,8 @@
 **IMPORTANT**: When working with code in this repository, always refer to these official documentation sources:
 
 ### ReScript Language Reference
-- **URL**: https://rescript-lang.org/llms/manual/llm-full.txt
+- **Official Doc**: https://rescript-lang.org/docs/manual/
+- **llm-full.txt**: https://rescript-lang.org/llms/manual/llm-full.txt
 - **Use for**:
   - ReScript syntax and language features
   - Standard library APIs
@@ -30,3 +31,8 @@
 - **Error handling**: Use `option` and `Result` types; avoid exceptions
 - **Tests**: Use rescript-mocha with bs-jsverify for property-based testing
 - **Formatting**: 2-space indentation, modules include type annotations with `with type`
+
+## Notes
+- Ensure each test has only a single expect statement, using tuples where multiple results need to be tested
+- Remember to use conventional commits spec for commit message
+- Remember to run tests and make sure all tests passes before committing any changes
