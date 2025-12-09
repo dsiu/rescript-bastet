@@ -8,7 +8,14 @@ module ArbitraryFloat: Bastet_Test.ARBITRARY
 
   type arbitrary<'a> = arbitrary<'a>
 
-  let make = arb_float(Bastet_Float.Bounded.bottom, Bastet_Float.Bounded.top ** (1. /. 150.))
+  // Use a constrained positive range to avoid floating-point overflow/precision issues
+  // Note: Float is not a fully law-abiding member of algebraic structures
+  // due to potential arithmetic overflows and floating point precision issues
+  // (see Bastet_Float.res). We use a practical positive range that:
+  // - Stays within Bounded.bottom and Bounded.top
+  // - Prevents overflow when values are multiplied together
+  // Using 1e50 as max ensures that even a*b*c stays well under maxValue (~1.8e308)
+  let make = arb_float(Bastet_Float.Bounded.bottom, 1.0e50)
 }
 
 module ApproximatelyEq = {
