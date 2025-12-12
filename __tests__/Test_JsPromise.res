@@ -1,7 +1,7 @@
 // prevent Bastet shadowing Promise
 module Stdlib_Promise = Promise
 
-open Bastet
+open! Bastet
 
 open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary

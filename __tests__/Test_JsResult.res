@@ -3,7 +3,7 @@ module Stdlib_Option = Option
 module Stdlib_Float = Float
 module Stdlib_Result = Result
 
-open Bastet
+open! Bastet
 
 open RescriptMocha.Mocha
 open BsChai.Expect.Expect

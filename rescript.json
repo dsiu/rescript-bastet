@@ -1,7 +1,6 @@
 {
   "name": "rescript-bastet",
   "version": "2.0.0",
-  "refmt": 3,
   "compiler-flags": [
   ],
   "warnings": {

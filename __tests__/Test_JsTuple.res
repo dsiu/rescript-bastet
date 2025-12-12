@@ -1,4 +1,4 @@
-open Bastet
+open! Bastet
 
 open RescriptMocha.Mocha
 open BsChai.Expect.Expect

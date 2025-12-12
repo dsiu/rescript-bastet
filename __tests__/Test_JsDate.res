@@ -1,4 +1,4 @@
-open Bastet
+open! Bastet
 
 open RescriptMocha.Mocha
 open BsJsverify.Verify.Arbitrary

@@ -1,5 +1,5 @@
 module Stdlib_String = String
-open Bastet
+open! Bastet
 
 // Examples
 

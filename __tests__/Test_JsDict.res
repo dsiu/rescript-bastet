@@ -2,7 +2,7 @@
 module Stdlib_List = List
 module Stdlib_Dict = Dict
 
-open Bastet
+open! Bastet
 
 open RescriptMocha.Mocha
 open BsChai.Expect.Expect

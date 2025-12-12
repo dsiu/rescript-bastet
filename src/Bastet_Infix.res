@@ -1,4 +1,4 @@
-open Bastet_Interface
+open! Bastet_Interface
 
 module Magma = (M: MAGMA) => {
   let \"<:>" = M.append

@@ -52,44 +52,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rescript/darwin-arm64@npm:12.0.0":
-  version: 12.0.0
-  resolution: "@rescript/darwin-arm64@npm:12.0.0"
+"@rescript/darwin-arm64@npm:12.0.1":
+  version: 12.0.1
+  resolution: "@rescript/darwin-arm64@npm:12.0.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/darwin-x64@npm:12.0.0":
-  version: 12.0.0
-  resolution: "@rescript/darwin-x64@npm:12.0.0"
+"@rescript/darwin-x64@npm:12.0.1":
+  version: 12.0.1
+  resolution: "@rescript/darwin-x64@npm:12.0.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/linux-arm64@npm:12.0.0":
-  version: 12.0.0
-  resolution: "@rescript/linux-arm64@npm:12.0.0"
+"@rescript/linux-arm64@npm:12.0.1":
+  version: 12.0.1
+  resolution: "@rescript/linux-arm64@npm:12.0.1"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rescript/linux-x64@npm:12.0.0":
-  version: 12.0.0
-  resolution: "@rescript/linux-x64@npm:12.0.0"
+"@rescript/linux-x64@npm:12.0.1":
+  version: 12.0.1
+  resolution: "@rescript/linux-x64@npm:12.0.1"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@rescript/runtime@npm:12.0.0":
-  version: 12.0.0
-  resolution: "@rescript/runtime@npm:12.0.0"
-  checksum: 10c0/32121f3a78154cf9ab8ae4939819b9807d4a70552d7c2594872f838456c63026eddca4d6b562220fe5431d56afa96e0e276f09e5d9028b15b03f2570a52f1d30
+"@rescript/runtime@npm:12.0.1":
+  version: 12.0.1
+  resolution: "@rescript/runtime@npm:12.0.1"
+  checksum: 10c0/93b180a684a0f97dd7e2ffe2f1818b30b9f8ccf1a01f0e899396edc586da90743f38d1a56ab28e00c4adf4a16ebdb8db50705576856516bb34dbb0de9abdd05f
   languageName: node
   linkType: hard
 
-"@rescript/win32-x64@npm:12.0.0":
-  version: 12.0.0
-  resolution: "@rescript/win32-x64@npm:12.0.0"
+"@rescript/win32-x64@npm:12.0.1":
+  version: 12.0.1
+  resolution: "@rescript/win32-x64@npm:12.0.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -204,7 +204,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array.prototype.reduce@npm:^1.0.6":
+"array.prototype.reduce@npm:^1.0.8":
   version: 1.0.8
   resolution: "array.prototype.reduce@npm:1.0.8"
   dependencies:
@@ -307,11 +307,11 @@ __metadata:
 
 "bs-chai@github:dsiu/bs-chai#rescript-v12":
   version: 1.0.1
-  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=8a1437666e3964aa8df3548e339b3da0f52cd885"
+  resolution: "bs-chai@https://github.com/dsiu/bs-chai.git#commit=213d320094f473752f4bd3719c1478d86b8d1be8"
   dependencies:
     chai: "npm:^4.1.2"
     mocha: "npm:^6.2.0"
-  checksum: 10c0/5d26664aeb78842293f6057dfe8add8a4cfad49a386a8b676dd405b4d3c55e058455004f2b82c03a085cfc9e8c36cde6275c0d0cb660a8f0fcb3c242e36d232b
+  checksum: 10c0/50bf022d66cf440a3aa6ce0336a2e39bca09f298d85e06b93048c0e9f3379377cad3e9c6188d9d18c45cbcffb4cef4893165f6c2d1a04863454f06f1e839eb6e
   languageName: node
   linkType: hard
 
@@ -694,7 +694,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-abstract@npm:^1.23.2, es-abstract@npm:^1.23.5, es-abstract@npm:^1.23.9":
+"es-abstract@npm:^1.23.5, es-abstract@npm:^1.23.9, es-abstract@npm:^1.24.0":
   version: 1.24.0
   resolution: "es-abstract@npm:1.24.0"
   dependencies:
@@ -2015,17 +2015,17 @@ __metadata:
   linkType: hard
 
 "object.getownpropertydescriptors@npm:^2.0.3":
-  version: 2.1.8
-  resolution: "object.getownpropertydescriptors@npm:2.1.8"
+  version: 2.1.9
+  resolution: "object.getownpropertydescriptors@npm:2.1.9"
   dependencies:
-    array.prototype.reduce: "npm:^1.0.6"
-    call-bind: "npm:^1.0.7"
+    array.prototype.reduce: "npm:^1.0.8"
+    call-bind: "npm:^1.0.8"
     define-properties: "npm:^1.2.1"
-    es-abstract: "npm:^1.23.2"
-    es-object-atoms: "npm:^1.0.0"
-    gopd: "npm:^1.0.1"
-    safe-array-concat: "npm:^1.1.2"
-  checksum: 10c0/553e9562fd86637c9c169df23a56f1d810d8c9b580a6d4be11552c009f32469310c9347f3d10325abf0cd9cfe4afc521a1e903fbd24148ae7ec860e1e7c75cf3
+    es-abstract: "npm:^1.24.0"
+    es-object-atoms: "npm:^1.1.1"
+    gopd: "npm:^1.2.0"
+    safe-array-concat: "npm:^1.1.3"
+  checksum: 10c0/8ccc9a4f28afb39cf7ab4d8acaf2ee817e47d59863d54a29b0e140648d841d2af3fc1564501a9b400862095258e3b28ee2c0506e1f5c04705ff781a8770f5eca
   languageName: node
   linkType: hard
 
@@ -2250,32 +2250,32 @@ __metadata:
   dependencies:
     bs-chai: "github:dsiu/bs-chai#rescript-v12"
     bs-jsverify: "github:dsiu/bs-jsverify#rescript-v12"
-    rescript: "npm:^12.0.0"
+    rescript: "npm:^12.0.1"
     rescript-mocha: "github:dsiu/rescript-mocha#rescript-v12"
   peerDependencies:
-    rescript: ^12.0.0
+    rescript: ^12.0.1
   languageName: unknown
   linkType: soft
 
 "rescript-mocha@github:dsiu/rescript-mocha#rescript-v12":
   version: 0.9.0
-  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=d96722207ef0976424d9d1dc1e6cdd490a74c5a0"
+  resolution: "rescript-mocha@https://github.com/dsiu/rescript-mocha.git#commit=4eb7ec82764c89847362faadeffea0eca74d6cd0"
   dependencies:
     mocha: "npm:^9.2.2"
-  checksum: 10c0/2e6422fc16f8110378a6dabc764d5af3c8a8190d4c5dc179e6926376be00bcd2204f6d45bbf663d6bb437e9cab0e60ec2b9fc19215bfbd80b2bd6a5b3578c570
+  checksum: 10c0/f591470398eafa1fb4757057bd75b1fd0a02f862b709ba3d0c57142d24af653cc91db590b20e0896eb1b6b56d529c5b30ca5aa1ee24d7fbd397acedc38db4d90
   languageName: node
   linkType: hard
 
-"rescript@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "rescript@npm:12.0.0"
+"rescript@npm:^12.0.1":
+  version: 12.0.1
+  resolution: "rescript@npm:12.0.1"
   dependencies:
-    "@rescript/darwin-arm64": "npm:12.0.0"
-    "@rescript/darwin-x64": "npm:12.0.0"
-    "@rescript/linux-arm64": "npm:12.0.0"
-    "@rescript/linux-x64": "npm:12.0.0"
-    "@rescript/runtime": "npm:12.0.0"
-    "@rescript/win32-x64": "npm:12.0.0"
+    "@rescript/darwin-arm64": "npm:12.0.1"
+    "@rescript/darwin-x64": "npm:12.0.1"
+    "@rescript/linux-arm64": "npm:12.0.1"
+    "@rescript/linux-x64": "npm:12.0.1"
+    "@rescript/runtime": "npm:12.0.1"
+    "@rescript/win32-x64": "npm:12.0.1"
   dependenciesMeta:
     "@rescript/darwin-arm64":
       optional: true
@@ -2293,7 +2293,7 @@ __metadata:
     rescript: cli/rescript.js
     rescript-legacy: cli/rescript-legacy.js
     rescript-tools: cli/rescript-tools.js
-  checksum: 10c0/8fc92a806d86825fe593cc2c23accc39c95236b4885f9c6d9874fc1b375dd6dd07f8a99ef4c8bbbb273a6f44d47439b5cb4a62577a57ab9ecb0c7ad15021846c
+  checksum: 10c0/a6decc8a385d2bcc3e10d7504fe37518d044896bcf04a4e6f1925c2f9fabf8f04e0db29b104f0bf680b804c27bb63607753e86353a260ac1f0ee7e6d0cdb1eba
   languageName: node
   linkType: hard
 
@@ -2304,7 +2304,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-array-concat@npm:^1.1.2, safe-array-concat@npm:^1.1.3":
+"safe-array-concat@npm:^1.1.3":
   version: 1.1.3
   resolution: "safe-array-concat@npm:1.1.3"
   dependencies:
