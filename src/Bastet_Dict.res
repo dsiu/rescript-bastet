@@ -6,19 +6,19 @@ module Infix = Bastet_Infix
 let \"<." = Function.Infix.\"<."
 
 %%raw(`
-var fold_left = function(f, initial, a) {
+var bastet_dict_fold_left = function(f, initial, a) {
   return Object.keys(a).reduce(function(acc, key) {
     return f(acc, a[key])
   }, initial)
 };
 
-var fold_left_keys = function(f, initial, a) {
+var bastet_dict_fold_left_keys = function(f, initial, a) {
   return Object.keys(a).reduce(function(acc, key) {
     return f(acc, key, a[key])
   }, initial)
 };
 
-var merge = function(a, b) {
+var bastet_dict_merge = function(a, b) {
   var obj = {}
   for (var key in b) obj[key] = b[key]
   for (var key in a) obj[key] = a[key]
@@ -26,11 +26,11 @@ var merge = function(a, b) {
 };
 `)
 
-@val external fold_left: (('a, 'b) => 'a, 'a, dict<'b>) => 'a = "fold_left"
+@val external fold_left: (('a, 'b) => 'a, 'a, dict<'b>) => 'a = "bastet_dict_fold_left"
 
-@val external fold_left_keys: (('a, string, 'b) => 'a, 'a, dict<'b>) => 'a = "fold_left_keys"
+@val external fold_left_keys: (('a, string, 'b) => 'a, 'a, dict<'b>) => 'a = "bastet_dict_fold_left_keys"
 
-@val external merge: (dict<'a>, dict<'a>) => dict<'a> = "merge"
+@val external merge: (dict<'a>, dict<'a>) => dict<'a> = "bastet_dict_merge"
 
 external unsafe_from_object: 'a => dict<'b> = "%identity"
 
