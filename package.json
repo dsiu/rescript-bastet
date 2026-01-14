@@ -27,7 +27,7 @@
   "devDependencies": {
     "bs-chai": "github:dsiu/bs-chai#rescript-v12",
     "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v12",
-    "rescript": "^12.0.2",
+    "rescript": "^12.1.0",
     "rescript-mocha": "github:dsiu/rescript-mocha#rescript-v12"
   },
   "packageManager": "yarn@4.12.0"
