@@ -22,7 +22,7 @@
   "author": "Risto Stevcev",
   "license": "BSD-3-Clause",
   "peerDependencies": {
-    "rescript": "^12.0.2"
+    "rescript": "^12.1.0"
   },
   "devDependencies": {
     "bs-chai": "github:dsiu/bs-chai#rescript-v12",
