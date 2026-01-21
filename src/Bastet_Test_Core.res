@@ -380,7 +380,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
         list{
           Q.property(~name="should satisfy identity", AA.make(Q.arbitrary_int), V.identity),
           Q.property(~name="should satisfy composition", AA.make(Q.arbitrary_int), a =>
-            V.composition(\"++"("!", ...), string_of_int, a)
+            V.composition(\"++"("!", ...), Int.toString(_), a)
           ),
         },
       )
@@ -397,7 +397,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
         name ++ ".Apply",
         list{
           Q.property(~name="should satisfy associative composition", AA.make(Q.arbitrary_int), n =>
-            V.associative_composition(A.pure(\"++"("!", ...)), A.pure(string_of_int), n)
+            V.associative_composition(A.pure(\"++"("!", ...)), A.pure(Int.toString(_)), n)
           ),
         },
       )
@@ -417,12 +417,12 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy homomorphism",
             AA.make(Q.arbitrary_int),
-            V.homomorphism(x => A.map(string_of_int, x), ...),
+            V.homomorphism(x => A.map(Int.toString(_), x), ...),
           ),
           Q.property(
             ~name="should satisfy interchange",
             Q.arbitrary_int,
-            V.interchange(A.pure(string_of_int), ...),
+            V.interchange(A.pure(Int.toString(_)), ...),
           ),
         },
       )
@@ -441,12 +441,12 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
           Q.property(
             ~name="should satisfy associativity",
             AA.make_bound(Q.arbitrary_int),
-            V.associativity(\"<."(M.pure, string_of_int), \"<."(M.pure, \"++"("!", ...)), ...),
+            V.associativity(\"<."(M.pure, Int.toString(_)), \"<."(M.pure, \"++"("!", ...)), ...),
           ),
           Q.property(
             ~name="should satisfy identity",
             Q.arbitrary_int,
-            V.identity(\"<."(M.pure, string_of_int), ...),
+            V.identity(\"<."(M.pure, Int.toString(_)), ...),
           ),
         },
       )
@@ -473,7 +473,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
             ~name="should satisfy distributivity",
             AA.make(Q.arbitrary_int),
             AA.make(Q.arbitrary_int),
-            V.distributivity(string_of_int, ...),
+            V.distributivity(Int.toString(_), ...),
           ),
         },
       )
@@ -495,7 +495,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
             V.distributivity(A.pure(\"*"(2, ...)), A.pure(\"+"(3, ...)), ...),
           ),
           T.test("should satisfy annihalation", () =>
-            T.check(T.bool, V.annihalation(A.pure(string_of_int)), true)
+            T.check(T.bool, V.annihalation(A.pure(Int.toString(_))), true)
           ),
         },
       )
@@ -513,7 +513,7 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
         list{
           Q.property(~name="should satisfy identity", AA.make(Q.arbitrary_int), V.identity),
           T.test("should satisfy annihalation", () =>
-            T.check(T.bool, V.annihalation(string_of_int), true)
+            T.check(T.bool, V.annihalation(Int.toString(_)), true)
           ),
         },
       )
@@ -919,10 +919,10 @@ module Make = (T: TEST, Q: QUICKCHECK with type t = T.test) => {
             ~name="should satisfy composition",
             AA.make(Q.arbitrary_int),
             V.composition(
-              float_of_int,
-              int_of_float,
-              \"<."(\"*"(3, ...), int_of_float),
-              \"<."(\"*."(4.0, ...), float_of_int),
+              Int.toFloat,
+              Float.toInt,
+              \"<."(\"*"(3, ...), Float.toInt),
+              \"<."(\"*."(4.0, ...), Int.toFloat),
               ...
             ),
           ),

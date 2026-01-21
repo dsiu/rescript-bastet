@@ -123,7 +123,7 @@ module Bounded: BOUNDED with type t = int = {
 module Show: SHOW with type t = int = {
   type t = int
 
-  let show = string_of_int
+  let show = Int.toString(_)
 }
 
 module Semiring: SEMIRING with type t = int = {

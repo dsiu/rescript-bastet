@@ -1,4 +1,5 @@
 // prevent Bastet shadowing Promise
+module Stdlib_Int = Int
 module Stdlib_Promise = Promise
 
 open! Bastet
@@ -38,7 +39,7 @@ describe("Promise", () => {
       "should satisfy composition",
       arb_nat,
       \"<."(
-        \"<."(o => Obj.magic(o, ...), V.composition(\"++"("!", ...), string_of_int, ...)),
+        \"<."(o => Obj.magic(o, ...), V.composition(\"++"("!", ...), Stdlib_Int.toString(_), ...)),
         promise,
       ),
     )
@@ -53,7 +54,7 @@ describe("Promise", () => {
           o => Obj.magic(o),
           V.associative_composition(
             Stdlib_Promise.resolve(\"++"("!", ...)),
-            Stdlib_Promise.resolve(string_of_int),
+            Stdlib_Promise.resolve(Stdlib_Int.toString(_)),
             ...
           ),
         ),
@@ -71,7 +72,7 @@ describe("Promise", () => {
     async_property1(
       "should satisfy homomorphism",
       arb_nat,
-      \"<."(o => Obj.magic(o, ...), V.homomorphism(string_of_int, ...)),
+      \"<."(o => Obj.magic(o, ...), V.homomorphism(Stdlib_Int.toString(_), ...)),
     )
   })
 })

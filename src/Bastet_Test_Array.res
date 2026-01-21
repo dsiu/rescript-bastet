@@ -131,7 +131,7 @@ module Array = (
         Q.property(
           ~name="should satisfy associativity",
           AA.make_bound(Q.arbitrary_int),
-          V.associativity(\"<."(Float.toString(_), fold'), \"<."(float_of_int, fold), ...),
+          V.associativity(\"<."(Float.toString(_), fold'), \"<."(Int.toFloat, fold), ...),
         ),
       },
     )

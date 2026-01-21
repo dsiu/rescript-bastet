@@ -1,4 +1,5 @@
 // prevent Bastet shadowing Option, Float, Result
+module Stdlib_Int = Int
 module Stdlib_List = List
 module Stdlib_Dict = Dict
 
@@ -21,7 +22,7 @@ describe("Dict", () => {
     property1(
       "should satisfy composition",
       arb_dict(arb_nat),
-      a => V.composition(\"++"("!", ...), string_of_int, a),
+      a => V.composition(\"++"("!", ...), Stdlib_Int.toString(_), a),
     )
   })
   describe("Apply", () => {
@@ -32,7 +33,7 @@ describe("Dict", () => {
       n =>
         V.associative_composition(
           Stdlib_Dict.fromArray(Stdlib_List.toArray(list{("g", \"++"("!", ...))})),
-          Stdlib_Dict.fromArray(Stdlib_List.toArray(list{("f", string_of_int)})),
+          Stdlib_Dict.fromArray(Stdlib_List.toArray(list{("f", Stdlib_Int.toString(_))})),
           n,
         ),
     )
@@ -50,12 +51,12 @@ describe("Dict", () => {
       "should satisfy distributivity",
       arb_dict(arb_nat),
       arb_dict(arb_nat),
-      V.distributivity(string_of_int, ...),
+      V.distributivity(Stdlib_Int.toString(_), ...),
     )
   })
   describe("Plus", () => {
     module V = Verify.Plus(Dict.Plus)
-    it("should satisfy annihalation", () => to_be(true, expect(V.annihalation(string_of_int)), ...))
+    it("should satisfy annihalation", () => to_be(true, expect(V.annihalation(Stdlib_Int.toString(_))), ...))
     property1("should satisfy identity", arb_dict(arb_nat), V.identity)
   })
   describe("Foldable", () =>

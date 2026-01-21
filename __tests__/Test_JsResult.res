@@ -2,6 +2,7 @@
 module Stdlib_Option = Option
 module Stdlib_Float = Float
 module Stdlib_Result = Result
+module Stdlib_Int = Int
 
 open! Bastet
 
@@ -280,7 +281,7 @@ describe("Result", () => {
     property1(
       "should satisfy composition",
       arb_result(arb_nat, arb_string),
-      V.composition(\"++"("!", ...), string_of_int, ...),
+      V.composition(\"++"("!", ...), Stdlib_Int.toString(_), ...),
     )
   })
   describe("Bifunctor", () => {
@@ -289,7 +290,7 @@ describe("Result", () => {
     property1(
       "should satisfy composition",
       arb_result(arb_string, arb_nat),
-      V.composition(\"++"("!", ...), \"*."(3.0, ...), \"++"("-", ...), float_of_int, ...),
+      V.composition(\"++"("!", ...), \"*."(3.0, ...), \"++"("-", ...), Stdlib_Int.toFloat, ...),
     )
   })
   describe("Apply", () => {
@@ -297,7 +298,7 @@ describe("Result", () => {
     property1(
       "should satisfy associative composition",
       arb_result(arb_nat, arb_string),
-      n => V.associative_composition(Ok(\"++"("!", ...)), Ok(string_of_int), n),
+      n => V.associative_composition(Ok(\"++"("!", ...)), Ok(Stdlib_Int.toString(_)), n),
     )
   })
   describe("Applicative", () => {
@@ -306,9 +307,9 @@ describe("Result", () => {
     property1(
       "should satisfy homomorphism",
       arb_result(arb_nat, arb_string),
-      V.homomorphism(x => Functors.ResultF.String.Functor.map(string_of_int, x), ...),
+      V.homomorphism(x => Functors.ResultF.String.Functor.map(Stdlib_Int.toString(_), x), ...),
     )
-    property1("should satisfy interchange", arb_nat, V.interchange(Ok(string_of_int), ...))
+    property1("should satisfy interchange", arb_nat, V.interchange(Ok(Stdlib_Int.toString(_)), ...))
   })
   describe("Monad", () => {
     module V = Verify.Monad(Functors.ResultF.String.Monad)
@@ -316,9 +317,9 @@ describe("Result", () => {
     property1(
       "should satisfy associativity",
       arb_result(arb_nat, arb_string),
-      V.associativity(\"<."(pure, string_of_int), \"<."(pure, \"++"("!", ...)), ...),
+      V.associativity(\"<."(pure, Stdlib_Int.toString(_)), \"<."(pure, \"++"("!", ...)), ...),
     )
-    property1("should satisfy identity", arb_nat, V.identity(\"<."(pure, string_of_int), ...))
+    property1("should satisfy identity", arb_nat, V.identity(\"<."(pure, Stdlib_Int.toString(_)), ...))
   })
   describe("Alt", () => {
     module V = Verify.Alt(Functors.ResultF.String.Alt)
@@ -333,7 +334,7 @@ describe("Result", () => {
       "should satisfy distributivity",
       arb_result(arb_nat, arb_string),
       arb_result(arb_nat, arb_string),
-      V.distributivity(string_of_int, ...),
+      V.distributivity(Stdlib_Int.toString(_), ...),
     )
   })
   describe("Extend", () => {
@@ -343,7 +344,7 @@ describe("Result", () => {
       arb_result(arb_nat, arb_bool),
       V.associativity(
         Result.result(f => Stdlib_Float.toString(f), const(String.Monoid.empty, ...), ...),
-        Result.result(float_of_int, const(Float.Additive.Monoid.empty, ...), ...),
+        Result.result(Stdlib_Int.toFloat, const(Float.Additive.Monoid.empty, ...), ...),
         ...
       ),
     )

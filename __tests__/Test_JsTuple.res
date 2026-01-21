@@ -1,3 +1,6 @@
+// prevent Bastet shadowing Float
+module Stdlib_Int = Int
+
 open! Bastet
 
 open RescriptMocha.Mocha
@@ -33,7 +36,7 @@ describe("Tuple", () => {
     property1(
       "should satisfy composition",
       arb_tuple((arb_string, arb_nat)),
-      a => V.composition(\"++"("!", ...), string_of_int, a),
+      a => V.composition(\"++"("!", ...), Stdlib_Int.toString(_), a),
     )
   })
   describe("Apply", () => {
@@ -44,7 +47,7 @@ describe("Tuple", () => {
       n =>
         V.associative_composition(
           (String.Monoid.empty, \"++"("!", ...)),
-          (String.Monoid.empty, string_of_int),
+          (String.Monoid.empty, Stdlib_Int.toString(_)),
           n,
         ),
     )
@@ -55,12 +58,12 @@ describe("Tuple", () => {
     property1(
       "should satisfy homomorphism",
       arb_tuple((arb_string, arb_nat)),
-      V.homomorphism(x => TupleF.String.Functor.map(string_of_int, x), ...),
+      V.homomorphism(x => TupleF.String.Functor.map(Stdlib_Int.toString(_), x), ...),
     )
     property1(
       "should satisfy interchange",
       arb_nat,
-      V.interchange((String.Monoid.empty, string_of_int), ...),
+      V.interchange((String.Monoid.empty, Stdlib_Int.toString(_)), ...),
     )
   })
   describe("Monad", () => {
@@ -69,9 +72,9 @@ describe("Tuple", () => {
     property1(
       "should satisfy associativity",
       arb_tuple((arb_string, arb_nat)),
-      V.associativity(\"<."(pure, string_of_int), \"<."(pure, \"++"("!", ...)), ...),
+      V.associativity(\"<."(pure, Stdlib_Int.toString(_)), \"<."(pure, \"++"("!", ...)), ...),
     )
-    property1("should satisfy identity", arb_nat, V.identity(\"<."(pure, string_of_int), ...))
+    property1("should satisfy identity", arb_nat, V.identity(\"<."(pure, Stdlib_Int.toString(_)), ...))
   })
   describe("Foldable", () => {
     open TupleF.String.Foldable
@@ -151,7 +154,7 @@ describe("Tuple", () => {
     property1(
       "should satisfy composition",
       arb_tuple((arb_string, arb_nat)),
-      V.composition(\"++"("!", ...), \"*."(3.0, ...), \"++"("-", ...), float_of_int, ...),
+      V.composition(\"++"("!", ...), \"*."(3.0, ...), \"++"("-", ...), Stdlib_Int.toFloat, ...),
     )
   })
 })

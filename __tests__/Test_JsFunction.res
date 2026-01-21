@@ -1,5 +1,6 @@
 // prevent Bastet shadowing Float
 module Stdlib_Float = Float
+module Stdlib_Int = Int
 
 open Bastet
 
@@ -31,7 +32,7 @@ describe("Function", () => {
           },
         )
 
-        V.identity(string_of_int)
+        V.identity(Stdlib_Int.toString(_))
       },
     )
     property1(
@@ -49,7 +50,7 @@ describe("Function", () => {
           },
         )
 
-        V.composition(\"++"("!", ...), string_of_int, \"+"(1, ...))
+        V.composition(\"++"("!", ...), Stdlib_Int.toString(_), \"+"(1, ...))
       },
     )
   })
@@ -102,7 +103,7 @@ describe("Function", () => {
           },
         )
 
-        V.associativity(\"=="("123!", ...), \"++"("!", ...), string_of_int)
+        V.associativity(\"=="("123!", ...), \"++"("!", ...), Stdlib_Int.toString(_))
       },
     )
   )
@@ -120,7 +121,7 @@ describe("Function", () => {
           },
         )
 
-        V.identity(string_of_int)
+        V.identity(Stdlib_Int.toString(_))
       },
     )
   )
@@ -138,7 +139,7 @@ describe("Function", () => {
           },
         )
 
-        V.identity(string_of_int)
+        V.identity(Stdlib_Int.toString(_))
       },
     )
     property1(
@@ -155,7 +156,7 @@ describe("Function", () => {
         )
 
         V.composition(
-          float_of_int,
+          Stdlib_Int.toFloat,
           f => Stdlib_Float.toString(f),
           \"*"(4, ...),
           \"++"("!", ...),
@@ -180,7 +181,7 @@ describe("Function", () => {
           },
         )
 
-        V.identity(string_of_int)
+        V.identity(Stdlib_Int.toString(_))
       },
     )
     property1(
@@ -198,7 +199,7 @@ describe("Function", () => {
           },
         )
 
-        V.composition(\"+"(1, ...), string_of_int, \"++"("!", ...))
+        V.composition(\"+"(1, ...), Stdlib_Int.toString(_), \"++"("!", ...))
       },
     )
   })

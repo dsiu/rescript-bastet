@@ -3,8 +3,6 @@
   "compiler-flags": [
   ],
   "warnings": {
-    "error": "+101+25+8+9+27",
-    "number": "-102-48-3"
   },
   "sources": [
     {
