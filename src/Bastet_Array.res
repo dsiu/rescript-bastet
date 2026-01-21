@@ -1,20 +1,21 @@
 module A = Bastet_ArrayF.Make({
-  let length = xs => Array.length(xs)
+  let length = Array.length
 
-  let make = (i, a) => Array.make(~length=i, a)
+  let make = (length, init) => Array.make(~length, init)
 
-  let append = (a, b) => Array.concat(a, b)
+  let append = Array.concat
 
-  let map: ('a => 'b, array<'a>) => array<'b> = (f, arr) => Array.map(arr, f)
+  let map: ('a => 'b, array<'a>) => array<'b> = (fn, array) => Array.map(array, fn)
 
-  let mapi = (f, arr) => Array.mapWithIndex(arr, f)
+  let mapi: (('a, int) => 'b, array<'a>) => array<'b> = (fn, array) => Array.mapWithIndex(array, fn)
 
-  let fold_left: (('a, 'b) => 'a, 'a, array<'b>) => 'a = (f, init, arr) =>
-    Array.reduce(arr, init, f)
+  let fold_left: (('a, 'b) => 'a, 'a, array<'b>) => 'a = (fn, init, xs) =>
+    Array.reduce(xs, init, fn)
 
-  let every: ('a => bool, array<'a>) => bool = (f, arr) => Array.every(arr, f)
+  let every: ('a => bool, array<'a>) => bool = (predicate, array) => Array.every(array, predicate)
 
-  let slice = (~start, ~end_, arr) => Array.slice(arr, ~start, ~end=end_)
+  let slice: (~start: int, ~end_: int, array<'a>) => array<'a> = (~start, ~end_, array) =>
+    Array.slice(array, ~start, ~end=end_)
 })
 
 include A

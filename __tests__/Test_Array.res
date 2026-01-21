@@ -28,7 +28,7 @@ module ArbitraryArrayInt: Test.ARBITRARY
 }
 
 module TestArray = Test.Array(
-  JsArray,
+  Bastet.Array,
   MochaI.Test,
   JsVerifyI.Quickcheck,
   ArbitraryArrayInt,
