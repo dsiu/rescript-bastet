@@ -26,13 +26,13 @@
     "rescript": "^12.2.0-rc.1"
   },
   "devDependencies": {
+    "@dsiu/rescript-mocha": "^0.11.0",
     "bs-chai": "github:dsiu/bs-chai#rescript-v12",
     "bs-jsverify": "github:dsiu/bs-jsverify#rescript-v12",
     "c8": "^10.1.3",
     "c8-as-nyc": "^1.1.11",
     "nyc": "^17.1.0",
-    "rescript": "^12.2.0-rc.1",
-    "rescript-mocha": "github:dsiu/rescript-mocha#rescript-v12"
+    "rescript": "^12.2.0-rc.1"
   },
   "packageManager": "yarn@4.12.0"
 }

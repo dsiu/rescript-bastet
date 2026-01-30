@@ -21,7 +21,7 @@
   },
   "suffix": ".res.mjs",
   "dev-dependencies": [
-    "rescript-mocha",
+    "@dsiu/rescript-mocha",
     "bs-chai",
     "bs-jsverify"
   ],
