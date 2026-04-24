@@ -9,8 +9,7 @@ let \"<." = Bastet_Function.Infix.\"<."
 module Functor: FUNCTOR with type t<'a> = promise<'a> = {
   type t<'a> = promise<'a>
 
-  //  let map = (f, a) => Js.Promise.then_(\"<."(Js.Promise.resolve, f), a)
-  let map = (f, a) => Promise.then(a, x => Promise.resolve(f(x)))
+  let map = (f, a) => a->Promise.then(Promise.resolve->\"<."(f))
 }
 
 module Apply: APPLY with type t<'a> = promise<'a> = {

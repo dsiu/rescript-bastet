@@ -143,22 +143,7 @@ module Compare = {
     let identity: F.t<'a> => bool = a => E.eq(F.map(Function.Category.id, a), a)
 
     let composition: ('b => 'c, 'a => 'b, F.t<'a>) => bool = (f, g, a) => {
-      // Orig:
-      // E.eq(F.map(\"<."(f, g), a), \"<."(F.map(f), F.map(g))(a))
-
-      // [todo] bug in compiler?
-      // complaining fm is a curried function where an uncurried function is expected
-      // meaning \"<." is expecting f to be uncurried?
-      //      let fm = F.map(f)
-      //      let gm = F.map(g)
-      //      let compose_fmgm = \"<."(fm, gm)
-
-      // workaround
-      let fm' = x => F.map(f, x)
-      let gm' = y => F.map(g, y)
-      let compose_fm'gm' = \"<."(fm', gm')
-
-      E.eq(F.map(\"<."(f, g), a), compose_fm'gm'(a))
+      E.eq(F.map(\"<."(f, g), a), \"<."(F.map(f,_), F.map(g, _))(a))
     }
   }
 
@@ -167,15 +152,10 @@ module Compare = {
 
     let associative_composition: (A.t<'b => 'c>, A.t<'a => 'b>, A.t<'a>) => bool = (f, g, h) => {
       open I
-      // orig:
-      // E.eq(\"<*>"(\"<*>"(A.map(Function.Semigroupoid.compose, f), g), h), \"<*>"(f, \"<*>"(g, h)))
-      //
-      let amc = A.map(a => Function.Semigroupoid.compose(a, _), f)
-      let amcg = \"<*>"(amc, g)
-      let amcgh = \"<*>"(amcg, h)
-
-      let fgh' = \"<*>"(f, \"<*>"(g, h))
-      E.eq(amcgh, fgh')
+      E.eq(
+        A.map(a => Function.Semigroupoid.compose(a, _), f)->\"<*>"(g)->\"<*>"(h),
+        f->\"<*>"(g->\"<*>"(h)),
+      )
     }
   }
 

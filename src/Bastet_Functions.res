@@ -13,6 +13,7 @@ and id = {
 }
 
 and \"<." = Function.Infix.\"<."
+and \">." = Function.Infix.\">."
 
 module Monoid = (M: MONOID) => {
   module I = Bastet_Infix.Magma(M)
@@ -51,11 +52,9 @@ module Apply = (A: APPLY) => {
   module I = Bastet_Infix.Apply(A)
   open I
 
-  // todo: is this correct??? (the const call)
-  let apply_first: (A.t<'a>, A.t<'b>) => A.t<'a> = (a, b) => \"<*>"(\"<$>"(x => const(x, _), a), b)
+  let apply_first: (A.t<'a>, A.t<'b>) => A.t<'a> = (a, b) => \"<$>"(x => const(x, _), a)->\"<*>"(b)
 
-  // todo: is this correct?? (the const call)
-  and apply_second: (A.t<'a>, A.t<'b>) => A.t<'b> = (a, b) => \"<*>"(\"<$>"(const(id, _), a), b)
+  and apply_second: (A.t<'a>, A.t<'b>) => A.t<'b> = (a, b) => \"<$>"(const(id, _), a)->\"<*>"(b)
 
   and apply_both: (A.t<'a>, A.t<'b>) => A.t<('a, 'b)> = (a, b) =>
     \"<*>"(\"<$>"(a' => b' => (a', b'), a), b)
@@ -222,8 +221,7 @@ module Foldable = (F: FOLDABLE) => {
     let traverse': ('a => A.t<'b>, F.t<'a>) => A.t<unit> = (f, fa) => {
       // ORIG:
       // F.fold_right(\"<."(Fn.apply_second, f), A.pure(), fa)
-
-      let c = \"<."(x => Fn.apply_second(x, _), f)
+      let c = f->\">."(x => Fn.apply_second(x, _))
       let c' = (x, y) => c(x)(y)
       F.fold_right(c', A.pure(), fa)
     }

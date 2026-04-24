@@ -6,19 +6,19 @@ module Infix = Bastet_Infix
 let \"<." = Function.Infix.\"<."
 
 %%raw(`
-var bastet_dict_fold_left = function(f, initial, a) {
+globalThis.bastet_dict_fold_left = function(f, initial, a) {
   return Object.keys(a).reduce(function(acc, key) {
     return f(acc, a[key])
   }, initial)
 };
 
-var bastet_dict_fold_left_keys = function(f, initial, a) {
+globalThis.bastet_dict_fold_left_keys = function(f, initial, a) {
   return Object.keys(a).reduce(function(acc, key) {
     return f(acc, key, a[key])
   }, initial)
 };
 
-var bastet_dict_merge = function(a, b) {
+globalThis.bastet_dict_merge = function(a, b) {
   var obj = {}
   for (var key in b) obj[key] = b[key]
   for (var key in a) obj[key] = a[key]
@@ -129,11 +129,13 @@ module Traversable: TRAVERSABLE_F = (A: APPLICATIVE) => {
   let traverse_with_index = (f, a) => {
     open I
     fold_left_keys(
-      (acc, k, v) =>
+      (acc, k, v) => {
+        let insert_flipped = dict => Function.flip((v, dict) => insert(k, v, dict), dict, _)
         \"<*>"(
-          \"<$>"(a => b => Function.flip((v, dict) => insert(k, v, dict), a, b), acc),
+          \"<$>"(insert_flipped, acc),
           f(k, v),
-        ),
+        )
+      },
       A.pure(Dict.make()),
       a,
     )
